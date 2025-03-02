@@ -1,0 +1,90 @@
+.explore-menu {
+  margin-top: 20px;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); */
+  text-align: center;
+}
+
+.explore-menu-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.explore-menu-text {
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.explore-menu-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.explore-menu-list-item {
+  cursor: pointer;
+  padding: 1rem;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  transition: transform 0.3s, background-color 0.3s;
+  text-align: center;
+}
+
+.explore-menu-list-item:hover {
+  transform: translateY(-5px);
+  background-color: #e2ffe2; /* Light green on hover */
+}
+
+.menu-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%; /* Make the images circular */
+  object-fit: cover; /* Ensure images cover the area */
+  margin-bottom: 0.5rem;
+}
+
+.menu-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.explore-menu-list-item.active {
+  border: 2px solid #4caf50; /* Green border for active category */
+}
+
+.separator {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid #e0e0e0;
+}
+.fixed-top-right {
+  position: fixed; /* Make the div fixed */
+  top: 50px; /* Adjust as necessary */
+  right: 50px; /* Adjust as necessary */
+  padding: 10px; /* Padding for aesthetics */
+  border-radius: 8px; /* Rounded corners */
+  z-index: 100; /* Ensure it stays above other elements */
+}
+
+/* Adjust this to customize how your fixed component looks */
+.fixed-top-right p {
+  margin: 0; /* Remove default margin */
+}
+.explore-menu-list-item .menu-image,
+.explore-menu-list-item .menu-name {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.explore-menu-list-item:hover .menu-image {
+  transform: scale(1.1);
+}
+
+.explore-menu-list-item:hover .menu-name {
+  color: #ff9900; /* Change to your preferred hover color */
+}

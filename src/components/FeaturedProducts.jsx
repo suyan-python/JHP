@@ -1,27 +1,32 @@
-import React from 'react';
+import React from "react";
 
 const products = [
   {
     id: 1,
     name: "Ethiopian Yirgacheffe",
     price: 19.99,
-    image: "https://images.unsplash.com/photo-1587734005433-8a1fb1aa2d43?auto=format&fit=crop&q=80",
-    description: "Light roasted, floral and bright with notes of bergamot and citrus"
+    image:
+      "https://images.unsplash.com/photo-1587734005433-8a1fb1aa2d43?auto=format&fit=crop&q=80",
+    description:
+      "Light roasted, floral and bright with notes of bergamot and citrus",
   },
   {
     id: 2,
     name: "Colombian Supremo",
     price: 18.99,
-    image: "https://images.unsplash.com/photo-1587734005433-8a1fb1aa2d43?auto=format&fit=crop&q=80",
-    description: "Medium roasted, smooth with caramel sweetness and nutty undertones"
+    image:
+      "https://images.unsplash.com/photo-1587734005433-8a1fb1aa2d43?auto=format&fit=crop&q=80",
+    description:
+      "Medium roasted, smooth with caramel sweetness and nutty undertones",
   },
   {
     id: 3,
     name: "Sumatra Mandheling",
     price: 21.99,
-    image: "https://images.unsplash.com/photo-1587734005433-8a1fb1aa2d43?auto=format&fit=crop&q=80",
-    description: "Dark roasted, full-bodied with earthy and spicy notes"
-  }
+    image:
+      "https://images.unsplash.com/photo-1587734005433-8a1fb1aa2d43?auto=format&fit=crop&q=80",
+    description: "Dark roasted, full-bodied with earthy and spicy notes",
+  },
 ];
 
 export function FeaturedProducts() {
@@ -31,12 +36,15 @@ export function FeaturedProducts() {
         <h2 className="text-3xl font-bold text-center mb-12 text-amber-900">
           Featured Products
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {products.map((product) => (
-            <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <img 
-                src={product.image} 
+            <div
+              key={product.id}
+              className="bg-white rounded-lg shadow-md overflow-hidden"
+            >
+              <img
+                src={product.image}
                 alt={product.name}
                 className="w-full h-48 object-cover"
               />

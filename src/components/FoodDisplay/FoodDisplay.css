@@ -1,0 +1,52 @@
+/* Container for the food display */
+.food-display-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Title styling */
+.food-display-title {
+  font-size: 2rem;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Flexbox grid layout for food items */
+.food-display-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Responsive food item cards */
+.food-item {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* General responsiveness */
+@media (max-width: 768px) {
+  .food-display-title {
+    font-size: 1.5rem;
+  }
+
+  .food-display-container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .food-display-title {
+    font-size: 1.2rem;
+  }
+}
