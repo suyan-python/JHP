@@ -30,6 +30,13 @@ export function Navbar({ cart }) {
   const closeCart = () => {
     setIsCartVisible(false); // Close the cart when the close button is clicked
   };
+  const removeFromCart = (index) => {
+    setCart(cart.filter((_, i) => i !== index));
+  };
+
+  const clearCart = () => {
+    setCart([]);
+  };
 
   return (
     <>
@@ -94,7 +101,13 @@ export function Navbar({ cart }) {
       </nav>
 
       {/* Cart Section - Uses the Cart component */}
-      <Cart cart={cart} isCartVisible={isCartVisible} closeCart={closeCart} />
+      <Cart
+        cart={cart}
+        isCartVisible={isCartVisible}
+        closeCart={closeCart}
+        removeFromCart={removeFromCart}
+        clearCart={clearCart}
+      />
     </>
   );
 }
