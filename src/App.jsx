@@ -10,14 +10,19 @@ import ExploreMenu from "./components/ExploreMenu/ExploreMenu";
 
 function App() {
   const [category, setCategory] = useState("All");
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
   return (
     <div className="min-h-screen">
-      <Navbar />
+      <Navbar cart={cart} />
       <main>
         <Hero />
         {/* <FeaturedProducts /> */}
-        <ExploreMenu category={category} setCategory={setCategory} />
-        <FoodDisplay category={category} />
+        {/* <ExploreMenu category={category} setCategory={setCategory} /> */}
+        <FoodDisplay addToCart={addToCart} />
         <Story />
         <Newsletter />
       </main>

@@ -1,34 +1,100 @@
-import React from "react";
-import { Coffee, ShoppingCart, User } from "lucide-react";
-import { Link } from "./Link";
+import React, { useState, useEffect } from "react";
+import { Coffee, ShoppingCart } from "lucide-react";
+import { Cart } from "./Cart/Cart.jsx"; // Import the Cart component
 
-export function Navbar() {
+export function Navbar({ cart }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [isCartVisible, setIsCartVisible] = useState(false); // State to control cart visibility
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const toggleCart = () => {
+    setIsCartVisible(!isCartVisible); // Toggle the visibility of the cart
+  };
+
+  const closeCart = () => {
+    setIsCartVisible(false); // Close the cart when the close button is clicked
+  };
+
   return (
-    <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <Coffee className="h-8 w-8 text-amber-700" />
-            <span className="ml-2 text-xl font-bold text-amber-900">JHP</span>
+    <>
+      {/* Navbar */}
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          scrolled ? "bg-white shadow-md" : "bg-transparent"
+        }`}
+      >
+        <div
+          className={`max-w-[90rem] mx-auto px-6 lg:px-12 flex flex-col items-center transition-all duration-300 ${
+            scrolled ? "text-gray-900" : "text-white"
+          }`}
+        >
+          {/* Logo and Cart Section */}
+          <div className="flex items-center justify-between w-full h-16">
+            <div className="w-1/3"></div> {/* Empty div for spacing */}
+            {/* Centered Logo */}
+            <div className="flex items-center">
+              <Coffee
+                className={`h-7 w-7 ${
+                  scrolled ? "text-gray-900" : "text-white"
+                }`}
+              />
+              <span
+                className={`ml-2 text-lg font-semibold ${
+                  scrolled ? "text-gray-900" : "text-white"
+                }`}
+              >
+                JHP
+              </span>
+            </div>
+            {/* Cart at Rightmost */}
+            <div className="w-1/3 flex justify-end">
+              <button
+                className="p-2 rounded-full transition"
+                onClick={toggleCart} // Toggle the cart visibility when clicked
+              >
+                <ShoppingCart className={`h-5 w-5`} />
+              </button>
+            </div>
           </div>
 
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="#home">Home</Link>
-            <Link href="#products">Products</Link>
-            <Link href="#story">Our Story</Link>
-            <Link href="#contact">Contact</Link>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <button className="p-2 hover:bg-amber-50 rounded-full">
-              <ShoppingCart className="h-6 w-6 text-amber-700" />
-            </button>
-            <button className="p-2 hover:bg-amber-50 rounded-full">
-              <User className="h-6 w-6 text-amber-700" />
-            </button>
+          {/* Navigation Links Below */}
+          <div className="flex items-center space-x-28 text-sm my-4">
+            {["Home", "Products", "Our Story", "Contact"].map((item, index) => (
+              <a
+                key={index}
+                href={`#${item.toLowerCase().replace(" ", "")}`}
+                className="relative group transition-colors"
+              >
+                {item}
+                <span
+                  className={`absolute left-0 bottom-0 w-0 h-[2px]  transition-all duration-300 group-hover:w-full ${
+                    scrolled ? "bg-black" : "bg-white"
+                  }`}
+                ></span>
+              </a>
+            ))}
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Cart Section - Uses the Cart component */}
+      <Cart cart={cart} isCartVisible={isCartVisible} closeCart={closeCart} />
+    </>
   );
 }
