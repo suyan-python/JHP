@@ -45,7 +45,7 @@ export function Cart({ isCartVisible, closeCart }) {
           Your Cart
         </h2>
         {cartArray.length === 0 ? (
-          <p className="text-center text-gray-500">No items in the cart.</p>
+          <p className="text-center text-red-500">No items in the cart.</p>
         ) : (
           <>
             {/* Cart Items */}

@@ -23,7 +23,7 @@ import menu_18 from "./menu_8.png";
 import menu_19 from "./menu_8.png";
 import menu_20 from "./menu_8.png";
 
-import food_1 from "./food_1.png";
+import food_1 from "./image1.png";
 import food_2 from "./food_2.png";
 import food_3 from "./america.jpeg";
 import food_4 from "./america.jpeg";
@@ -55,6 +55,8 @@ import food_29 from "./food_29.png";
 import food_30 from "./food_30.png";
 import food_31 from "./food_31.png";
 import food_32 from "./food_32.png";
+
+import hover_1 from "./hover1.png";
 
 import coffee from "./coffee.jpeg";
 
@@ -184,6 +186,7 @@ export const food_list = [
     _id: "1",
     name: "Espresso",
     image: food_1,
+    hoverImage: hover_1,
     price: 120,
     description:
       "Food provides essential nutrients for overall health and well-being",
