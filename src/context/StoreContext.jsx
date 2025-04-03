@@ -1,63 +1,74 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { food_list } from "../assets/assets"; // Ensure food_list contains your food items with id, price, and image
+import { FaTrashAlt } from "react-icons/fa"; // Trash icon import
 
-export const StoreContext = createContext({ food_list: [] });
+export const CartContext = createContext({ food_list: [] });
 
-const StoreContextProvider = (props) => {
+export const useStore = () => {
+  return useContext(CartContext);
+};
+
+const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
 
-  // Extract prices and images from food_list
+  // Extract prices, images, and names from food_list
   const itemPrices = food_list.reduce((acc, item) => {
     acc[item._id] = item.price;
     return acc;
   }, {});
 
   const itemImages = food_list.reduce((acc, item) => {
-    acc[item._id] = item.image; // Map item._id to its image URL
+    acc[item._id] = item.image;
     return acc;
   }, {});
 
   const itemNames = food_list.reduce((acc, item) => {
-    acc[item._id] = item.name; // Map item._id to its image URL
+    acc[item._id] = item.name;
     return acc;
   }, {});
 
+  // Add item to the cart (increment quantity if it already exists)
   const addToCart = (itemId) => {
     setCartItems((prev) => ({
       ...prev,
-      [itemId]: (prev[itemId] || 0) + 1, // Increment quantity or set to 1
+      [itemId]: (prev[itemId] || 0) + 1,
     }));
   };
 
-  const getTotalPrice = () => {
-    return Object.keys(cartItems).reduce((total, id) => {
-      return total + (itemPrices[id] || 0) * cartItems[id]; // Calculate total price
-    }, 0);
-  };
-
+  // Remove one item from the cart (decrement quantity or remove completely if quantity is 0)
   const removeFromCart = (itemId) => {
     setCartItems((prev) => {
-      if (!prev[itemId]) return prev; // If the item is not in the cart, return previous state
-      const newQuantity = prev[itemId] - 1; // Decrease quantity by 1
+      if (!prev[itemId]) return prev;
 
+      const newQuantity = prev[itemId] - 1;
       if (newQuantity <= 0) {
-        const { [itemId]: _, ...rest } = prev; // Remove item if quantity is zero
+        const { [itemId]: _, ...rest } = prev;
         return rest;
       }
 
-      return { ...prev, [itemId]: newQuantity }; // Otherwise, update the quantity
+      return { ...prev, [itemId]: newQuantity };
     });
   };
+
+  // Decrement an item completely from the cart
   const decrementCartItem = (id) => {
     setCartItems((prevItems) => {
       const updatedItems = { ...prevItems };
-      delete updatedItems[id]; // Removes the item from the cart entirely
+      delete updatedItems[id];
       return updatedItems;
     });
   };
 
+  // Clear the entire cart
   const clearCart = () => {
-    setCartItems({}); // Reset cartItems to an empty object
+    setCartItems({});
+  };
+
+  // Get the total price of all cart items
+  const getTotalPrice = () => {
+    return Object.keys(cartItems).reduce((total, id) => {
+      return total + (itemPrices[id] || 0) * cartItems[id];
+    }, 0);
   };
 
   useEffect(() => {
@@ -69,19 +80,17 @@ const StoreContextProvider = (props) => {
     cartItems,
     addToCart,
     removeFromCart,
+    decrementCartItem,
     clearCart,
     getTotalPrice,
-    decrementCartItem,
-    itemPrices, // Provide itemPrices
-    itemImages, // Provide itemImages
+    itemPrices,
+    itemImages,
     itemNames,
   };
 
   return (
-    <StoreContext.Provider value={contextValue}>
-      {props.children}
-    </StoreContext.Provider>
+    <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
   );
 };
 
-export default StoreContextProvider;
+export default CartProvider;

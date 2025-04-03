@@ -1,84 +1,21 @@
-// FoodDisplay.js
 import React, { useState } from "react";
-import { FaShoppingCart } from "react-icons/fa"; // Import the cart icon
-import image1 from "../../assets/image1.png";
-import hover1 from "../../assets/hover1.png";
+import { useStore } from "../../context/StoreContext.jsx"; // Import Store Context
+import { FaShoppingCart } from "react-icons/fa";
 
-const products = [
-  {
-    id: 1,
-    name: "Single Origin Ethiopian",
-    description: "Medium roast with fruity undertones",
-    price: 15.99,
-    category: "coffee",
-    image: image1,
-    hoverImage: hover1,
-  },
-  {
-    id: 1,
-    name: "Single Origin Ethiopian",
-    description: "Medium roast with fruity undertones",
-    price: 15.99,
-    category: "coffee",
-    image: image1,
-    hoverImage: hover1,
-  },
-  {
-    id: 1,
-    name: "Single Origin Ethiopian",
-    description: "Medium roast with fruity undertones",
-    price: 15.99,
-    category: "coffee",
-    image: image1,
-    hoverImage: hover1,
-  },
-  {
-    id: 1,
-    name: "Single Origin Ethiopian",
-    description: "Medium roast with fruity undertones",
-    price: 15.99,
-    category: "coffee",
-    image: image1,
-    hoverImage: hover1,
-  },
-  {
-    id: 1,
-    name: "Single Origin Ethiopian",
-    description: "Medium roast with fruity undertones",
-    price: 15.99,
-    category: "coffee",
-    image: image1,
-    hoverImage: hover1,
-  },
-  {
-    id: 1,
-    name: "Single Origin Ethiopian",
-    description: "Medium roast with fruity undertones",
-    price: 15.99,
-    category: "coffee",
-    image: image1,
-    hoverImage: hover1,
-  },
-];
-
-function FoodDisplay({ addToCart }) {
+const FoodDisplay = () => {
+  const { food_list, addToCart, itemNames, itemPrices, itemImages } =
+    useStore(); // Get food_list and other necessary values from Store Context
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [isCartVisible, setIsCartVisible] = useState(false); // State to control visibility of the cart
 
+  // Filter the products based on selected category
   const filteredProducts =
     selectedCategory === "all"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
-
-  const toggleCartVisibility = () => {
-    setIsCartVisible(!isCartVisible); // Toggle cart visibility on button click
-  };
+      ? food_list
+      : food_list.filter((product) => product.category === selectedCategory);
 
   return (
     <div className="py-12 bg-white rounded-2xl" id="products">
       <div className="max-w-7xl mx-auto relative">
-        {/* Conditionally render Cart or Products */}
-        {isCartVisible && <Cart cart={addToCart} />}
         <div>
           {/* Filter Section */}
           <div className="flex justify-left space-x-4 mb-6 text-black">
@@ -103,38 +40,47 @@ function FoodDisplay({ addToCart }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {filteredProducts.map((product) => (
               <div
-                key={product.id}
+                key={product._id}
                 className="p-6 rounded-lg hover:shadow-lg transition-shadow relative group"
               >
-                {/* Product Image - Normal Image and Hover Image */}
-                <div className="relative w-full h-64">
+                {/* Product Image */}
+                <div className="relative w-full h-64 overflow-hidden rounded-lg">
                   <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover rounded-lg transition-all duration-500 group-hover:opacity-0 group-hover:scale-110"
+                    src={itemImages[product._id]} // Fetch image from the context
+                    alt={itemNames[product._id]} // Fetch name from the context
+                    className="w-full h-full object-cover transition-all duration-500 ease-in-out group-hover:opacity-0"
                   />
                   <img
-                    src={product.hoverImage} // Assuming you have a hoverImage in the product data
+                    src={product.hoverImage} // Assuming hoverImage is also in the product object or handled similarly
                     alt={`${product.name} Hover`}
-                    className="absolute top-0 left-0 w-full h-full object-cover rounded-lg transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110"
+                    className="absolute top-0 left-0 w-full h-full object-cover rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out"
                   />
                 </div>
 
-                {/* Product Name and Price - Always visible */}
+                {/* Product Info */}
                 <div className="mt-4">
-                  <h3 className="text-lg">{product.name}</h3>
-                  <p className="text-lg text-amber-600">${product.price}</p>
+                  <h3 className="text-lg">{itemNames[product._id]}</h3>{" "}
+                  {/* Fetch name from context */}
+                  <p className="text-lg text-amber-600">
+                    Rs. {itemPrices[product._id]}
+                  </p>{" "}
+                  {/* Fetch price from context */}
                 </div>
 
-                {/* Description and Add to Cart Button (These will slide up on hover) */}
-                <div className="mt-4 opacity-0 group-hover:opacity-100 transform group-hover:translate-y-[-10px] transition-all duration-300">
-                  <p className="text-sm mb-4">{product.description}</p>
-                  <button
-                    onClick={() => addToCart(product)}
-                    className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-full mt-4 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-50 shadow-md hover:shadow-lg"
-                  >
-                    Add to Cart
-                  </button>
+                {/* Hidden Info (Initially hidden, shown on hover) */}
+                <div className="opacity-0 group-hover:opacity-100 transform group-hover:translate-y-4 transition-all duration-500 ease-in-out">
+                  <p className="text-gray-500 mt-2">{product.description}</p>
+
+                  {/* Add to Cart Button */}
+                  <div className="mt-4">
+                    <button
+                      onClick={() => addToCart(product._id)} // Use the _id to add the correct product to the cart
+                      className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105"
+                    >
+                      <FaShoppingCart className="mr-2" />
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -143,6 +89,6 @@ function FoodDisplay({ addToCart }) {
       </div>
     </div>
   );
-}
+};
 
 export default FoodDisplay;

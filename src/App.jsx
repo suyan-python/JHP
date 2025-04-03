@@ -8,6 +8,7 @@ import { Footer } from "./components/Footer";
 import FoodDisplay from "./components/FoodDisplay/FoodDisplay";
 import ExploreMenu from "./components/ExploreMenu/ExploreMenu";
 import { Cart } from "./components/Cart/Cart.jsx"; // Import Cart Component
+import StoreContextProvider from "./context/StoreContext.jsx";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -32,22 +33,24 @@ function App() {
 
   return (
     <div className="min-h-screen">
-      <Navbar cart={cart} toggleCart={toggleCart} />
-      <main>
-        <Hero />
-        <FoodDisplay addToCart={addToCart} />
-        <Story />
-        <Newsletter />
-      </main>
-      <Footer />
+      <StoreContextProvider>
+        <Navbar cart={cart} toggleCart={toggleCart} />
+        <main>
+          <Hero />
+          <FoodDisplay addToCart={addToCart} />
+          <Story />
+          <Newsletter />
+        </main>
+        <Footer />
 
-      {/* Cart Component */}
-      <Cart
-        cart={cart}
-        isCartVisible={isCartVisible}
-        closeCart={() => setIsCartVisible(false)}
-        removeFromCart={removeFromCart} // ✅ Ensure this function is passed correctly
-      />
+        {/* Cart Component */}
+        <Cart
+          cart={cart}
+          isCartVisible={isCartVisible}
+          closeCart={() => setIsCartVisible(false)}
+          removeFromCart={removeFromCart} // ✅ Ensure this function is passed correctly
+        />
+      </StoreContextProvider>
     </div>
   );
 }

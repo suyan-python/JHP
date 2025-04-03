@@ -1,41 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Coffee, ShoppingCart } from "lucide-react";
-import { Cart } from "./Cart/Cart.jsx"; // Import the Cart component
+import { Cart } from "./Cart/Cart.jsx";
+import { useStore } from "../context/StoreContext"; // Ensure correct import
 
-export function Navbar({ cart }) {
+export function Navbar() {
+  const { cartItems } = useStore(); // Get cartItems from context
   const [scrolled, setScrolled] = useState(false);
-  const [isCartVisible, setIsCartVisible] = useState(false); // State to control cart visibility
+  const [isCartVisible, setIsCartVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 10);
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const toggleCart = () => {
-    setIsCartVisible(!isCartVisible); // Toggle the visibility of the cart
+    setIsCartVisible(!isCartVisible);
   };
 
   const closeCart = () => {
-    setIsCartVisible(false); // Close the cart when the close button is clicked
-  };
-  const removeFromCart = (index) => {
-    setCart(cart.filter((_, i) => i !== index));
-  };
-
-  const clearCart = () => {
-    setCart([]);
+    setIsCartVisible(false);
   };
 
   return (
@@ -53,7 +42,7 @@ export function Navbar({ cart }) {
         >
           {/* Logo and Cart Section */}
           <div className="flex items-center justify-between w-full h-16">
-            <div className="w-1/3"></div> {/* Empty div for spacing */}
+            <div className="w-1/3"></div>
             {/* Centered Logo */}
             <div className="flex items-center">
               <Coffee
@@ -66,21 +55,27 @@ export function Navbar({ cart }) {
                   scrolled ? "text-gray-900" : "text-white"
                 }`}
               >
-                JHP
+                JHP Store
               </span>
             </div>
-            {/* Cart at Rightmost */}
+            {/* Cart Icon */}
             <div className="w-1/3 flex justify-end">
               <button
                 className="p-2 rounded-full transition"
-                onClick={toggleCart} // Toggle the cart visibility when clicked
+                onClick={toggleCart}
               >
-                <ShoppingCart className={`h-5 w-5`} />
+                <ShoppingCart className="h-5 w-5" />
+                {/* Display cart count only if cartItems exist */}
+                {Object.keys(cartItems || {}).length > 0 && (
+                  <span className="ml-1 text-sm font-bold">
+                    ({Object.keys(cartItems).length})
+                  </span>
+                )}
               </button>
             </div>
           </div>
 
-          {/* Navigation Links Below */}
+          {/* Navigation Links */}
           <div className="flex items-center space-x-28 text-sm my-4">
             {["Home", "Products", "Our Story", "Contact"].map((item, index) => (
               <a
@@ -90,7 +85,7 @@ export function Navbar({ cart }) {
               >
                 {item}
                 <span
-                  className={`absolute left-0 bottom-0 w-0 h-[2px]  transition-all duration-300 group-hover:w-full ${
+                  className={`absolute left-0 bottom-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full ${
                     scrolled ? "bg-black" : "bg-white"
                   }`}
                 ></span>
@@ -100,14 +95,8 @@ export function Navbar({ cart }) {
         </div>
       </nav>
 
-      {/* Cart Section - Uses the Cart component */}
-      <Cart
-        cart={cart}
-        isCartVisible={isCartVisible}
-        closeCart={closeCart}
-        removeFromCart={removeFromCart}
-        clearCart={clearCart}
-      />
+      {/* Cart Component */}
+      <Cart isCartVisible={isCartVisible} closeCart={closeCart} />
     </>
   );
 }
