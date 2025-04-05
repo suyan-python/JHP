@@ -65,9 +65,12 @@ const CartProvider = ({ children }) => {
   };
 
   // Get the total price of all cart items
+  // StoreContext.jsx or your context provider file
   const getTotalPrice = () => {
     return Object.keys(cartItems).reduce((total, id) => {
-      return total + (itemPrices[id] || 0) * cartItems[id];
+      const price = itemPrices[id] || 0;
+      const quantity = cartItems[id] || 0;
+      return total + price * quantity;
     }, 0);
   };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Coffee, ShoppingCart } from "lucide-react";
 import { Cart } from "./Cart/Cart.jsx";
-import { useStore } from "../context/StoreContext"; // Ensure correct import
+import { useStore } from "../context/StoreContext.jsx"; // Ensure correct import
 
 export function Navbar() {
   const { cartItems } = useStore(); // Get cartItems from context
