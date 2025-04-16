@@ -14,7 +14,7 @@ export function Hero() {
 
   return (
     <>
-      <div className="relative mt-36 mb-12">
+      <div className="relative mt-48 mb-12">
         {/* Background Image */}
         <div
           className="absolute inset-0 h-[55vh] bg-cover bg-center rounded-2xl brightness-75"
@@ -39,7 +39,7 @@ export function Hero() {
             </p>
             <a
               href="#products"
-              className="bg-amber-700 hover:bg-white text-white hover:text-black px-8 py-3 rounded-2xl text-lg font-semibold transition-colors"
+              className="bg-bluee hover:bg-white text-white hover:text-black px-8 py-3 rounded-2xl text-lg font-semibold transition-colors"
             >
               Order Coffee Beans
             </a>

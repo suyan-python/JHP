@@ -7,6 +7,7 @@ export function Navbar() {
   const { cartItems } = useStore(); // Get cartItems from context
   const [scrolled, setScrolled] = useState(false);
   const [isCartVisible, setIsCartVisible] = useState(false);
+  const [isNotificationVisible, setIsNotificationVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,17 +28,42 @@ export function Navbar() {
     setIsCartVisible(false);
   };
 
+  const closeNotification = () => {
+    setIsNotificationVisible(false);
+  };
+
   return (
     <>
+      {/* Notification Bar */}
+      {isNotificationVisible && (
+        <div className="fixed top-0 left-0 w-full bg-[#E4C16F] py-2 px-4 z-40 text-center text-brownn">
+          <div className="relative flex items-center justify-center">
+            {/* Centered Text */}
+            <span className="text-sm mx-auto">
+              Special offer: Get 10% off your first purchase with code
+              WELCOME10!
+            </span>
+
+            {/* Close Button on the Right */}
+            <button
+              onClick={closeNotification}
+              className="absolute right-0 text-lg font-semibold px-4"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Navbar */}
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        className={`fixed left-0 w-full z-50 transition-all duration-300 ${
           scrolled ? "bg-white shadow-md" : "bg-transparent"
-        }`}
+        } ${isNotificationVisible ? "top-10" : "top-0"}`} // Dynamically adjust top value
       >
         <div
           className={`max-w-[90rem] mx-auto px-6 lg:px-12 flex flex-col items-center transition-all duration-300 ${
-            scrolled ? "text-gray-900" : "text-white"
+            scrolled ? "text-brownn" : "text-brownn"
           }`}
         >
           {/* Logo and Cart Section */}
@@ -47,12 +73,12 @@ export function Navbar() {
             <div className="flex items-center">
               <Coffee
                 className={`h-7 w-7 ${
-                  scrolled ? "text-gray-900" : "text-white"
+                  scrolled ? "text-brownn" : "text-brownn"
                 }`}
               />
               <span
                 className={`ml-2 text-lg font-semibold ${
-                  scrolled ? "text-gray-900" : "text-white"
+                  scrolled ? "text-brownn" : "text-brownn"
                 }`}
               >
                 JHP Store

@@ -13,6 +13,8 @@ import Success from "./components/esewa/Success.jsx";
 import Failure from "./components/esewa/Failure.jsx";
 import Payment from "./components/esewa/Payment.jsx";
 
+import PopupOffer from "./popup.jsx";
+
 function App() {
   const [cart, setCart] = useState([]);
   const [isCartVisible, setIsCartVisible] = useState(false);
@@ -35,6 +37,9 @@ function App() {
     <div className="min-h-screen">
       <StoreContextProvider>
         <Router>
+          {/* Show the popup offer */}
+          <PopupOffer />
+
           <Navbar cart={cart} toggleCart={toggleCart} />
           <Routes>
             <Route path="/" element={<Hero />} />
