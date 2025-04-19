@@ -14,6 +14,7 @@ import Failure from "./components/esewa/Failure.jsx";
 import Payment from "./components/esewa/Payment.jsx";
 
 import PopupOffer from "./popup.jsx";
+import PlaceOrder from "./components/Cart/PlaceOrder.jsx";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -43,6 +44,7 @@ function App() {
           <Navbar cart={cart} toggleCart={toggleCart} />
           <Routes>
             <Route path="/" element={<Hero />} />
+            <Route path="/payment" element={<PlaceOrder />} />
             <Route path="/payment-success" element={<Success />} />
             <Route path="/payment-failure" element={<Failure />} />
             <Route path="/payment-form" element={<Payment />} />

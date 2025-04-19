@@ -1,38 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export function Story() {
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   return (
-    <section className="my-12 py-20 bg-white" id="story">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
-            <img
-              src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?auto=format&fit=crop&q=80"
-              alt="Coffee roasting process"
-              className="rounded-lg shadow-lg"
-            />
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold mb-6 text-amber-900">
-              Our Story
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Founded in 2020, Brew Haven began with a simple mission: to bring
-              the world's finest coffee to your cup. Our journey started in the
-              heart of Seattle's coffee culture, where our master roasters
-              perfected the art of bringing out the unique character of each
-              bean.
-            </p>
-            <p className="text-gray-600 mb-6">
-              We work directly with farmers across the globe, ensuring fair
-              trade practices and sustainable farming methods. Every bean is
-              carefully selected, roasted to perfection, and delivered fresh to
-              your doorstep.
-            </p>
-            <button className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-full text-lg font-semibold transition-colors">
-              Learn More
-            </button>
-          </div>
+    <section
+      id="story"
+      className="relative w-full bg-brownn text-white overflow-hidden py-20 px-4 md:px-12 my-8 rounded-2xl"
+    >
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+        {/* Left Image */}
+        <div
+          className="relative h-[400px] md:h-[550px] w-full rounded-xl overflow-hidden shadow-2xl"
+          data-aos="fade-right"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?auto=format&fit=crop&q=80"
+            alt="Roasting beans"
+            className="w-full h-full object-cover"
+          />
+          {/* Optional overlay */}
+          <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+        </div>
+
+        {/* Right Text */}
+        <div data-aos="fade-left" className="z-10">
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight text-[#f4eadd]">
+            Our Journey into the Brew
+          </h2>
+          <p className="text-lg text-[#ddd6cc] leading-relaxed mb-5">
+            From the misty highlands of Illam to the cozy corners of our café,
+            every bean we roast has a story to tell. Brew Haven began with a
+            vision: brew bold, brew responsibly.
+          </p>
+          <p className="text-lg text-[#ddd6cc] leading-relaxed mb-8">
+            We partner with farmers who care for the earth, roast with
+            precision, and serve with purpose — so your cup doesn’t just taste
+            good, it does good.
+          </p>
+          <button className="bg-[#f4eadd] hover:bg-[#ddcdb7] text-[#3e2c1c] px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
+            Learn More
+          </button>
         </div>
       </div>
     </section>

@@ -6,6 +6,10 @@ export default {
       colors: {
         brownn: "#795548",
         bluee: "#32b9d9",
+        soft: "#FAF3E0",
+      },
+      backgroundImage: {
+        coverr: "url('./src/assets/background/1.jpg')",
       },
     },
   },

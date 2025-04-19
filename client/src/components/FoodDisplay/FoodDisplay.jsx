@@ -15,10 +15,10 @@ const FoodDisplay = () => {
     // Add to the temporary "added" state
     setAddedItems((prev) => [...prev, id]);
 
-    // Remove after 2 seconds
+    // Remove after 4 seconds
     setTimeout(() => {
       setAddedItems((prev) => prev.filter((itemId) => itemId !== id));
-    }, 3000);
+    }, 4000);
   };
 
   const filteredProducts =
@@ -36,8 +36,8 @@ const FoodDisplay = () => {
               key={category}
               className={`px-3 py-1.5 text-sm font-medium rounded-md transition ${
                 selectedCategory === category
-                  ? "text-amber-700 border-b-2 border-amber-700"
-                  : "text-gray-600 hover:text-amber-700"
+                  ? "text-bluee border-b-2 border-bluee"
+                  : "text-gray-600 hover:text-bluee"
               }`}
               onClick={() => setSelectedCategory(category)}
             >
@@ -49,7 +49,7 @@ const FoodDisplay = () => {
         </div>
 
         {/* Product Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
             <div
               key={product._id}
@@ -70,11 +70,11 @@ const FoodDisplay = () => {
               </div>
 
               {/* Product Info */}
-              <div className="mt-3">
+              <div className="mt-3 text-center">
                 <h3 className="text-md font-semibold text-gray-800 truncate">
                   {itemNames[product._id]}
                 </h3>
-                <p className="text-sm text-amber-600 font-semibold mt-1">
+                <p className="text-sm text-bluee font-semibold mt-1">
                   Rs. {itemPrices[product._id]}
                 </p>
 
@@ -88,7 +88,7 @@ const FoodDisplay = () => {
                   className={`mt-3 w-full ${
                     addedItems.includes(product._id)
                       ? "bg-green-600"
-                      : "bg-amber-600 hover:bg-amber-700"
+                      : "bg-bluee hover:bg-bluee "
                   } text-white font-medium py-2 rounded-full flex items-center justify-center gap-2 text-sm transition-transform duration-300 hover:scale-105`}
                   disabled={addedItems.includes(product._id)}
                 >

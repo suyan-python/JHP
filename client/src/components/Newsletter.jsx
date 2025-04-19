@@ -1,15 +1,16 @@
-import React from 'react';
+import React from "react";
 
 export function Newsletter() {
   return (
-    <section className="bg-amber-900 py-16">
+    <section className="bg-brownn py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             Join Our Coffee Club
           </h2>
           <p className="text-amber-100 mb-8 max-w-2xl mx-auto">
-            Subscribe to our newsletter for exclusive offers, brewing tips, and early access to new products.
+            Subscribe to our newsletter for exclusive offers, brewing tips, and
+            early access to new products.
           </p>
           <form className="max-w-md mx-auto">
             <div className="flex gap-4">

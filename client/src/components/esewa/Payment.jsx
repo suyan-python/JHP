@@ -28,7 +28,7 @@ const PaymentComponent = () => {
   };
 
   return (
-    <div className="max-w-sm mx-auto mt-16 p-6 bg-white rounded-lg shadow-lg border border-green-100">
+    <div className="max-w-sm mx-auto my-2 p-6 bg-white rounded-lg shadow-lg border border-green-100">
       <div className="text-center mb-6">
         <img
           src="https://esewa.com.np/common/images/esewa_logo.png"
