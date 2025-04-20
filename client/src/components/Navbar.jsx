@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Coffee, ShoppingCart } from "lucide-react";
+import { Coffee, ShoppingCart, Crown } from "lucide-react";
 import { Cart } from "./Cart/Cart.jsx";
 import { useStore } from "../context/StoreContext.jsx";
 import { FaSearch } from "react-icons/fa";
@@ -22,15 +22,6 @@ export function Navbar() {
   const closeNotification = () => setIsNotificationVisible(false);
   const toggleCart = () => setIsCartVisible(!isCartVisible);
   const closeCart = () => setIsCartVisible(false);
-
-  const navLinks = [
-    "Home",
-    "Products",
-    "Our Story",
-    "People",
-    "Vlogs",
-    "Contact",
-  ];
 
   const handleNavClick = (link) => {
     setActiveSection(link.toLowerCase().replace(" ", ""));
@@ -106,8 +97,11 @@ export function Navbar() {
               {/* Logo */}
               <NavLink to={"/"}>
                 <div className="flex items-center">
-                  <Coffee className="h-7 w-7 text-brownn" />
-                  <span className="ml-2 text-lg font-semibold">JHP Store</span>
+                  {/* <Coffee className="h-7 w-7 text-brownn" /> */}
+                  <Crown />
+                  <span className="ml-2 text-lg font-semibold">
+                    Jewel Himalayan Products
+                  </span>
                 </div>
               </NavLink>
 
@@ -128,29 +122,97 @@ export function Navbar() {
             </div>
 
             {/* Navigation Links */}
-            <div className="flex items-center space-x-28 text-sm my-4">
-              {navLinks.map((item, index) => {
-                const linkKey = item.toLowerCase().replace(" ", "");
-                const isActive = activeSection === linkKey;
 
-                return (
-                  <a
-                    key={index}
-                    href={`#${linkKey}`}
-                    onClick={() => handleNavClick(item)}
-                    className={`relative group transition-colors ${
-                      isActive ? "text-bluee" : ""
-                    }`}
-                  >
-                    {item}
-                    <span
-                      className={`absolute left-0 bottom-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full ${
-                        scrolled ? "bg-black" : "bg-bluee"
-                      } ${isActive ? "w-full" : ""}`}
-                    ></span>
-                  </a>
-                );
-              })}
+            <div className="flex items-center space-x-28 text-sm my-4">
+              <NavLink
+                to="/"
+                onClick={() => setActiveSection("home")}
+                className={`relative group transition-colors ${
+                  activeSection === "home" ? "text-bluee" : ""
+                }`}
+              >
+                Home
+                <span
+                  className={`absolute left-0 bottom-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full ${
+                    scrolled ? "bg-black" : "bg-bluee"
+                  } ${activeSection === "home" ? "w-full" : ""}`}
+                ></span>
+              </NavLink>
+
+              <NavLink
+                to="/store"
+                onClick={() => setActiveSection("products")}
+                className={`relative group transition-colors ${
+                  activeSection === "products" ? "text-bluee" : ""
+                }`}
+              >
+                JHP Store
+                <span
+                  className={`absolute left-0 bottom-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full ${
+                    scrolled ? "bg-black" : "bg-bluee"
+                  } ${activeSection === "products" ? "w-full" : ""}`}
+                ></span>
+              </NavLink>
+
+              <NavLink
+                to="/JHP"
+                onClick={() => setActiveSection("ourstory")}
+                className={`relative group transition-colors ${
+                  activeSection === "ourstory" ? "text-bluee" : ""
+                }`}
+              >
+                JHP
+                <span
+                  className={`absolute left-0 bottom-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full ${
+                    scrolled ? "bg-black" : "bg-bluee"
+                  } ${activeSection === "ourstory" ? "w-full" : ""}`}
+                ></span>
+              </NavLink>
+
+              <NavLink
+                to="/JHCB"
+                onClick={() => setActiveSection("people")}
+                className={`relative group transition-colors ${
+                  activeSection === "people" ? "text-bluee" : ""
+                }`}
+              >
+                JHCB
+                <span
+                  className={`absolute left-0 bottom-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full ${
+                    scrolled ? "bg-black" : "bg-bluee"
+                  } ${activeSection === "people" ? "w-full" : ""}`}
+                ></span>
+              </NavLink>
+
+              <NavLink
+                to="/inaya"
+                onClick={() => setActiveSection("vlogs")}
+                className={`relative group transition-colors ${
+                  activeSection === "vlogs" ? "text-bluee" : ""
+                }`}
+              >
+                iNaya Cafe
+                <span
+                  className={`absolute left-0 bottom-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full ${
+                    scrolled ? "bg-black" : "bg-bluee"
+                  } ${activeSection === "vlogs" ? "w-full" : ""}`}
+                ></span>
+              </NavLink>
+
+              <NavLink
+                to="/#contact"
+                onClick={() => setActiveSection("contact")}
+                className={`relative group transition-colors ${
+                  activeSection === "contact" ? "text-bluee" : ""
+                }`}
+              >
+                Contact
+                <span
+                  className={`absolute left-0 bottom-0 w-0 h-[2px] transition-all duration-300 group-hover:w-full ${
+                    scrolled ? "bg-black" : "bg-bluee"
+                  } ${activeSection === "contact" ? "w-full" : ""}`}
+                ></span>
+              </NavLink>
             </div>
           </div>
         </nav>

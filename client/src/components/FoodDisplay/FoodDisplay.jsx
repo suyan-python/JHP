@@ -1,95 +1,127 @@
 import React, { useState } from "react";
+import { Coffee } from "lucide-react";
 import { useStore } from "../../context/StoreContext.jsx";
-import { FaShoppingCart } from "react-icons/fa";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaShoppingCart, FaCheckCircle } from "react-icons/fa";
 
 const FoodDisplay = () => {
   const { food_list, addToCart, itemNames, itemPrices, itemImages } =
     useStore();
+
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortOrder, setSortOrder] = useState("default");
   const [addedItems, setAddedItems] = useState([]);
 
   const handleAddToCart = (id) => {
     addToCart(id);
-
-    // Add to the temporary "added" state
     setAddedItems((prev) => [...prev, id]);
-
-    // Remove after 4 seconds
     setTimeout(() => {
       setAddedItems((prev) => prev.filter((itemId) => itemId !== id));
     }, 4000);
   };
 
-  const filteredProducts =
-    selectedCategory === "all"
+  // Filter + Sort Logic
+  const sortedFilteredProducts = [
+    ...(selectedCategory === "all"
       ? food_list
-      : food_list.filter((product) => product.category === selectedCategory);
+      : food_list.filter((product) => product.category === selectedCategory)),
+  ];
+
+  if (sortOrder === "asc") {
+    sortedFilteredProducts.sort(
+      (a, b) => itemPrices[a._id] - itemPrices[b._id]
+    );
+  } else if (sortOrder === "desc") {
+    sortedFilteredProducts.sort(
+      (a, b) => itemPrices[b._id] - itemPrices[a._id]
+    );
+  }
 
   return (
-    <div className="py-10 bg-white rounded-2xl" id="products">
+    <section className="py-20 bg-white my-36" id="products">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Filter Buttons */}
-        <div className="flex justify-start space-x-3 mb-8 text-black">
-          {["all", "coffee", "tea"].map((category) => (
-            <button
-              key={category}
-              className={`px-3 py-1.5 text-sm font-medium rounded-md transition ${
-                selectedCategory === category
-                  ? "text-bluee border-b-2 border-bluee"
-                  : "text-gray-600 hover:text-bluee"
-              }`}
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category === "all"
-                ? "All Products"
-                : category.charAt(0).toUpperCase() + category.slice(1)}
-            </button>
-          ))}
+        {/* Title */}
+        <div className="flex items-center justify-center gap-2 text-3xl font-semibold text-brownn mb-12">
+          <Coffee className="w-7 h-7" />
+          <span>JHP Store</span>
         </div>
 
-        {/* Product Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
+        {/* Filter + Sort */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-10 gap-4">
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap gap-3">
+            {["all", "coffee", "tea"].map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium capitalize transition duration-300 border ${
+                  selectedCategory === category
+                    ? "bg-bluee text-white border-bluee"
+                    : "bg-white text-gray-700 border-gray-300 hover:bg-bluee hover:text-white"
+                }`}
+              >
+                {category === "all" ? "All Products" : category}
+              </button>
+            ))}
+          </div>
+
+          {/* Sort Dropdown */}
+          <div className="flex items-center gap-2">
+            <label htmlFor="sort" className="text-sm font-medium text-gray-700">
+              Sort by Price:
+            </label>
+            <select
+              id="sort"
+              onChange={(e) => setSortOrder(e.target.value)}
+              className="px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-bluee"
+            >
+              <option value="default">Default</option>
+              <option value="asc">Low to High</option>
+              <option value="desc">High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {sortedFilteredProducts.map((product) => (
             <div
               key={product._id}
-              className="max-w-[280px] mx-auto p-3 rounded-xl bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300 border group"
+              className="bg-white border rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group"
             >
-              {/* Product Image */}
-              <div className="relative w-full aspect-square overflow-hidden rounded-lg">
+              {/* Image Section */}
+              <div className="relative aspect-square overflow-hidden">
                 <img
                   src={itemImages[product._id]}
                   alt={itemNames[product._id]}
-                  className="w-full h-full object-cover rounded-lg transition-opacity duration-300 group-hover:opacity-0"
+                  className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-0"
                 />
                 <img
                   src={product.hoverImage}
-                  alt={`${product.name} Hover`}
-                  className="absolute inset-0 w-full h-full object-cover rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  alt={`${itemNames[product._id]} Hover`}
+                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 />
               </div>
 
-              {/* Product Info */}
-              <div className="mt-3 text-center">
-                <h3 className="text-md font-semibold text-gray-800 truncate">
+              {/* Info Section */}
+              <div className="p-4 text-center">
+                <h3 className="text-lg font-semibold text-gray-800 truncate">
                   {itemNames[product._id]}
                 </h3>
-                <p className="text-sm text-bluee font-semibold mt-1">
+                <p className="text-bluee font-medium mt-1">
                   Rs. {itemPrices[product._id]}
                 </p>
-
-                <p className="text-xs text-gray-500 mt-1 group-hover:opacity-100 opacity-0 group-hover:translate-y-0 -translate-y-1 transition-all duration-300">
+                <p className="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition duration-300">
                   {product.description}
                 </p>
 
                 {/* Add to Cart Button */}
                 <button
                   onClick={() => handleAddToCart(product._id)}
-                  className={`mt-3 w-full ${
+                  className={`mt-4 w-full py-2 rounded-full text-white font-medium text-sm transition-transform duration-300 hover:scale-105 flex items-center justify-center gap-2 ${
                     addedItems.includes(product._id)
                       ? "bg-green-600"
-                      : "bg-bluee hover:bg-bluee "
-                  } text-white font-medium py-2 rounded-full flex items-center justify-center gap-2 text-sm transition-transform duration-300 hover:scale-105`}
+                      : "bg-bluee hover:bg-blue-700"
+                  }`}
                   disabled={addedItems.includes(product._id)}
                 >
                   {addedItems.includes(product._id) ? (
@@ -109,7 +141,7 @@ const FoodDisplay = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
