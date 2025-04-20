@@ -23,22 +23,22 @@ export function WhyJHP() {
   ];
 
   return (
-    <section className="bg-gray-100 py-20 my-10">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold mb-10 text-gray-800">
+    <section className="bg-gray-100 py-16 sm:py-20 my-10 px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-gray-800">
           Why JHP Coffee?
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((f, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-xl shadow hover:shadow-md transition duration-300"
+              className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300"
             >
-              <div className="text-4xl mb-4">{f.icon}</div>
-              <h3 className="text-xl font-semibold mb-2 text-bluee">
+              <div className="text-5xl mb-4">{f.icon}</div>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-bluee">
                 {f.title}
               </h3>
-              <p className="text-gray-600 text-sm">{f.desc}</p>
+              <p className="text-sm sm:text-base text-gray-600">{f.desc}</p>
             </div>
           ))}
         </div>
