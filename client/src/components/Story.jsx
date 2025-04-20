@@ -9,7 +9,7 @@ export function Story() {
 
   return (
     <section
-      id="story"
+      id="ourstory"
       className="relative w-full bg-brownn text-white overflow-hidden py-20 px-4 md:px-12 my-8 rounded-2xl"
     >
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">

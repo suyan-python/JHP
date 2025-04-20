@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import { Navbar } from "./components/Navbar.jsx";
@@ -7,52 +7,46 @@ import { Story } from "./components/Story.jsx";
 import { Newsletter } from "./components/Newsletter.jsx";
 import { Footer } from "./components/Footer.jsx";
 import FoodDisplay from "./components/FoodDisplay/FoodDisplay.jsx";
-import { Cart } from "./components/Cart/Cart.jsx"; // Import Cart Component
+import { Cart } from "./components/Cart/Cart.jsx";
 import StoreContextProvider from "./context/StoreContext.jsx";
 import Success from "./components/esewa/Success.jsx";
 import Failure from "./components/esewa/Failure.jsx";
 import Payment from "./components/esewa/Payment.jsx";
-
 import PopupOffer from "./popup.jsx";
 import PlaceOrder from "./components/Cart/PlaceOrder.jsx";
 
 function App() {
-  const [cart, setCart] = useState([]);
-  const [isCartVisible, setIsCartVisible] = useState(false);
-
   const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, product]);
-  };
-
-  const removeFromCart = (indexToRemove) => {
-    setCart((prevCart) =>
-      prevCart.filter((_, index) => index !== indexToRemove)
-    );
-  };
-
-  const toggleCart = () => {
-    setIsCartVisible(!isCartVisible);
+    setCart([...cart, product]);
   };
 
   return (
-    <div className="min-h-screen">
-      <StoreContextProvider>
-        <Router>
-          {/* Show the popup offer */}
-          <PopupOffer />
+    <StoreContextProvider>
+      <Router>
+        {/* Popup Offer */}
+        <PopupOffer />
 
-          <Navbar cart={cart} toggleCart={toggleCart} />
-          <Routes>
-            <Route path="/" element={<Hero />} />
-            <Route path="/payment" element={<PlaceOrder />} />
-            <Route path="/payment-success" element={<Success />} />
-            <Route path="/payment-failure" element={<Failure />} />
-            <Route path="/payment-form" element={<Payment />} />
-          </Routes>
-          <Footer />
-        </Router>
-      </StoreContextProvider>
-    </div>
+        {/* Navbar */}
+        <Navbar />
+
+        {/* Main Routes */}
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route
+            path="/store"
+            element={<FoodDisplay addToCart={addToCart} />}
+          />
+          <Route path="/payment" element={<PlaceOrder />} />
+          <Route path="/payment-success" element={<Success />} />
+          <Route path="/payment-failure" element={<Failure />} />
+          <Route path="/payment-form" element={<Payment />} />
+        </Routes>
+
+        {/* Footer */}
+        <Footer />
+      </Router>
+    </StoreContextProvider>
   );
 }
+
 export default App;

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { ShoppingCart, User } from "lucide-react";
-import FoodDisplay from "./FoodDisplay/FoodDisplay";
 import { Story } from "./Story";
-import { Newsletter } from "./Newsletter";
+import { WhyJHP } from "./Hero2";
+import { ExperienceVideo } from "./Hero3";
+import { BrewGuide } from "./Hero4";
 
 export function Hero() {
   const [cart, setCart] = useState([]);
@@ -41,9 +42,9 @@ export function Hero() {
           </div>
         </div>
       </div>
-      <FoodDisplay addToCart={addToCart} />
       <Story />
-      {/* <Newsletter /> */}
+      <WhyJHP />
+      <ExperienceVideo />
     </>
   );
 }
