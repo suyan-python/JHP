@@ -13,6 +13,9 @@ import PopupOffer from "./popup.jsx";
 import PlaceOrder from "./components/Cart/PlaceOrder.jsx";
 import JHPHome from "./components/JHP/jhpHome.jsx";
 import JHP from "./components/JHP/jhp.jsx";
+import JHCB from "./components/JHCB/JHCB.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
+import Inaya from "./components/iNaya/Inaya.jsx";
 
 function App() {
   const addToCart = (product) => {
@@ -22,13 +25,9 @@ function App() {
   return (
     <StoreContextProvider>
       <Router>
-        {/* Popup Offer */}
         <PopupOffer />
-
-        {/* Navbar */}
+        <ScrollToTop />
         <Navbar />
-
-        {/* Main Routes */}
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route
@@ -37,8 +36,8 @@ function App() {
           />
 
           <Route path="/JHP" element={<JHP />} />
-          <Route path="/JHCB" element={<PlaceOrder />} />
-          <Route path="/inaya" element={<PlaceOrder />} />
+          <Route path="/JHCB" element={<JHCB />} />
+          <Route path="/inaya" element={<Inaya />} />
 
           <Route path="/payment" element={<PlaceOrder />} />
           <Route path="/payment-success" element={<Success />} />
