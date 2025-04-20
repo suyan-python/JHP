@@ -10,6 +10,7 @@ export default {
       },
       backgroundImage: {
         coverr: "url('./src/assets/background/1.jpg')",
+        herobean: "url('./src/assets/background/herobean.jpg')",
       },
     },
   },
