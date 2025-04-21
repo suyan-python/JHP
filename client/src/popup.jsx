@@ -1,4 +1,3 @@
-// src/components/PopupOffer.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,10 +6,14 @@ const PopupOffer = () => {
   const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
-  const handleBuyNow = () => navigate("/payment-form");
+
+  const handleBuyNow = () => {
+    setShow(false); // Close popup first
+    navigate("/store"); // Then navigate
+  };
 
   useEffect(() => {
-    // Optional: Add logic to show this only once per session or daily using localStorage/sessionStorage
+    // Optional logic to show only once per session/day
     // sessionStorage.setItem("hasSeenPopup", true);
   }, []);
 

@@ -25,9 +25,14 @@ export function Navbar() {
   const toggleCart = () => setIsCartVisible(!isCartVisible);
   const closeCart = () => setIsCartVisible(false);
 
-  const handleNavClick = (link) => {
-    setActiveSection(link.toLowerCase().replace(" ", ""));
-    setMobileMenuOpen(false); // Close mobile menu on nav click
+  // const handleNavClick = (link) => {
+  //   setActiveSection(link.toLowerCase().replace(" ", ""));
+  //   setMobileMenuOpen(false); // Close mobile menu on nav click
+  // };
+
+  const handleNavClick = (id) => {
+    setActiveSection(id);
+    setMobileMenuOpen(false);
   };
 
   useEffect(() => {
@@ -50,11 +55,11 @@ export function Navbar() {
 
   const navLinks = [
     { to: "/", label: "Home", id: "home" },
-    { to: "/store", label: "JHP Store", id: "products" },
-    { to: "/JHP", label: "JHP", id: "ourstory" },
-    { to: "/JHCB", label: "JHCB", id: "people" },
-    { to: "/inaya", label: "iNaya Cafe", id: "vlogs" },
-    { to: "/#contact", label: "Contact", id: "contact" },
+    { to: "/store", label: "JHP Store", id: "store" },
+    { to: "/JHP", label: "JHP", id: "JHP" },
+    { to: "/JHCB", label: "JHCB", id: "JHCB" },
+    { to: "/inaya", label: "iNaya Cafe", id: "inaya" },
+    { to: "/#contact", label: "Contact", id: "Contact" },
   ];
 
   return (
@@ -86,15 +91,7 @@ export function Navbar() {
         >
           <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 text-brownn">
             <div className="flex justify-between items-center h-16">
-              {/* Logo */}
-              <NavLink to="/" className="flex items-center space-x-2">
-                <Crown />
-                <span className="text-lg font-semibold whitespace-nowrap">
-                  Jewel Himalayan Products
-                </span>
-              </NavLink>
-
-              {/* Search */}
+              {/* Search - Left */}
               <div className="hidden sm:flex items-center w-full max-w-[200px] relative">
                 <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black w-4 h-4" />
                 <input
@@ -106,8 +103,18 @@ export function Navbar() {
                 />
               </div>
 
-              {/* Cart + Hamburger */}
-              <div className="flex items-center gap-4">
+              {/* Logo - Center */}
+              <div className="flex justify-center flex-1 sm:justify-center">
+                <NavLink to="/" className="flex items-center space-x-2">
+                  <Crown />
+                  <span className="text-lg font-semibold whitespace-nowrap text-center">
+                    Jewel Himalayan Products
+                  </span>
+                </NavLink>
+              </div>
+
+              {/* Cart + Hamburger - Right */}
+              <div className="flex justify-end items-center gap-4">
                 <button
                   className="relative p-2 rounded-full"
                   onClick={toggleCart}
@@ -133,7 +140,7 @@ export function Navbar() {
                 <NavLink
                   key={id}
                   to={to}
-                  onClick={() => handleNavClick(label)}
+                  onClick={() => handleNavClick(id)}
                   className={`relative group transition-colors ${
                     activeSection === id ? "text-bluee" : ""
                   }`}
@@ -150,7 +157,7 @@ export function Navbar() {
 
             {/* Mobile Nav */}
             {mobileMenuOpen && (
-              <div className="sm:hidden mt-4 space-y-4 text-sm">
+              <div className="sm:hidden mt-4 space-y-4 text-sm bg-white text-black shadow-md rounded-md px-4 py-4 z-40 relative">
                 {navLinks.map(({ to, label, id }) => (
                   <NavLink
                     key={id}
