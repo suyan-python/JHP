@@ -8,3 +8,9 @@ body {
   font-family: "Playfair Display", serif;
   font-style: normal;
 }
+
+@media (max-width: 768px) {
+  body {
+    margin: 0 30px; /* Removes horizontal margin for tablets and mobile */
+  }
+}
