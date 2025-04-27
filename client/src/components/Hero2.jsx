@@ -23,7 +23,7 @@ export function WhyJHP() {
   ];
 
   return (
-    <section className="bg-gray-100 py-16 sm:py-20 my-10 px-4 sm:px-6">
+    <section className="bg-gray-100 py-16 sm:py-20 my-36 px-4 sm:px-6 rounded-[40px] sm:rounded-[50px] lg:rounded-[70px]">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-gray-800">
           Why JHP Coffee?

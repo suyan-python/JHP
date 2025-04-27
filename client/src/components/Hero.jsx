@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Story } from "./Story";
 import { WhyJHP } from "./Hero2";
 import { ExperienceVideo } from "./Hero3";
+import background from "../assets/background/1.jpg";
 
 export function Hero() {
   const [cart, setCart] = useState([]);
@@ -13,9 +14,15 @@ export function Hero() {
 
   return (
     <>
-      <div className="relative mt-40 mb-12">
+      <div className="relative mt-40 mb-5">
         {/* Background Image */}
-        <div className="absolute inset-0 h-[55vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[90vh] bg-cover bg-center rounded-[40px] sm:rounded-[50px] lg:rounded-[70px] brightness-75 bg-coverr"></div>
+        <div className="absolute inset-0 h-[55vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[90vh]  brightness-75">
+          <img
+            className="rounded-[40px] sm:rounded-[50px] lg:rounded-[70px]"
+            src={background}
+            alt=""
+          />
+        </div>
 
         {/* Hero Content */}
         <div

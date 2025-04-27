@@ -1,6 +1,6 @@
 export function ExperienceVideo() {
   return (
-    <section className="bg-black text-white py-16 sm:py-20 px-4 sm:px-6">
+    <section className="bg-black text-white py-16 sm:py-20 px-4 sm:px-6 my-36 rounded-[40px] sm:rounded-[50px] lg:rounded-[70px]">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-bold mb-6">
           From Farm to Cup

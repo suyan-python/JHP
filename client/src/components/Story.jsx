@@ -10,7 +10,7 @@ export function Story() {
   return (
     <section
       id="ourstory"
-      className="relative w-full bg-brownn text-white overflow-hidden py-16 px-4 sm:px-6 md:px-12 my-8 rounded-2xl"
+      className="relative w-full bg-brownn text-white overflow-hidden py-16 px-4 sm:px-6 md:px-12 my-2 rounded-[40px] sm:rounded-[50px] lg:rounded-[70px]"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Left Image */}
