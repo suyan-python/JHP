@@ -12,10 +12,10 @@ function Home() {
           <div className="text-area text-center lg:text-left py-10 lg:py-16">
             <div className="">
               <div className="title font-semibold lg:text-[68px] text-gray-800">
-                Welcome to iNaya Cafe
+                Welcome to inaya Cafe
               </div>
               <div className="description my-4 text-gray-600 text-base lg:text-lg text-justify">
-                Discover the story of iNaya Cafe, where passion for coffee meets
+                Discover the story of inaya Cafe, where passion for coffee meets
                 the comfort of home. Our mission is to bring delightful brews to
                 your doorstep.
               </div>
@@ -24,9 +24,9 @@ function Home() {
             {/* Buttons */}
             <div className="mt-10 lg:mt-20 flex flex-col lg:flex-row gap-6 items-center">
               <Link to={"home"}>
-                <button className="flex items-center font-medium  gap-4 explore-our-story bg-brightColor text-white text-sm lg:text-xl px-6 py-3 rounded-full hover:bg-orange-500 transition duration-300">
+                <button className="flex items-center font-medium  gap-4 explore-our-story bg-brightColor text-white text-sm lg:text-xl px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-700 transition duration-300">
                   Order Now
-                  <div className="bg-white p-2 rounded-full  text-brightColor">
+                  <div className="bg-white p-2 rounded-full text-orange-700">
                     <MdArrowOutward />
                   </div>
                 </button>

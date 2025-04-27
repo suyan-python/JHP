@@ -1,5 +1,5 @@
 import { EsewaPaymentGateway, EsewaCheckStatus } from "esewajs";
-import { Transaction } from "../model/Transaction.model.js"; //for saving the ordered data in database
+import { Transaction } from "../models/Transaction.model.js"; //for saving the ordered data in database
 
 const EsewaInitiatePayment = async (req, res) => {
   const { amount, productId } = req.body; //data coming from frontend

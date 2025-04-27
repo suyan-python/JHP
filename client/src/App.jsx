@@ -16,6 +16,8 @@ import JHP from "./components/JHP/jhp.jsx";
 import JHCB from "./components/JHCB/JHCB.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import Inaya from "./components/iNaya/Inaya.jsx";
+import Parent from "./components/Parent/Parent.jsx";
+import StoreDetail from "./components/FoodDisplay/StoreDetail.jsx";
 
 function App() {
   const addToCart = (product) => {
@@ -34,10 +36,13 @@ function App() {
             path="/store"
             element={<FoodDisplay addToCart={addToCart} />}
           />
+          <Route path="/store/:id" element={<StoreDetail />} />
 
-          <Route path="/JHP" element={<JHP />} />
+          {/* <Route path="/JHP" element={<JHP />} />
           <Route path="/JHCB" element={<JHCB />} />
-          <Route path="/inaya" element={<Inaya />} />
+          <Route path="/inaya" element={<Inaya />} /> */}
+
+          <Route path="/parent" element={<Parent />} />
 
           <Route path="/payment" element={<PlaceOrder />} />
           <Route path="/payment-success" element={<Success />} />

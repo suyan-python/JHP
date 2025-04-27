@@ -54,12 +54,13 @@ export function Navbar() {
   }, [searchInput, products]);
 
   const navLinks = [
-    { to: "/", label: "Home", id: "home" },
+    { to: "/", label: "About", id: "home" },
     { to: "/store", label: "JHP Store", id: "store" },
-    { to: "/JHP", label: "JHP", id: "JHP" },
-    { to: "/JHCB", label: "JHCB", id: "JHCB" },
-    { to: "/inaya", label: "iNaya Cafe", id: "inaya" },
-    { to: "/#contact", label: "Contact", id: "Contact" },
+    // { to: "/JHP", label: "JHP", id: "JHP" },
+    // { to: "/JHCB", label: "JHCB", id: "JHCB" },
+    // { to: "/inaya", label: "inaya Cafe", id: "inaya" },
+    // { to: "/contact", label: "Contact", id: "Contact" },
+    { to: "/parent", label: "Parent Company", id: "Parent" },
   ];
 
   return (
@@ -67,15 +68,17 @@ export function Navbar() {
       <div className="fixed top-0 left-0 w-full z-50 transition-all duration-300">
         {/* Notification Bar */}
         {isNotificationVisible && (
-          <div className="bg-[#E4C16F] py-3 text-center text-brownn text-sm px-4">
-            <div className="relative flex items-center justify-center">
-              <span className="mx-auto">
-                Special offer: Get 10% off your first purchase with code
-                <strong> WELCOME10</strong>!
+          <div className="bg-[#E4C16F] py-2 md:py-3 px-4 text-center text-brownn text-sm md:text-base font-medium">
+            <div className="relative flex items-center justify-center max-w-6xl mx-auto">
+              <span className="mx-auto leading-tight">
+                Pay now!{" "}
+                <strong className="font-bold">Get Free Delivery</strong>
+                <strong></strong>
               </span>
               <button
                 onClick={closeNotification}
-                className="absolute right-0 text-lg font-bold px-4"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-2xl font-bold text-brownn hover:text-red-600 transition-colors"
+                aria-label="Close notification"
               >
                 &times;
               </button>
@@ -108,7 +111,7 @@ export function Navbar() {
                 <NavLink to="/" className="flex items-center space-x-2">
                   <Crown />
                   <span className="text-lg font-semibold whitespace-nowrap text-center">
-                    Jewel Himalayan Products
+                    JHP Store
                   </span>
                 </NavLink>
               </div>

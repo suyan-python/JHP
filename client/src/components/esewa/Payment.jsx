@@ -12,7 +12,7 @@ const PaymentComponent = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4500/initiate-payment",
+        "http://localhost:5000/initiate-payment",
         {
           amount: totalAmount,
           productId: generateUniqueId(),
