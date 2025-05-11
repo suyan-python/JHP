@@ -72,7 +72,7 @@ function StoreDetail() {
       {showToast && (
         <div
           role="alert"
-          className={`fixed bottom-5 right-5 px-6 py-4  shadow-xl z-50 text-sm font-medium text-white flex items-center space-x-3 transform transition-all duration-500 ease-in-out ${
+          className={`fixed bottom-5 right-5 px-6 py-4  shadow-xl z-50 text-sm font-medium flex items-center space-x-3 transform transition-all duration-500 ease-in-out ${
             toastType === "success"
               ? "animate-slideIn border border-green-500 text-green-500 bg-white"
               : "animate-slideIn border border-red-500 text-red-500 bg-white"
