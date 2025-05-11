@@ -1,6 +1,7 @@
 import React from "react";
 import { useStore } from "../../context/StoreContext";
 import { FaPlus, FaMinus, FaTrashAlt } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 export function Cart() {
   const {
@@ -107,16 +108,25 @@ export function Cart() {
       </div>
 
       {/* Total */}
-      <div className="mt-8 text-right">
-        <p className="text-xl font-bold text-gray-900">
+      <div className="mt-8 text-right space-y-4">
+        <p className="text-xl font-semibold text-gray-800">
           Total: Rs. {getTotalPrice()}
         </p>
+
         <button
           onClick={clearCart}
-          className="mt-4 px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md"
+          className="px-6 py-2 border border-red-400 text-gray-800 font-medium rounded-md hover:bg-gray-100 transition duration-200"
         >
           Clear Cart
         </button>
+
+        <div>
+          <NavLink to="/payment">
+            <button className="px-6 py-2 border border-black text-black font-medium rounded-md hover:bg-black hover:text-white transition duration-200">
+              Proceed to Payment
+            </button>
+          </NavLink>
+        </div>
       </div>
     </div>
   );

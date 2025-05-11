@@ -4,7 +4,7 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 export function Footer() {
   return (
     <footer
-      className="w-full bg-[#1c130f] text-[#e6dccf] pt-16 pb-10"
+      className="w-full bg-[#1c130f] text-[#e6dccf] pt-16 pb-10 rounded-t-3xl"
       id="contact"
     >
       <div className="px-6 md:px-12">
