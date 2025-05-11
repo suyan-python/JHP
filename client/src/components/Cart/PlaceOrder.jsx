@@ -3,15 +3,16 @@ import { FaTruck } from "react-icons/fa";
 import PaymentComponent from "../esewa/Payment";
 import { useStore } from "../../context/StoreContext";
 import Esewa from "../../assets/esewa.jpg";
-
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PlaceOrder = ({ cartTotal = 0 }) => {
   const { getTotalPrice } = useStore();
   const totalAmount = getTotalPrice();
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY, // Replace with your actual key
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
   const [formData, setFormData] = useState({
@@ -53,12 +54,32 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
     };
 
     console.log("Placing Order:", orderDetails);
-    alert("Order placed successfully!");
+
+    toast.success("🎉 Order placed successfully!", {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "colored",
+    });
+
+    // Optionally reset form
+    setFormData({
+      firstName: "",
+      lastName: "",
+      phone: "",
+      email: "",
+      deliveryTime: "",
+      subscribe: false,
+      paymentMethod: "Cash",
+      location: "",
+    });
   };
 
   return (
     <div className="bg-white p-4 md:px-6 md:py-5 rounded-lg shadow-xl max-w-md mx-auto my-28">
-      {/* Total Section */}
       <div className="text-left text-sm text-gray-700 font-medium">
         Total (Tax included):
       </div>
@@ -157,6 +178,7 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
             name="firstName"
             placeholder="First Name"
             required
+            value={formData.firstName}
             onChange={handleChange}
             className="flex-1 border border-gray-300 rounded-md px-3 py-2"
           />
@@ -165,6 +187,7 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
             name="lastName"
             placeholder="Last Name"
             required
+            value={formData.lastName}
             onChange={handleChange}
             className="flex-1 border border-gray-300 rounded-md px-3 py-2"
           />
@@ -175,6 +198,7 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
           name="phone"
           placeholder="Mobile Number"
           required
+          value={formData.phone}
           onChange={handleChange}
           className="w-full border border-gray-300 rounded-md px-3 py-2"
         />
@@ -184,6 +208,7 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
           name="email"
           placeholder="Email Address"
           required
+          value={formData.email}
           onChange={handleChange}
           className="w-full border border-gray-300 rounded-md px-3 py-2"
         />
@@ -196,6 +221,7 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
             type="datetime-local"
             name="deliveryTime"
             required
+            value={formData.deliveryTime}
             onChange={handleChange}
             className="border border-gray-300 rounded-md px-3 py-2"
           />
@@ -266,6 +292,8 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
           Pay now for Free Delivery
         </p>
       </form>
+
+      <ToastContainer />
     </div>
   );
 };
