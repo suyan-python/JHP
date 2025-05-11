@@ -118,7 +118,8 @@ export function Navbar() {
 
               {/* Cart + Hamburger - Right */}
               <div className="flex justify-end items-center gap-4">
-                <button
+                <NavLink
+                  to={"/cart"}
                   className="relative p-2 rounded-full"
                   onClick={toggleCart}
                 >
@@ -128,7 +129,7 @@ export function Navbar() {
                       {Object.keys(cartItems).length}
                     </span>
                   )}
-                </button>
+                </NavLink>
 
                 {/* Hamburger for mobile */}
                 <button className="sm:hidden" onClick={toggleMobileMenu}>
@@ -212,7 +213,7 @@ export function Navbar() {
       )}
 
       {/* Cart Component */}
-      <Cart isCartVisible={isCartVisible} closeCart={closeCart} />
+      {/* <Cart isCartVisible={isCartVisible} closeCart={closeCart} /> */}
     </>
   );
 }

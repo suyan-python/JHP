@@ -1,131 +1,122 @@
 import React from "react";
 import { useStore } from "../../context/StoreContext";
-import { FaTrashAlt } from "react-icons/fa";
-import PaymentComponent from "../esewa/Payment";
-import { FaShoppingBag } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { FaPlus, FaMinus, FaTrashAlt } from "react-icons/fa";
 
-export function Cart({ isCartVisible, closeCart }) {
+export function Cart() {
   const {
     cartItems,
-    removeFromCart,
-    addToCart,
-    decrementCartItem,
-    clearCart,
-    getTotalPrice,
     itemNames,
-    itemPrices,
     itemImages,
+    itemPrices,
+    itemPricesBySize,
+    itemTypes,
+    getTotalPrice,
+    addToCart,
+    removeFromCart,
+    clearCart,
   } = useStore();
 
-  const cartArray = Object.keys(cartItems || {}).map((id) => ({
-    id,
-    name: itemNames[id] || "Unknown Item",
-    price: itemPrices[id] || 0,
-    quantity: cartItems[id],
-    image: itemImages[id] || "",
-  }));
+  const cartEntries = Object.entries(cartItems);
 
-  const totalPrice = getTotalPrice();
+  const handleRemoveItem = (id) => {
+    const newCart = { ...cartItems };
+    delete newCart[id];
+    // Use setCartItems if you expose it, or call clearCart/addToCart accordingly
+    clearCart();
+    Object.entries(newCart).forEach(([itemId, { quantity, selectedSize }]) => {
+      addToCart(itemId, quantity, selectedSize);
+    });
+  };
+
+  if (cartEntries.length === 0) {
+    return (
+      <div className="text-center py-20 my-36">
+        <h2 className="text-2xl font-semibold text-gray-700">
+          Your cart is empty
+        </h2>
+      </div>
+    );
+  }
 
   return (
-    <div
-      className={`fixed top-0 right-0 h-full w-full sm:w-[60%] md:w-[45%] bg-white shadow-2xl z-50 transition-transform duration-300 ${
-        isCartVisible ? "translate-x-0" : "translate-x-full"
-      } overflow-y-auto rounded-l-xl`}
-    >
-      {/* Close Button */}
-      <button
-        onClick={closeCart}
-        className="absolute top-4 right-4 text-3xl font-bold text-gray-600 hover:text-gray-800"
-      >
-        &times;
-      </button>
+    <div className="max-w-4xl mx-auto px-4 py-12 my-36">
+      <h2 className="text-3xl font-bold text-gray-900 mb-6">Your Cart</h2>
+      <div className="space-y-6">
+        {cartEntries.map(([id, { quantity, selectedSize }]) => {
+          const name = itemNames[id];
+          const image = itemImages[id];
+          const type = itemTypes[id];
 
-      {/* Cart Content */}
-      <div className="p-6 pt-14">
-        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
-          My Cart
-        </h2>
+          const pricePerUnit =
+            type === "washed process"
+              ? itemPricesBySize[id]?.[selectedSize] || itemPrices[id]
+              : itemPrices[id];
 
-        {cartArray.length === 0 ? (
-          <p className="text-center text-red-500 text-lg">
-            Your cart is currently empty.
-          </p>
-        ) : (
-          <>
-            {/* Cart Items */}
-            <div className="space-y-5">
-              {cartArray.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex justify-between items-center bg-gray-50 border border-gray-200 rounded-lg p-4 hover:shadow transition"
-                >
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-16 h-16 object-cover rounded"
-                    />
-                    <div>
-                      <p className="font-medium text-gray-900">{item.name}</p>
-                      <p className="text-sm text-gray-600">
-                        Rs. {item.price} × {item.quantity}
-                      </p>
-                    </div>
-                  </div>
+          const totalPrice = pricePerUnit * quantity;
 
-                  <div className="flex items-center gap-2">
+          return (
+            <div
+              key={id}
+              className="flex items-center justify-between bg-white p-4 rounded-xl shadow-md"
+            >
+              <div className="flex items-center gap-4">
+                <img
+                  src={image}
+                  alt={name}
+                  className="w-20 h-20 object-cover rounded-lg shadow-sm"
+                />
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {name}
+                  </h3>
+                  <p className="text-sm text-gray-600">Size: {selectedSize}g</p>
+                  <p className="text-sm text-gray-600 flex items-center gap-2">
+                    Quantity:
                     <button
-                      onClick={() => addToCart(item.id)}
-                      className="px-2 py-1 text-lg font-semibold text-green-600 hover:text-green-700"
+                      onClick={() => removeFromCart(id)}
+                      className="p-1 rounded bg-gray-200 hover:bg-gray-300"
                     >
-                      +
+                      <FaMinus className="text-xs" />
                     </button>
+                    <span>{quantity}</span>
                     <button
-                      onClick={() => removeFromCart(item.id)}
-                      className="px-2 py-1 text-lg font-semibold text-yellow-600 hover:text-yellow-700"
+                      onClick={() => addToCart(id, 1, selectedSize)}
+                      className="p-1 rounded bg-gray-200 hover:bg-gray-300"
                     >
-                      -
+                      <FaPlus className="text-xs" />
                     </button>
-                    <button
-                      onClick={() => decrementCartItem(item.id)}
-                      className="text-red-500 hover:text-red-600 text-lg"
-                    >
-                      <FaTrashAlt />
-                    </button>
-                  </div>
+                  </p>
+                  <p className="text-sm text-gray-800 font-medium">
+                    Rs. {pricePerUnit} each
+                  </p>
+                  <p className="text-sm text-gray-900 font-semibold">
+                    Total: Rs. {totalPrice}
+                  </p>
                 </div>
-              ))}
-            </div>
-
-            {/* Total & Clear */}
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-10 border-t pt-6">
-              <div className="text-xl text-gray-800">
-                <p className="text-sm font-medium">Subtotal:</p>
-                <p className="text-black font-semibold text-lg">
-                  Rs. {totalPrice}
-                </p>
               </div>
               <button
-                onClick={clearCart}
-                className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-md text-sm"
+                onClick={() => handleRemoveItem(id)}
+                className="text-red-500 hover:text-red-700"
+                title="Remove item"
               >
-                Clear Cart
+                <FaTrashAlt className="text-xl" />
               </button>
             </div>
+          );
+        })}
+      </div>
 
-            {/* Payment Section */}
-            <div className="mt-8 flex justify-center">
-              <NavLink to={"/payment"}>
-                <button className="flex items-center gap-2 bg-bluee hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-all">
-                  <FaShoppingBag />
-                  <span>Place Order</span>
-                </button>
-              </NavLink>
-            </div>
-          </>
-        )}
+      {/* Total */}
+      <div className="mt-8 text-right">
+        <p className="text-xl font-bold text-gray-900">
+          Total: Rs. {getTotalPrice()}
+        </p>
+        <button
+          onClick={clearCart}
+          className="mt-4 px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md"
+        >
+          Clear Cart
+        </button>
       </div>
     </div>
   );
