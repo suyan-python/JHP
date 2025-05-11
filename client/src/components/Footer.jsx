@@ -40,13 +40,30 @@ export function Footer() {
           </div>
 
           {/* Contact Info */}
+          {/* Contact Info */}
           <div>
             <h4 className="text-xl font-semibold mb-4 text-white">Contact</h4>
             <ul className="text-sm text-[#d3c3b3] space-y-2">
               <li>Jewel Himalayan Products Pvt. Ltd.</li>
               <li>Balkumari, Lalitpur, Nepal</li>
-              <li>Phone: +977 980-000-0000</li>
-              <li>Email: contact@jhpstore.com</li>
+              <li>
+                Phone:{" "}
+                <a
+                  href="tel:+9779800000000"
+                  className="hover:text-amber-400 transition-colors duration-200"
+                >
+                  +977 980-000-0000
+                </a>
+              </li>
+              <li>
+                Email:{" "}
+                <a
+                  href="mailto:contact@jhpstore.com"
+                  className="hover:text-amber-400 transition-colors duration-200"
+                >
+                  contact@jhpstore.com
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -56,15 +73,22 @@ export function Footer() {
               Connect with Us
             </h4>
             <div className="flex space-x-4">
-              {[Facebook, Instagram, Twitter].map((Icon, idx) => (
-                <a
-                  key={idx}
-                  href="#"
-                  className="hover:text-amber-400 transition-transform transform hover:scale-110"
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              ))}
+              <a
+                href="https://www.facebook.com/JHPjewelhimalayanproducts"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-amber-400 transition-transform transform hover:scale-110"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.instagram.com/jewel.himalayan.products?igsh=MW1hczAyZGd3anBxaA=="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-amber-400 transition-transform transform hover:scale-110"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
             </div>
           </div>
         </div>

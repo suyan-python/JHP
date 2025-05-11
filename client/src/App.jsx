@@ -18,6 +18,7 @@ import ScrollToTop from "./components/ScrollToTop.jsx";
 import Inaya from "./components/iNaya/Inaya.jsx";
 import Parent from "./components/Parent/Parent.jsx";
 import StoreDetail from "./components/FoodDisplay/StoreDetail.jsx";
+import { Cart } from "./components/Cart/Cart.jsx";
 
 function App() {
   const addToCart = (product) => {
@@ -27,11 +28,12 @@ function App() {
   return (
     <StoreContextProvider>
       <Router>
-        <PopupOffer />
+        {/* <PopupOffer /> */}
         <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/" element={<Hero />} />
+          <Route path="/cart" element={<Cart />} />
           <Route
             path="/store"
             element={<FoodDisplay addToCart={addToCart} />}
