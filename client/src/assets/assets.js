@@ -27,7 +27,9 @@ import food_1 from "./image1.png";
 import med from "./med.jpg";
 import med2 from "./med2.JPG";
 import drip from "./drip.JPG";
+import dripH from "./dripH.JPG";
 import special from "./special.JPG";
+import specialH from "./specialH.JPG";
 import med3 from "./med3.png";
 import food_2 from "./food_2.png";
 import food_3 from "./america.jpeg";
@@ -191,7 +193,7 @@ export const food_list = [
     _id: 1,
     name: "Special Edition",
     image: special,
-    hoverImage: hover_1,
+    hoverImage: specialH,
     price: 1800,
     description:
       "Food provides essential nutrients for overall health and well-being",
@@ -204,8 +206,8 @@ export const food_list = [
     _id: 2,
     name: "Washed",
     image: drip,
-    hoverImage: hover_1,
-    price: 500,
+    hoverImage: dripH,
+    price: 600,
     description: "5pcs per box. Per sachets = 14grams",
     category: "coffee",
     flavors: ["flavor1", "flavor2"],
@@ -215,8 +217,8 @@ export const food_list = [
     _id: 3,
     name: "Natural",
     image: drip,
-    hoverImage: hover_1,
-    price: 600,
+    hoverImage: dripH,
+    price: 700,
     description: "5pcs per box. Per sachets = 14grams",
     category: "coffee",
     flavors: ["flavor1", "flavor2"],

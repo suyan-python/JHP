@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useStore } from "../../context/StoreContext.jsx";
 import { FaShoppingCart, FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AiFillStar } from "react-icons/ai";
 
 const FoodDisplay = () => {
   const { food_list, addToCart, itemNames, itemPrices, itemImages } =
@@ -33,7 +34,7 @@ const FoodDisplay = () => {
   };
 
   const renderProductSection = (title, products) => (
-    <div className="mb-16">
+    <div className="fooddisplay mb-16">
       <h2 className="text-xl sm:text-2xl font-semibold text-brownn mb-6">
         {title}
       </h2>
@@ -59,12 +60,20 @@ const FoodDisplay = () => {
             </Link>
 
             {/* Product Info (name, price, description, and select options) */}
-            <div className="p-3 text-center bg-white  group-hover:translate-y-[-20px] translate-y-4 transition duration-300 z-10 rounded-t-2xl">
-              <h3 className="text-sm font-semibold text-gray-800 truncate">
+            <div className="p-3 text-left bg-white  group-hover:translate-y-[-20px] translate-y-4 transition duration-300 z-10 rounded-t-2xl">
+              <h3 className="text-base font-semibold text-gray-800 truncate">
                 {itemNames[product._id]}
               </h3>
-              <p className="text-sm text-bluee font-medium">
-                From: {itemPrices[product._id]}
+
+              <p className="text-sm text-gray-500">250gm</p>
+
+              {/* Review Section with React Icons */}
+              <p className="text-sm text-yellow-600 font-medium my-2 flex items-center justify-center gap-1">
+                <AiFillStar /> 4.5 (120 reviews)
+              </p>
+
+              <p className="text-sm text-white font-medium mt-2 text-center bg-brownn rounded-md py-2">
+                From: Rs. {itemPrices[product._id]}
               </p>
 
               {/* Description and Select Options */}
@@ -73,7 +82,7 @@ const FoodDisplay = () => {
                   {product.description}
                 </p>
                 <Link to={`/store/${product._id}`}>
-                  <button className="w-full text-bluee font-medium text-sm hover:text-blue-600 transition duration-300">
+                  <button className="w-full text-brownn font-medium text-sm transition duration-300">
                     SELECT OPTIONS
                   </button>
                 </Link>
@@ -101,7 +110,7 @@ const FoodDisplay = () => {
   );
 
   return (
-    <section className="py-12 bg-white my-36" id="products">
+    <section className=" py-12  my-36" id="products">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl sm:text-3xl font-semibold text-brownn text-center mb-10 sm:mb-12">
           Our Products
@@ -116,8 +125,8 @@ const FoodDisplay = () => {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-sm font-medium capitalize border transition ${
                   selectedCategory === category
-                    ? "bg-bluee text-white border-bluee"
-                    : "text-gray-700 bg-white border-gray-300 hover:bg-bluee hover:text-white"
+                    ? "bg-brownn text-white border-white"
+                    : "text-gray-700 bg-white border-gray-300 hover:bg-brownn hover:text-white"
                 }`}
               >
                 {category === "all" ? "All Products" : category}

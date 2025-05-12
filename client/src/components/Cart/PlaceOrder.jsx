@@ -1,19 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaTruck } from "react-icons/fa";
 import PaymentComponent from "../esewa/Payment";
 import { useStore } from "../../context/StoreContext";
 import Esewa from "../../assets/esewa.jpg";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { ToastContainer, toast } from "react-toastify";
+import { generatePDFReceipt } from "../utils/generatePDFReceipt";
 import "react-toastify/dist/ReactToastify.css";
 
-const PlaceOrder = ({ cartTotal = 0 }) => {
-  const { getTotalPrice } = useStore();
-  const totalAmount = getTotalPrice();
+const PlaceOrder = () => {
+  const { getTotalPrice, cartItems } = useStore();
+  const initialTotal = getTotalPrice();
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-  });
+  const [finalTotal, setFinalTotal] = useState(initialTotal);
+  const [hasPromo, setHasPromo] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
+  const [promoApplied, setPromoApplied] = useState(false);
+  const [onlinePaymentOption, setOnlinePaymentOption] = useState("");
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -23,15 +25,8 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
     deliveryTime: "",
     subscribe: false,
     paymentMethod: "Cash",
-    location: "",
   });
 
-  const [marker, setMarker] = useState({
-    lat: 27.7172,
-    lng: 85.324,
-  });
-
-  const [onlinePaymentOption, setOnlinePaymentOption] = useState("");
   const paymentMethods = ["Cash", "Khalti", "IMEPay", "Fonepay", "NepalPay"];
 
   const handleChange = (e) => {
@@ -41,59 +36,124 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const orderDetails = {
+  //     ...formData,
+  //     items: cartItems, // assume you get this from context
+  //     total: initialTotal,
+  //     discountedTotal: finalTotal,
+  //   };
+
+  //   try {
+  //     // const response = await fetch("/api/orders", {
+  //     //   method: "POST",
+  //     //   headers: { "Content-Type": "application/json" },
+  //     //   body: JSON.stringify(orderDetails),
+  //     // });
+
+  //     // if (!response.ok) throw new Error("Failed to place order");
+
+  //     toast.success("Order placed and saved to database!");
+
+  //     // Generate PDF after successful order
+  //     generatePDFReceipt(orderDetails);
+
+  //     // Reset form
+  //     setFormData({
+  //       firstName: "",
+  //       lastName: "",
+  //       phone: "",
+  //       email: "",
+  //       deliveryTime: "",
+  //       subscribe: false,
+  //       paymentMethod: "Cash",
+  //     });
+  //     setHasPromo(false);
+  //     setPromoCode("");
+  //     setPromoApplied(false);
+  //     setFinalTotal(initialTotal);
+  //     setOnlinePaymentOption("");
+  //   } catch (error) {
+  //     console.error("Error placing order:", error);
+  //     toast.error("Something went wrong. Try again.");
+  //   }
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const orderDetails = {
       ...formData,
-      location: {
-        latitude: marker.lat,
-        longitude: marker.lng,
-      },
+      items: Array.isArray(cartItems) ? cartItems : [], // ensure it's an array
+      total: initialTotal,
+      discountedTotal: finalTotal,
     };
 
-    console.log("Placing Order:", orderDetails);
-
-    toast.success("🎉 Order placed successfully!", {
-      position: "top-center",
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "colored",
-    });
-
-    // Optionally reset form
-    setFormData({
-      firstName: "",
-      lastName: "",
-      phone: "",
-      email: "",
-      deliveryTime: "",
-      subscribe: false,
-      paymentMethod: "Cash",
-      location: "",
-    });
+    try {
+      generatePDFReceipt(orderDetails);
+      toast.success("Order placed successfully! Receipt downloaded.");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        deliveryTime: "",
+        paymentMethod: "",
+      });
+      clearCart();
+    } catch (error) {
+      console.error("Error generating receipt:", error);
+      toast.error("Something went wrong. Try again.");
+    }
   };
 
+  const applyPromo = () => {
+    if (promoCode.trim().toUpperCase() === "FROMWEB") {
+      const discounted = initialTotal * 0.9;
+      setFinalTotal(discounted.toFixed(2));
+      setPromoApplied(true);
+      toast.success("You've received 10% discount!", {
+        position: "top-center",
+        autoClose: 4000,
+        theme: "colored",
+      });
+    } else {
+      setFinalTotal(initialTotal);
+      setPromoApplied(false);
+      toast.error("Invalid promo code", {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "colored",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!hasPromo) {
+      setPromoCode("");
+      setPromoApplied(false);
+      setFinalTotal(initialTotal);
+    }
+  }, [hasPromo, initialTotal]);
+
   return (
-    <div className="bg-white p-4 md:px-6 md:py-5 rounded-lg shadow-xl max-w-md mx-auto my-28">
+    <div className="form bg-white p-4 md:px-6 md:py-5 rounded-lg shadow-xl max-w-md mx-auto my-40">
       <div className="text-left text-sm text-gray-700 font-medium">
         Total (Tax included):
       </div>
       <div className="text-2xl font-bold text-bluee mb-4">
-        NRs. {totalAmount ? parseFloat(totalAmount).toFixed(2) : "0.00"}
+        NRs. {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
       </div>
 
       <hr className="my-4" />
 
-      {/* Payment Section */}
+      {/* Payment Selection */}
       <div>
         <p className="text-gray-700 mb-1 font-semibold">
           Payment for bill of NRs.{" "}
-          {totalAmount ? parseFloat(totalAmount).toFixed(2) : "0.00"}
+          {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
         </p>
 
         <p className="text-sm font-semibold text-gray-600 mb-2">
@@ -105,7 +165,7 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
               key={method}
               type="button"
               onClick={() =>
-                setFormData({ ...formData, paymentMethod: method })
+                setFormData((prev) => ({ ...prev, paymentMethod: method }))
               }
               className={`px-3 py-1 border rounded-md text-sm font-medium transition-colors ${
                 formData.paymentMethod === method
@@ -118,9 +178,12 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
           ))}
         </div>
       </div>
+      <p className="text-center text-red-500 text-sm mt-3 font-semibold">
+        *Pay now for Free Delivery*
+      </p>
 
-      {/* Online Payment Visual */}
-      <div className="mb-6">
+      {/* Online Payment Visuals */}
+      <div className="mb-6 mt-2">
         <p className="text-sm font-semibold text-gray-600 mb-2">
           Online Payment Options:
         </p>
@@ -165,7 +228,7 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
         )}
       </div>
 
-      {/* Delivery Info Form */}
+      {/* Delivery Info */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <p className="text-sm text-gray-600">
           Please fill in your details so we can call you for delivery
@@ -227,48 +290,36 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
           />
         </div>
 
-        {/* Location Picker */}
-        {isLoaded && (
-          <div className="mb-4">
-            <label className="text-sm font-medium text-gray-600 block mb-2">
-              Pin Delivery Location:
-            </label>
-            <div className="h-64 w-full rounded-md overflow-hidden border border-gray-300">
-              <GoogleMap
-                center={marker}
-                zoom={15}
-                mapContainerStyle={{ width: "100%", height: "100%" }}
-                onClick={(e) =>
-                  setMarker({
-                    lat: e.latLng.lat(),
-                    lng: e.latLng.lng(),
-                  })
-                }
-              >
-                <Marker
-                  position={marker}
-                  draggable
-                  onDragEnd={(e) =>
-                    setMarker({
-                      lat: e.latLng.lat(),
-                      lng: e.latLng.lng(),
-                    })
-                  }
-                />
-              </GoogleMap>
-            </div>
+        {/* Promo Section */}
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm text-gray-600">
             <input
-              type="text"
-              name="location"
-              value={`${marker.lat.toFixed(5)}, ${marker.lng.toFixed(5)}`}
-              readOnly
-              className="mt-2 w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-100"
+              type="radio"
+              checked={hasPromo}
+              onChange={() => setHasPromo(!hasPromo)}
             />
-            <p className="text-xs text-gray-500 mt-1">
-              Drag or click to pin your location on the map.
-            </p>
-          </div>
-        )}
+            I have a promo code
+          </label>
+
+          {hasPromo && (
+            <div className="flex gap-2 items-center">
+              <input
+                type="text"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value)}
+                placeholder="Enter Promo Code"
+                className="flex-1 border border-gray-300 rounded-md px-3 py-2"
+              />
+              <button
+                type="button"
+                onClick={applyPromo}
+                className="px-3 py-2 bg-bluee text-white rounded-md font-semibold text-sm hover:bg-blue-800 transition"
+              >
+                Apply
+              </button>
+            </div>
+          )}
+        </div>
 
         <label className="flex items-center gap-2 text-sm text-gray-600">
           <input
@@ -287,10 +338,6 @@ const PlaceOrder = ({ cartTotal = 0 }) => {
           <FaTruck />
           Place Order
         </button>
-
-        <p className="text-center text-gray-500 text-sm mt-3">
-          Pay now for Free Delivery
-        </p>
       </form>
 
       <ToastContainer />
