@@ -41,7 +41,7 @@ function StoreDetail() {
 
     // If same size item is already in cart, show error
     if (existingItem && existingItem.selectedSize === selectedSize) {
-      setToastMessage("Item already added to cart!");
+      setToastMessage("Item already in cart!");
       setToastType("error");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 4000);

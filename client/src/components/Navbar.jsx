@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Coffee, ShoppingCart, Crown, Menu, X } from "lucide-react";
-import { Cart } from "./Cart/Cart.jsx";
 import { useStore } from "../context/StoreContext.jsx";
 import { FaSearch } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import JHPstore from "../assets/logo/JHPstore.png";
 
 export function Navbar() {
   const { cartItems, products } = useStore();
   const [scrolled, setScrolled] = useState(false);
   const [isCartVisible, setIsCartVisible] = useState(false);
   const [isNotificationVisible, setIsNotificationVisible] = useState(true);
-  const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [activeSection, setActiveSection] = useState("");
+
+  const location = useLocation();
 
   const handleScroll = () => {
     setScrolled(window.scrollY > 10);
@@ -23,22 +24,21 @@ export function Navbar() {
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const closeNotification = () => setIsNotificationVisible(false);
   const toggleCart = () => setIsCartVisible(!isCartVisible);
-  const closeCart = () => setIsCartVisible(false);
-
-  // const handleNavClick = (link) => {
-  //   setActiveSection(link.toLowerCase().replace(" ", ""));
-  //   setMobileMenuOpen(false); // Close mobile menu on nav click
-  // };
-
-  const handleNavClick = (id) => {
-    setActiveSection(id);
-    setMobileMenuOpen(false);
-  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const pathToIdMap = {
+      "/": "home",
+      "/store": "store",
+      "/parent": "Parent",
+    };
+
+    setActiveSection(pathToIdMap[location.pathname] || "");
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!Array.isArray(products) || searchInput.trim() === "") {
@@ -54,13 +54,9 @@ export function Navbar() {
   }, [searchInput, products]);
 
   const navLinks = [
-    { to: "/", label: "About", id: "home" },
-    { to: "/store", label: "JHP Store", id: "store" },
-    // { to: "/JHP", label: "JHP", id: "JHP" },
-    // { to: "/JHCB", label: "JHCB", id: "JHCB" },
-    // { to: "/inaya", label: "inaya Cafe", id: "inaya" },
-    // { to: "/contact", label: "Contact", id: "Contact" },
-    { to: "/parent", label: "Parent Company", id: "Parent" },
+    { to: "/", label: "ABOUT", id: "home" },
+    { to: "/store", label: "STORE", id: "store" },
+    { to: "/parent", label: "COMPANY", id: "Parent" },
   ];
 
   return (
@@ -73,7 +69,6 @@ export function Navbar() {
               <span className="mx-auto leading-tight">
                 Pay now!{" "}
                 <strong className="font-bold">Get Free Delivery</strong>
-                <strong></strong>
               </span>
               <button
                 onClick={closeNotification}
@@ -93,9 +88,9 @@ export function Navbar() {
           } ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}
         >
           <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 text-brownn">
-            <div className="flex justify-between items-center h-16">
+            <div className="relative flex items-center h-28">
               {/* Search - Left */}
-              <div className="hidden sm:flex items-center w-full max-w-[200px] relative">
+              <div className="hidden sm:flex items-center w-full max-w-[200px] relative z-10">
                 <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black w-4 h-4" />
                 <input
                   type="text"
@@ -106,18 +101,18 @@ export function Navbar() {
                 />
               </div>
 
-              {/* Logo - Center */}
-              <div className="flex justify-center flex-1 sm:justify-center">
-                <NavLink to="/" className="flex items-center space-x-2">
-                  <Crown />
-                  <span className="text-lg font-semibold whitespace-nowrap text-center">
-                    JHP Store
-                  </span>
+              <div className="absolute left-1/2 transform -translate-x-1/2 mt-4">
+                <NavLink to="/" className="">
+                  <img
+                    src={JHPstore}
+                    alt="JHP Store"
+                    className="h-40 sm:h-40 md:h-48 lg:h-48 xl:h-48 w-auto"
+                  />
                 </NavLink>
               </div>
 
               {/* Cart + Hamburger - Right */}
-              <div className="flex justify-end items-center gap-4">
+              <div className="ml-auto flex items-center gap-4 z-10">
                 <NavLink
                   to={"/cart"}
                   className="relative p-2 rounded-full"
@@ -131,7 +126,6 @@ export function Navbar() {
                   )}
                 </NavLink>
 
-                {/* Hamburger for mobile */}
                 <button className="sm:hidden" onClick={toggleMobileMenu}>
                   {mobileMenuOpen ? <X /> : <Menu />}
                 </button>
@@ -139,14 +133,13 @@ export function Navbar() {
             </div>
 
             {/* Desktop Nav */}
-            <div className="hidden sm:flex justify-center space-x-12 py-2 text-sm">
+            <div className="hidden sm:flex justify-center space-x-44 py-2 text-sm">
               {navLinks.map(({ to, label, id }) => (
                 <NavLink
                   key={id}
                   to={to}
-                  onClick={() => handleNavClick(id)}
                   className={`relative group transition-colors ${
-                    activeSection === id ? "text-bluee" : ""
+                    activeSection === id ? "text-bluee font-semibold" : ""
                   }`}
                 >
                   {label}
@@ -166,7 +159,7 @@ export function Navbar() {
                   <NavLink
                     key={id}
                     to={to}
-                    onClick={() => handleNavClick(label)}
+                    onClick={() => setMobileMenuOpen(false)}
                     className={`block transition-colors ${
                       activeSection === id ? "text-bluee font-semibold" : ""
                     }`}
@@ -211,9 +204,6 @@ export function Navbar() {
           </ul>
         </div>
       )}
-
-      {/* Cart Component */}
-      {/* <Cart isCartVisible={isCartVisible} closeCart={closeCart} /> */}
     </>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Facebook, Instagram, Twitter } from "lucide-react";
+import footer from "../assets/logo/footer.png";
 
 export function Footer() {
   return (
@@ -11,9 +12,9 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
           {/* Brand Info */}
           <div>
-            <h3 className="text-3xl font-bold mb-4 tracking-wide text-white">
-              JHP Store
-            </h3>
+            <div className="text-3xl font-bold mb-4 tracking-wide text-white">
+              <img src={footer} alt="" />
+            </div>
             <p className="text-sm leading-relaxed text-[#d3c3b3]">
               Discover the purity of the Himalayas. Ethically sourced,
               hand-crafted, and delivered fresh to your home.
