@@ -38,14 +38,14 @@ const FoodDisplay = () => {
       <h2 className="text-xl sm:text-2xl font-semibold text-brownn mb-6">
         {title}
       </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {products.map((product) => (
           <div
             key={product._id}
-            className="bg-white border rounded-2xl shadow-sm group hover:shadow-lg hover:scale-[1.02] transition duration-300 flex flex-col relative pb-4"
+            className="bg-white border rounded-2xl shadow-sm group hover:shadow-lg hover:scale-[1.02] transition duration-300 flex flex-col relative pb-6 sm:pb-4"
           >
             <Link to={`/store/${product._id}`}>
-              <div className="relative h-80 overflow-hidden">
+              <div className="relative h-72 sm:h-80 overflow-hidden">
                 <img
                   src={itemImages[product._id]}
                   alt={itemNames[product._id]}
