@@ -81,30 +81,78 @@ const PlaceOrder = () => {
   //   }
   // };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   const orderDetails = {
+  //     ...formData,
+  //     items: Array.isArray(cartItems) ? cartItems : [], // ensure it's an array
+  //     total: initialTotal,
+  //     discountedTotal: finalTotal,
+  //   };
+
+  //   try {
+  //     generatePDFReceipt(orderDetails);
+  //     toast.success("Order placed successfully! Receipt downloaded.");
+  //     setFormData({
+  //       firstName: "",
+  //       lastName: "",
+  //       phone: "",
+  //       email: "",
+  //       deliveryTime: "",
+  //       paymentMethod: "",
+  //     });
+  //     clearCart();
+  //   } catch (error) {
+  //     console.error("Error generating receipt:", error);
+  //     toast.error("Something went wrong. Try again.");
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const orderDetails = {
       ...formData,
-      items: Array.isArray(cartItems) ? cartItems : [], // ensure it's an array
+      items: Object.entries(cartItems).map(([id, data]) => ({
+        itemId: parseInt(id),
+        quantity: data.quantity,
+        selectedSize: data.selectedSize,
+      })),
       total: initialTotal,
       discountedTotal: finalTotal,
     };
 
     try {
+      const response = await fetch("http://localhost:5000/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderDetails),
+      });
+
+      if (!response.ok) throw new Error("Failed to place order");
+
+      toast.success("Order placed and saved to database!");
       generatePDFReceipt(orderDetails);
-      toast.success("Order placed successfully! Receipt downloaded.");
+
+      // Clear form and cart
       setFormData({
         firstName: "",
         lastName: "",
         phone: "",
         email: "",
         deliveryTime: "",
-        paymentMethod: "",
+        subscribe: false,
+        paymentMethod: "Cash",
       });
+      setHasPromo(false);
+      setPromoCode("");
+      setPromoApplied(false);
+      setFinalTotal(initialTotal);
+      setOnlinePaymentOption("");
       clearCart();
     } catch (error) {
-      console.error("Error generating receipt:", error);
+      console.error("Error placing order:", error);
       toast.error("Something went wrong. Try again.");
     }
   };
@@ -178,12 +226,12 @@ const PlaceOrder = () => {
           ))}
         </div>
       </div>
-      <p className="text-center text-red-500 text-sm mt-3 font-semibold">
+      {/* <p className="text-center text-red-500 text-sm mt-3 font-semibold">
         *Pay now for Free Delivery*
-      </p>
+      </p> */}
 
       {/* Online Payment Visuals */}
-      <div className="mb-6 mt-2">
+      {/* <div className="mb-6 mt-2">
         <p className="text-sm font-semibold text-gray-600 mb-2">
           Online Payment Options:
         </p>
@@ -226,7 +274,7 @@ const PlaceOrder = () => {
             <img src={Esewa} alt="QR Code" className="w-40 h-40" />
           </div>
         )}
-      </div>
+      </div> */}
 
       {/* Delivery Info */}
       <form onSubmit={handleSubmit} className="space-y-4">

@@ -3,16 +3,20 @@ import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
 
-import { connectDB } from "./src/DB/db.js";
+// import { connectDB } from "./src/DB/db.js";
+import connectDBMOGO from "./src/config/db.js";
 import { productRoutes } from "./src/routes/productRoutes.js";
 import { cartRoutes } from "./src/routes/cartRoutes.js";
+import orderRoutes from "./src/routes/orderRoutes.js";
+
 import {
   EsewaInitiatePayment,
   paymentStatus,
 } from "./src/controller/esewa.controller.js";
 
 dotenv.config();
-connectDB();
+// connectDB();
+connectDBMOGO();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -26,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) => res.send("Backend Server Running"));
 app.use("/products", productRoutes);
 app.use("/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
 app.post("/initiate-payment", EsewaInitiatePayment);
 app.post("/payment-status", paymentStatus);
 
