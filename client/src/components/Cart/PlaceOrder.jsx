@@ -5,9 +5,10 @@ import { useStore } from "../../context/StoreContext";
 import { ToastContainer, toast } from "react-toastify";
 import { generatePDFReceipt } from "../utils/generatePDFReceipt";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
-  const { getTotalPrice, cartItems } = useStore();
+  const { getTotalPrice, cartItems, clearCart } = useStore();
   const initialTotal = getTotalPrice(); // Get the initial total from the StoreContext
 
   const [finalTotal, setFinalTotal] = useState(initialTotal);
@@ -25,6 +26,7 @@ const PlaceOrder = () => {
     subscribe: false,
     paymentMethod: "Cash",
   });
+  const navigate = useNavigate();
 
   const paymentMethods = ["Cash", "Khalti", "IMEPay", "Fonepay", "NepalPay"];
 
@@ -129,8 +131,10 @@ const PlaceOrder = () => {
       setHasPromo(false);
       setPromoCode("");
       setPromoApplied(false);
-      setFinalTotal(initialTotal);
+      setFinalTotal(0);
       setOnlinePaymentOption("");
+      clearCart();
+      navigate("/order-success");
     } catch (error) {
       console.error("Error placing order:", error);
       toast.error("Something went wrong. Try again.");
@@ -168,7 +172,7 @@ const PlaceOrder = () => {
 
   return (
     <div className="form bg-white p-4 md:px-6 md:py-5 rounded-lg shadow-xl max-w-md mx-auto my-40">
-      <div className="text-left text-sm text-gray-700 font-medium">
+      <div className="text-left text-sm text-red-700 font-medium">
         Total (Tax included):
       </div>
       <div className="text-2xl font-bold text-bluee mb-4">
