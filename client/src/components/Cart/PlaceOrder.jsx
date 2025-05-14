@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import { FaTruck } from "react-icons/fa";
 import PaymentComponent from "../esewa/Payment";
 import { useStore } from "../../context/StoreContext";
-import Esewa from "../../assets/esewa.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import { generatePDFReceipt } from "../utils/generatePDFReceipt";
 import "react-toastify/dist/ReactToastify.css";
 
 const PlaceOrder = () => {
   const { getTotalPrice, cartItems } = useStore();
-  const initialTotal = getTotalPrice();
+  const initialTotal = getTotalPrice(); // Get the initial total from the StoreContext
 
   const [finalTotal, setFinalTotal] = useState(initialTotal);
   const [hasPromo, setHasPromo] = useState(false);
@@ -36,92 +35,68 @@ const PlaceOrder = () => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const orderDetails = {
-  //     ...formData,
-  //     items: cartItems, // assume you get this from context
-  //     total: initialTotal,
-  //     discountedTotal: finalTotal,
-  //   };
-
-  //   try {
-  //     // const response = await fetch("/api/orders", {
-  //     //   method: "POST",
-  //     //   headers: { "Content-Type": "application/json" },
-  //     //   body: JSON.stringify(orderDetails),
-  //     // });
-
-  //     // if (!response.ok) throw new Error("Failed to place order");
-
-  //     toast.success("Order placed and saved to database!");
-
-  //     // Generate PDF after successful order
-  //     generatePDFReceipt(orderDetails);
-
-  //     // Reset form
-  //     setFormData({
-  //       firstName: "",
-  //       lastName: "",
-  //       phone: "",
-  //       email: "",
-  //       deliveryTime: "",
-  //       subscribe: false,
-  //       paymentMethod: "Cash",
-  //     });
-  //     setHasPromo(false);
-  //     setPromoCode("");
-  //     setPromoApplied(false);
-  //     setFinalTotal(initialTotal);
-  //     setOnlinePaymentOption("");
-  //   } catch (error) {
-  //     console.error("Error placing order:", error);
-  //     toast.error("Something went wrong. Try again.");
-  //   }
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const orderDetails = {
-  //     ...formData,
-  //     items: Array.isArray(cartItems) ? cartItems : [], // ensure it's an array
-  //     total: initialTotal,
-  //     discountedTotal: finalTotal,
-  //   };
-
-  //   try {
-  //     generatePDFReceipt(orderDetails);
-  //     toast.success("Order placed successfully! Receipt downloaded.");
-  //     setFormData({
-  //       firstName: "",
-  //       lastName: "",
-  //       phone: "",
-  //       email: "",
-  //       deliveryTime: "",
-  //       paymentMethod: "",
-  //     });
-  //     clearCart();
-  //   } catch (error) {
-  //     console.error("Error generating receipt:", error);
-  //     toast.error("Something went wrong. Try again.");
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Gather form data from state (since you're using controlled components)
     const orderDetails = {
-      ...formData,
-      items: Object.entries(cartItems).map(([id, data]) => ({
-        itemId: parseInt(id),
-        quantity: data.quantity,
-        selectedSize: data.selectedSize,
-      })),
+      firstName: formData.firstName, // Accessing formData state
+      lastName: formData.lastName,
+      phone: formData.phone,
+      email: formData.email,
+      deliveryTime: formData.deliveryTime,
+      subscribe: formData.subscribe,
+      paymentMethod: formData.paymentMethod,
       total: initialTotal,
       discountedTotal: finalTotal,
+      shipping: 100,
+      items: Object.entries(cartItems)
+        .map(([key, item]) => {
+          const {
+            id,
+            name,
+            quantity,
+            selectedSize,
+            image,
+            type,
+            pricesBySize,
+            price,
+            shipping,
+          } = item;
+
+          // Ensure that name and price are included in the item object
+          if (!name || !price) {
+            console.error(`Missing name or price for item: ${item.id}`);
+            return null; // Or handle this error as per your requirements
+          }
+
+          const size = selectedSize || 250;
+
+          const pricePerUnit =
+            type === "washed process" ? pricesBySize?.[size] || price : price;
+
+          const totalPrice = (pricePerUnit * quantity).toFixed(2);
+
+          return {
+            itemId: id,
+            name,
+            quantity,
+            selectedSize: size,
+            price: pricePerUnit,
+            totalPrice,
+            image,
+            shipping: shipping,
+          };
+        })
+        .filter(Boolean), // Remove null values if any items are missing required fields
     };
+
+    // Ensure items have the required fields before sending
+    if (orderDetails.items.length === 0) {
+      toast.error("No valid items to submit");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:5000/api/orders", {
@@ -133,7 +108,13 @@ const PlaceOrder = () => {
       if (!response.ok) throw new Error("Failed to place order");
 
       toast.success("Order placed and saved to database!");
-      generatePDFReceipt(orderDetails);
+      try {
+        console.log("Generating PDF with:", orderDetails);
+        generatePDFReceipt(orderDetails);
+      } catch (err) {
+        console.error("PDF generation failed:", err);
+        toast.error("Failed to generate PDF receipt.");
+      }
 
       // Clear form and cart
       setFormData({
@@ -150,7 +131,6 @@ const PlaceOrder = () => {
       setPromoApplied(false);
       setFinalTotal(initialTotal);
       setOnlinePaymentOption("");
-      clearCart();
     } catch (error) {
       console.error("Error placing order:", error);
       toast.error("Something went wrong. Try again.");
@@ -226,55 +206,6 @@ const PlaceOrder = () => {
           ))}
         </div>
       </div>
-      {/* <p className="text-center text-red-500 text-sm mt-3 font-semibold">
-        *Pay now for Free Delivery*
-      </p> */}
-
-      {/* Online Payment Visuals */}
-      {/* <div className="mb-6 mt-2">
-        <p className="text-sm font-semibold text-gray-600 mb-2">
-          Online Payment Options:
-        </p>
-        <div className="flex gap-2 mb-4">
-          <button
-            type="button"
-            onClick={() => setOnlinePaymentOption("esewa")}
-            className={`px-3 py-1 border rounded-md text-sm font-medium transition-colors ${
-              onlinePaymentOption === "esewa"
-                ? "bg-bluee text-white"
-                : "border-bluee text-bluee hover:bg-bluee hover:text-white"
-            }`}
-          >
-            Pay via eSewa
-          </button>
-          <button
-            type="button"
-            onClick={() => setOnlinePaymentOption("qr")}
-            className={`px-3 py-1 border rounded-md text-sm font-medium transition-colors ${
-              onlinePaymentOption === "qr"
-                ? "bg-bluee text-white"
-                : "border-bluee text-bluee hover:bg-bluee hover:text-white"
-            }`}
-          >
-            Show QR Code
-          </button>
-        </div>
-
-        {onlinePaymentOption === "esewa" && (
-          <div className="border p-3 rounded-md shadow">
-            <PaymentComponent />
-          </div>
-        )}
-
-        {onlinePaymentOption === "qr" && (
-          <div className="flex flex-col items-center border p-4 rounded-md shadow">
-            <p className="text-sm font-medium text-gray-700 mb-2">
-              Scan to Pay (QR Code linked to 9843822887)
-            </p>
-            <img src={Esewa} alt="QR Code" className="w-40 h-40" />
-          </div>
-        )}
-      </div> */}
 
       {/* Delivery Info */}
       <form onSubmit={handleSubmit} className="space-y-4">

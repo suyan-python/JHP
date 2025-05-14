@@ -19,13 +19,15 @@ export function Cart() {
 
   const cartEntries = Object.entries(cartItems);
 
-  const handleRemoveItem = (id) => {
+  const handleRemoveItem = (cartKey) => {
     const newCart = { ...cartItems };
-    delete newCart[id];
-    // Use setCartItems if you expose it, or call clearCart/addToCart accordingly
+    delete newCart[cartKey];
+
+    // Rebuild cart
     clearCart();
     Object.entries(newCart).forEach(([itemId, { quantity, selectedSize }]) => {
-      addToCart(itemId, quantity, selectedSize);
+      const [realId] = itemId.split("-");
+      addToCart(realId, quantity, selectedSize);
     });
   };
 
@@ -43,7 +45,9 @@ export function Cart() {
     <div className="max-w-4xl mx-auto px-4 py-12 my-36">
       <h2 className="text-3xl font-bold text-gray-900 mb-6">Your Cart</h2>
       <div className="space-y-6">
-        {cartEntries.map(([id, { quantity, selectedSize }]) => {
+        {cartEntries.map(([cartKey, { quantity, selectedSize }]) => {
+          const [id] = cartKey.split("-");
+
           const name = itemNames[id];
           const image = itemImages[id];
           const type = itemTypes[id];
@@ -57,7 +61,7 @@ export function Cart() {
 
           return (
             <div
-              key={id}
+              key={cartKey}
               className="flex items-center justify-between bg-white p-4 rounded-xl shadow-md"
             >
               <div className="flex items-center gap-4">
@@ -74,7 +78,7 @@ export function Cart() {
                   <p className="text-sm text-gray-600 flex items-center gap-2">
                     Quantity:
                     <button
-                      onClick={() => removeFromCart(id)}
+                      onClick={() => removeFromCart(id, selectedSize)}
                       className="p-1 rounded bg-gray-200 hover:bg-gray-300"
                     >
                       <FaMinus className="text-xs" />
@@ -96,7 +100,7 @@ export function Cart() {
                 </div>
               </div>
               <button
-                onClick={() => handleRemoveItem(id)}
+                onClick={() => handleRemoveItem(cartKey)}
                 className="text-red-500 hover:text-red-700"
                 title="Remove item"
               >
