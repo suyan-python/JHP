@@ -3,15 +3,9 @@ import { Story } from "./Story";
 import { WhyJHP } from "./Hero2";
 import { ExperienceVideo } from "./Hero3";
 import background from "../assets/background/1.jpg";
+import { NavLink } from "react-router-dom";
 
 export function Hero() {
-  const [cart, setCart] = useState([]);
-
-  // Function to add items to the cart
-  const addToCart = (product) => {
-    setCart([...cart, product]);
-  };
-
   return (
     <>
       <div className="relative mt-40 mb-5">
@@ -38,12 +32,13 @@ export function Hero() {
               Arabica beans while empowering local farmers with expert support
               in cultivation and processing.
             </p>
-            <a
-              href="#products"
+
+            <NavLink
+              to={"/store"}
               className="inline-block border border-white text-white hover:bg-white hover:text-black px-6 sm:px-8 py-2 sm:py-3 rounded-2xl text-sm sm:text-lg font-semibold transition-all duration-300"
             >
               Order Coffee Beans
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>

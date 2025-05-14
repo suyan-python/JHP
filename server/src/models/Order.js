@@ -11,11 +11,16 @@ const orderSchema = new mongoose.Schema(
     paymentMethod: { type: String, required: true },
     total: { type: Number, required: true },
     discountedTotal: { type: Number },
+    shipping: { type: Number }, // Optional shipping fee
+    orderId: { type: String }, // Optional unique order ID
     items: [
       {
-        itemId: Number,
-        quantity: Number,
-        selectedSize: Number,
+        itemId: { type: Number, required: true },
+        name: { type: String, required: true },
+        selectedSize: { type: Number, required: true }, // e.g., 250, 500, 1000
+        quantity: { type: Number, required: true },
+        price: { type: Number, required: true }, // unit price
+        type: { type: String }, // optional, e.g., "washed process"
       },
     ],
   },

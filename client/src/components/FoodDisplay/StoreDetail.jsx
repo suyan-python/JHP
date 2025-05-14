@@ -37,10 +37,11 @@ function StoreDetail() {
   const [toastType, setToastType] = useState("success");
 
   const handleAddToCart = () => {
-    const existingItem = cartItems[id];
+    const cartKey = `${id}-${selectedSize}`;
+    const existingItem = cartItems[cartKey];
 
-    // If same size item is already in cart, show error
-    if (existingItem && existingItem.selectedSize === selectedSize) {
+    // If same item and size already exists in cart, show error
+    if (existingItem) {
       setToastMessage("Item already in cart!");
       setToastType("error");
       setShowToast(true);
@@ -53,6 +54,7 @@ function StoreDetail() {
     setToastType("success");
     setAddedToCart(true);
     setShowToast(true);
+
     setTimeout(() => {
       setAddedToCart(false);
       setShowToast(false);
