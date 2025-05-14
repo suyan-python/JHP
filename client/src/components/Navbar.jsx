@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Coffee, ShoppingCart, Crown, Menu, X } from "lucide-react";
+import { ShoppingCart, Menu, X } from "lucide-react";
 import { useStore } from "../context/StoreContext.jsx";
-import { FaSearch } from "react-icons/fa";
 import { NavLink, useLocation } from "react-router-dom";
 import JHPstore from "../assets/logo/JHPstore.png";
 
 export function Navbar() {
-  const { cartItems, products } = useStore();
+  const { cartItems } = useStore();
   const [scrolled, setScrolled] = useState(false);
-  const [isCartVisible, setIsCartVisible] = useState(false);
   const [isNotificationVisible, setIsNotificationVisible] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [activeSection, setActiveSection] = useState("");
 
   const location = useLocation();
@@ -23,7 +19,6 @@ export function Navbar() {
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const closeNotification = () => setIsNotificationVisible(false);
-  const toggleCart = () => setIsCartVisible(!isCartVisible);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -39,19 +34,6 @@ export function Navbar() {
 
     setActiveSection(pathToIdMap[location.pathname] || "");
   }, [location.pathname]);
-
-  useEffect(() => {
-    if (!Array.isArray(products) || searchInput.trim() === "") {
-      setSearchResults([]);
-      return;
-    }
-
-    const results = products.filter((item) =>
-      item.name.toLowerCase().includes(searchInput.toLowerCase())
-    );
-
-    setSearchResults(results);
-  }, [searchInput, products]);
 
   const navLinks = [
     { to: "/", label: "ABOUT", id: "home" },
@@ -84,23 +66,47 @@ export function Navbar() {
         {/* Navbar */}
         <nav
           className={`transition-all duration-300 ${
-            isNotificationVisible ? "top-0" : "top-0"
-          } ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}
+            scrolled ? "bg-white shadow-md" : "bg-transparent"
+          }`}
         >
           <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 text-brownn">
             <div className="relative flex items-center h-28">
-              {/* Search - Left */}
-              <div className="hidden sm:flex items-center w-full max-w-[200px] relative z-10">
-                <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search coffee or tea..."
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  className="pl-8 pr-2 py-1 text-sm bg-transparent border-b border-black focus:border-bluee focus:outline-none focus:ring-0 w-full placeholder:text-black"
-                />
+              {/* Browse Dropdown - Desktop Only */}
+              <div className="hidden sm:block relative group z-10">
+                <button className="text-sm font-medium text-brownn hover:text-bluee transition-colors">
+                  Browse
+                </button>
+                <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-300">
+                  <ul className="py-2 text-sm text-gray-700">
+                    <li>
+                      <NavLink
+                        to="/store#special-editions"
+                        className="block px-4 py-2 hover:bg-bluee hover:text-white"
+                      >
+                        Special Editions
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/store#drip-box"
+                        className="block px-4 py-2 hover:bg-bluee hover:text-white"
+                      >
+                        Drip Box
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/store#washed-process"
+                        className="block px-4 py-2 hover:bg-bluee hover:text-white"
+                      >
+                        Washed Process
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
+              {/* Logo Center */}
               <div className="absolute left-1/2 transform -translate-x-1/2 mt-4">
                 <NavLink to="/" className="">
                   <img
@@ -113,11 +119,7 @@ export function Navbar() {
 
               {/* Cart + Hamburger - Right */}
               <div className="ml-auto flex items-center gap-4 z-10">
-                <NavLink
-                  to={"/cart"}
-                  className="relative p-2 rounded-full"
-                  onClick={toggleCart}
-                >
+                <NavLink to="/cart" className="relative p-2 rounded-full">
                   <ShoppingCart className="h-5 w-5" />
                   {Object.keys(cartItems || {}).length > 0 && (
                     <span className="absolute -top-2 -right-2 bg-bluee text-white rounded-full text-xs px-1">
@@ -168,42 +170,36 @@ export function Navbar() {
                   </NavLink>
                 ))}
 
-                {/* Mobile Search */}
-                <div className="flex items-center w-full max-w-[200px] relative mt-2">
-                  <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black w-4 h-4" />
-                  <input
-                    type="text"
-                    placeholder="Search coffee or tea..."
-                    value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    className="pl-8 pr-2 py-1 text-sm bg-transparent border-b border-black focus:border-bluee focus:outline-none focus:ring-0 w-full placeholder:text-black"
-                  />
+                {/* Mobile Browse */}
+                <div className="mt-2 space-y-2 text-sm">
+                  <p className="font-semibold text-gray-800">Browse</p>
+                  <NavLink
+                    to="/store#special-editions"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block pl-4 text-gray-700 hover:text-bluee"
+                  >
+                    Special Editions
+                  </NavLink>
+                  <NavLink
+                    to="/store#drip-box"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block pl-4 text-gray-700 hover:text-bluee"
+                  >
+                    Drip Box
+                  </NavLink>
+                  <NavLink
+                    to="/store#washed-process"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block pl-4 text-gray-700 hover:text-bluee"
+                  >
+                    Washed Process
+                  </NavLink>
                 </div>
               </div>
             )}
           </div>
         </nav>
       </div>
-
-      {/* Search Dropdown */}
-      {searchResults.length > 0 && (
-        <div className="absolute top-24 left-6 bg-white shadow-lg border rounded-md p-4 w-[250px] z-50">
-          <ul className="space-y-2 text-sm">
-            {searchResults.map((item) => (
-              <li
-                key={item.id}
-                className="hover:text-bluee cursor-pointer"
-                onClick={() => {
-                  setSearchInput("");
-                  setSearchResults([]);
-                }}
-              >
-                {item.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </>
   );
 }
