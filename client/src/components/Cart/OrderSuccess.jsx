@@ -1,12 +1,23 @@
+import React from "react";
 import Lottie from "lottie-react";
 import riderAnimation from "../../assets/rider-animation.json";
 import { useNavigate } from "react-router-dom";
+import Confetti from "react-confetti";
+import { useWindowSize } from "react-use";
 
 const OrderSuccess = () => {
   const navigate = useNavigate();
+  const { width, height } = useWindowSize();
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center bg-white px-4 py-8 text-center">
+      <Confetti
+        width={width}
+        height={height}
+        numberOfPieces={400}
+        recycle={false}
+      />
+
       <div className="max-w-md w-full">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-700 mb-4">
           Your Order Has Been Placed Successfully!
