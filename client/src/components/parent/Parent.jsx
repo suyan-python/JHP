@@ -9,19 +9,22 @@ function Parent() {
 
   return (
     <div
-      className="relative flex items-center justify-center h-[72vh] my-40 rounded-3xl px-6 text-center text-white bg-cover bg-center bg-no-repeat"
+      className="relative flex items-center justify-center h-[80vh] md:h-[85vh] my-40 px-6 text-center text-white rounded-[30px] sm:rounded-[40px] lg:rounded-[60px] overflow-hidden shadow-2xl"
       style={{
-        backgroundImage: `linear-gradient(to bottom right, rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url(${backgroundImage})`,
+        backgroundImage: `linear-gradient(to bottom right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)), url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Content Container */}
-      <div className="relative z-10 max-w-3xl w-full py-20">
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-6 animate-fade-in">
+      {/* Content */}
+      <div className="relative z-10 max-w-4xl w-full px-4 py-16 sm:py-20 lg:py-24">
+        <h1 className="header text-5xl sm:text-4xl md:text-7xl font-serif font-bold tracking-tight mb-6 animate-fade-in">
           Discover Our Story
         </h1>
-        <p className="text-gray-200 text-lg md:text-xl mb-10 leading-relaxed animate-fade-in delay-150">
+        <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-8 sm:mb-10 leading-relaxed animate-fade-in delay-150">
           Journey through the rich heritage and passion behind{" "}
-          <span className="text-blue-400 font-semibold">
+          <span className="text-[#b3e5ff] font-semibold">
             Jewel Himalayan Products
           </span>{" "}
           — bringing the finest treasures from the heart of the Himalayas to
@@ -32,16 +35,16 @@ function Parent() {
           href="https://about.jewelhimalayanproducts.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-md hover:shadow-lg animate-fade-in delay-300"
+          className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-md hover:shadow-lg animate-fade-in delay-300 text-sm sm:text-base"
         >
-          Visit Parent Company
+          Parent Company
           <ExternalLink className="w-4 h-4" />
         </a>
       </div>
 
-      {/* Optional Decorative Blurs */}
-      <div className="absolute top-[-50px] left-[-50px] w-72 h-72 bg-blue-400 rounded-full blur-[120px] opacity-20 z-0"></div>
-      <div className="absolute bottom-[-50px] right-[-50px] w-72 h-72 bg-pink-400 rounded-full blur-[120px] opacity-20 z-0"></div>
+      {/* Decorative Glow Circles */}
+      <div className="absolute top-[-60px] left-[-60px] w-64 h-64 bg-blue-400 rounded-full blur-[110px] opacity-20 z-0"></div>
+      <div className="absolute bottom-[-60px] right-[-60px] w-64 h-64 bg-pink-400 rounded-full blur-[110px] opacity-20 z-0"></div>
     </div>
   );
 }

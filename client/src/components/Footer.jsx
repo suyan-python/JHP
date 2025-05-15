@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import footer from "../assets/logo/footer.png";
 
@@ -22,19 +23,24 @@ export function Footer() {
           </div>
 
           {/* Quick Links */}
+
           <div>
             <h4 className="text-xl font-semibold mb-4 text-white">
               Quick Links
             </h4>
             <ul className="space-y-3 text-sm text-[#d3c3b3]">
-              {["Home", "Products", "Our Journey", "Contact"].map((item, i) => (
+              {[
+                { label: "Home", path: "/" },
+                { label: "Store", path: "/store" },
+                { label: "Our Journey", path: "/parent" },
+              ].map((item, i) => (
                 <li key={i}>
-                  <a
-                    href={`#${item.toLowerCase().replace(" ", "")}`}
+                  <Link
+                    to={item.path}
                     className="hover:text-amber-400 transition-colors duration-200"
                   >
-                    {item}
-                  </a>
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>

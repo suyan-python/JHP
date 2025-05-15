@@ -69,7 +69,7 @@ export function Navbar() {
             scrolled ? "bg-white shadow-md" : "bg-transparent"
           }`}
         >
-          <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 text-brownn">
+          <div className="header max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 text-brownn font-bold">
             <div className="relative flex items-center h-28">
               {/* Browse Dropdown - Desktop Only */}
               <div className="hidden sm:block relative group z-10">

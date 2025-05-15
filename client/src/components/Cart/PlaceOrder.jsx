@@ -28,7 +28,15 @@ const PlaceOrder = () => {
   });
   const navigate = useNavigate();
 
-  const paymentMethods = ["Cash", "Khalti", "IMEPay", "Fonepay", "NepalPay"];
+  const paymentMethods = [
+    "Cash",
+    "eSewa",
+    "Khalti",
+    "IMEPay",
+    "Fonepay",
+    "NepalPay",
+    "Bank Transfer",
+  ];
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -142,7 +150,8 @@ const PlaceOrder = () => {
   };
 
   const applyPromo = () => {
-    if (promoCode.trim().toUpperCase() === "FROMWEB") {
+    const code = promoCode.trim().toUpperCase();
+    if (code === "FROMWEB" || code === "BINAYAK") {
       const discounted = initialTotal * 0.9;
       setFinalTotal(discounted.toFixed(2));
       setPromoApplied(true);
@@ -171,27 +180,28 @@ const PlaceOrder = () => {
   }, [hasPromo, initialTotal]);
 
   return (
-    <div className="form bg-white p-4 md:px-6 md:py-5 rounded-lg shadow-xl max-w-md mx-auto my-40">
-      <div className="text-left text-sm text-red-700 font-medium">
-        Total (Tax included):
-      </div>
-      <div className="text-2xl font-bold text-bluee mb-4">
-        NRs. {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
+    <div className="bg-white rounded-xl shadow-lg max-w-md mx-auto my-44 p-6 md:p-8">
+      <div className="mb-6">
+        <p className="text-sm font-semibold text-red-600">
+          Total (Tax included):
+        </p>
+        <h2 className="text-3xl font-extrabold text-blue-600 mt-1">
+          NRs. {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
+        </h2>
       </div>
 
-      <hr className="my-4" />
+      <hr className="border-gray-200 mb-6" />
 
-      {/* Payment Selection */}
-      <div>
-        <p className="text-gray-700 mb-1 font-semibold">
+      {/* Payment selection */}
+      <section className="mb-8">
+        <p className="text-gray-700 font-semibold mb-2">
           Payment for bill of NRs.{" "}
           {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
         </p>
-
-        <p className="text-sm font-semibold text-gray-600 mb-2">
+        <p className="text-gray-500 font-medium mb-3">
           On Delivery Payment Options:
         </p>
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-3">
           {paymentMethods.map((method) => (
             <button
               key={method}
@@ -199,26 +209,27 @@ const PlaceOrder = () => {
               onClick={() =>
                 setFormData((prev) => ({ ...prev, paymentMethod: method }))
               }
-              className={`px-3 py-1 border rounded-md text-sm font-medium transition-colors ${
-                formData.paymentMethod === method
-                  ? "bg-bluee text-white"
-                  : "border-bluee text-bluee hover:bg-bluee hover:text-white"
-              }`}
+              className={`px-5 py-2 rounded-md font-semibold text-sm transition-colors 
+            ${
+              formData.paymentMethod === method
+                ? "bg-blue-600 text-white shadow-md"
+                : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+            }`}
             >
               {method}
             </button>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Delivery Info */}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <p className="text-sm text-gray-600">
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <p className="text-gray-600 text-sm mb-4">
           Please fill in your details so we can call you for delivery
           confirmation.
         </p>
 
-        <div className="flex flex-col md:flex-row gap-3">
+        <div className="flex flex-col md:flex-row gap-4">
           <input
             type="text"
             name="firstName"
@@ -226,7 +237,7 @@ const PlaceOrder = () => {
             required
             value={formData.firstName}
             onChange={handleChange}
-            className="flex-1 border border-gray-300 rounded-md px-3 py-2"
+            className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="text"
@@ -235,7 +246,7 @@ const PlaceOrder = () => {
             required
             value={formData.lastName}
             onChange={handleChange}
-            className="flex-1 border border-gray-300 rounded-md px-3 py-2"
+            className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -246,7 +257,7 @@ const PlaceOrder = () => {
           required
           value={formData.phone}
           onChange={handleChange}
-          className="w-full border border-gray-300 rounded-md px-3 py-2"
+          className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input
@@ -256,11 +267,11 @@ const PlaceOrder = () => {
           required
           value={formData.email}
           onChange={handleChange}
-          className="w-full border border-gray-300 rounded-md px-3 py-2"
+          className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
-        <div className="flex items-center gap-2">
-          <label className="font-medium text-sm text-gray-600">
+        <div className="flex items-center gap-3">
+          <label className="font-medium text-gray-600 text-sm">
             Delivery Time:
           </label>
           <input
@@ -269,34 +280,36 @@ const PlaceOrder = () => {
             required
             value={formData.deliveryTime}
             onChange={handleChange}
-            className="border border-gray-300 rounded-md px-3 py-2"
+            className="rounded-lg border border-gray-300 px-3 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         {/* Promo Section */}
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="space-y-3">
+          <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer select-none">
             <input
-              type="radio"
+              type="checkbox"
               checked={hasPromo}
               onChange={() => setHasPromo(!hasPromo)}
+              className="w-5 h-5 accent-blue-600 cursor-pointer"
             />
             I have a promo code
           </label>
 
           {hasPromo && (
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-3 items-center">
               <input
                 type="text"
                 value={promoCode}
-                onChange={(e) => setPromoCode(e.target.value)}
+                onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
                 placeholder="Enter Promo Code"
-                className="flex-1 border border-gray-300 rounded-md px-3 py-2"
+                className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+
               <button
                 type="button"
                 onClick={applyPromo}
-                className="px-3 py-2 bg-bluee text-white rounded-md font-semibold text-sm hover:bg-blue-800 transition"
+                className="px-5 py-3 bg-blue-600 text-white rounded-lg font-semibold text-sm hover:bg-blue-700 transition"
               >
                 Apply
               </button>
@@ -304,21 +317,22 @@ const PlaceOrder = () => {
           )}
         </div>
 
-        <label className="flex items-center gap-2 text-sm text-gray-600">
+        <label className="flex items-center gap-2 text-gray-600 text-sm cursor-pointer select-none">
           <input
             type="checkbox"
             name="subscribe"
             checked={formData.subscribe}
             onChange={handleChange}
+            className="w-5 h-5 accent-blue-600 cursor-pointer"
           />
           Keep me up to date on news and exclusive offers.
         </label>
 
         <button
           type="submit"
-          className="w-full bg-bluee hover:bg-blue-800 text-white font-semibold py-3 rounded-md flex items-center justify-center gap-2 text-lg transition-all"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg flex items-center justify-center gap-3 text-lg transition"
         >
-          <FaTruck />
+          <FaTruck size={20} />
           Place Order
         </button>
       </form>

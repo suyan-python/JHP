@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useStore } from "../../context/StoreContext";
+import { Star } from "lucide-react"; // Optional: placeholder for ratings
 
 function StoreDetail() {
   const { id } = useParams();
@@ -21,26 +22,24 @@ function StoreDetail() {
   const productDescription = itemDescriptions[id];
   const productFlavors = itemFlavors[id];
   const productType = itemTypes[id];
-
   const productPrice = itemPrices[id] || 0;
+
   const [selectedSize, setSelectedSize] = useState(250);
+  const [quantity, setQuantity] = useState(1);
+  const [addedToCart, setAddedToCart] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
+
   const priceBySize =
     productType === "washed process"
       ? itemPricesBySize[id]?.[selectedSize] || productPrice
       : productPrice;
 
-  const [quantity, setQuantity] = useState(1);
-  const [addedToCart, setAddedToCart] = useState(false);
-
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState("success");
-
   const handleAddToCart = () => {
     const cartKey = `${id}-${selectedSize}`;
     const existingItem = cartItems[cartKey];
 
-    // If same item and size already exists in cart, show error
     if (existingItem) {
       setToastMessage("Item already in cart!");
       setToastType("error");
@@ -71,57 +70,69 @@ function StoreDetail() {
 
   return (
     <>
+      {/* Toast Notification */}
       {showToast && (
         <div
           role="alert"
-          className={`fixed bottom-5 right-5 px-6 py-4  shadow-xl z-50 text-sm font-medium flex items-center space-x-3 transform transition-all duration-500 ease-in-out ${
+          className={`fixed bottom-5 right-5 px-6 py-4 shadow-xl z-50 text-sm font-medium flex items-center space-x-3 transform transition-all duration-500 ease-in-out ${
             toastType === "success"
-              ? "animate-slideIn border border-green-500 text-green-500 bg-white"
-              : "animate-slideIn border border-red-500 text-red-500 bg-white"
+              ? "animate-slideIn border border-green-500 text-green-600 bg-white"
+              : "animate-slideIn border border-red-500 text-red-600 bg-white"
           }`}
         >
           <span>{toastMessage}</span>
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 my-36 py-12 bg-white rounded-3xl shadow-xl">
-        {/* Product Image */}
+      {/* Main Section */}
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 my-40 py-12 bg-white rounded-3xl shadow-xl">
+        {/* Image */}
         <div className="flex justify-center items-start">
           <img
             src={productImage}
             alt={productName}
-            className="rounded-2xl shadow-md object-cover w-full h-[600px]"
+            className="rounded-2xl shadow-lg object-cover w-full h-[600px]"
           />
         </div>
 
-        {/* Product Info */}
-        <div className="flex flex-col space-y-6 justify-between">
+        {/* Info */}
+        <div className="flex flex-col space-y-8 justify-start">
+          {/* Breadcrumb */}
           <div className="text-sm text-gray-400">
             JHP Store &gt;{" "}
             <span className="text-black font-semibold">{productName}</span>
           </div>
 
-          <h1 className="text-4xl font-bold text-gray-900 leading-snug">
-            {productName}
-          </h1>
+          {/* Title & Type */}
+          <div>
+            <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
+              {productName}
+            </h1>
+            <span className="inline-block bg-gray-100 text-gray-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide shadow-sm">
+              {productType || "Coffee"}
+            </span>
+          </div>
 
+          {/* Flavors */}
           {productFlavors?.length > 0 && (
-            <div className="text-gray-600 text-sm">
-              <strong className="text-gray-800">Flavors:</strong>{" "}
+            <div className="text-sm text-gray-600">
+              <strong className="text-gray-800">Flavor Notes:</strong>{" "}
               {productFlavors.join(", ")}
             </div>
           )}
 
-          <p className="text-gray-700 text-base leading-relaxed">
+          {/* Description */}
+          <p className="text-gray-700 leading-relaxed text-base">
             {productDescription}
           </p>
 
+          {/* Size Selector */}
           <div className="flex flex-col max-w-[200px]">
             <label
               htmlFor="size"
               className="text-sm font-medium text-gray-800 mb-1"
             >
-              Size
+              Choose Size
             </label>
             <select
               id="size"
@@ -139,8 +150,9 @@ function StoreDetail() {
             </select>
           </div>
 
+          {/* Price and Quantity */}
           <div className="flex flex-col gap-4 mt-6">
-            <div className="text-2xl font-semibold text-gray-900">
+            <div className="text-3xl font-bold text-gray-900">
               Rs. {priceBySize * quantity}
             </div>
 
@@ -165,6 +177,7 @@ function StoreDetail() {
               </div>
             </div>
 
+            {/* Add to Cart Button */}
             <button
               className={`w-fit px-6 py-3 font-semibold rounded-lg shadow-md transition duration-200 ${
                 addedToCart
@@ -173,8 +186,18 @@ function StoreDetail() {
               }`}
               onClick={handleAddToCart}
             >
-              {addedToCart ? "✔ Added" : "Add to Cart"}
+              {addedToCart ? "✔ Added to Cart" : "Add to Cart"}
             </button>
+          </div>
+
+          {/* Extra Info Section */}
+          <div className="border-t pt-6 mt-8 text-sm text-gray-600 space-y-2">
+            <div className="flex items-center gap-2">
+              <Star size={16} className="text-yellow-500" />
+              <span>Rated 4.8/5 by 120+ coffee lovers</span>
+            </div>
+            <div>Handpicked beans from the lush hills of Illam</div>
+            <div>Small-batch roasted for rich, authentic flavor</div>
           </div>
         </div>
       </div>
