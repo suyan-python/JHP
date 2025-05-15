@@ -36,7 +36,9 @@ const FoodDisplay = () => {
   const renderProductSection = (title, products) => (
     <div className="fooddisplay mb-20">
       <div className="text-center mb-8">
-        <h2 className="text-2xl sm:text-3xl font-bold text-brownn">{title}</h2>
+        <h2 className="header text-2xl sm:text-3xl font-bold text-brownn">
+          {title}
+        </h2>
         <div className="w-20 h-1 bg-brownn mx-auto mt-2 rounded-full"></div>
       </div>
 
@@ -136,7 +138,7 @@ const FoodDisplay = () => {
   return (
     <section className="py-40" id="products">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl sm:text-4xl font-bold text-brownn text-center mb-16">
+        <h1 className="header text-3xl sm:text-4xl font-bold text-brownn text-center mb-16">
           Discover Our Finest Products
         </h1>
 
