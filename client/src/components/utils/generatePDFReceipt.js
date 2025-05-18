@@ -1,6 +1,6 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import logo from "../../assets/logo/JHPstore.png"; // should be base64 or accessible
+import logo from "../../assets/logo/JHPstore.png"; // Ensure this is base64 or publicly accessible if needed
 
 export const generatePDFReceipt = (order) => {
   const doc = new jsPDF();
@@ -70,8 +70,10 @@ export const generatePDFReceipt = (order) => {
   doc.setFont("helvetica", "normal");
   const date = new Date().toLocaleString();
   doc.text(`Date: ${date}`, 10, currentY);
-  if (order.orderId) {
-    doc.text(`Order ID: ${order.orderId}`, pageWidth - 60, currentY);
+
+  const orderId = order._id || order.orderId;
+  if (orderId) {
+    doc.text(`Order ID: ${orderId}`, pageWidth - 60, currentY);
   }
   currentY += lineSpacing;
 

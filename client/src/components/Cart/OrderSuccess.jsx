@@ -1,13 +1,24 @@
 import React from "react";
 import Lottie from "lottie-react";
 import riderAnimation from "../../assets/rider-animation.json";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
+import { generatePDFReceipt } from "../../components/utils/generatePDFReceipt"; // adjust the path as needed
 
 const OrderSuccess = () => {
   const navigate = useNavigate();
   const { width, height } = useWindowSize();
+  const location = useLocation();
+  const orderDetails = location.state?.orderDetails;
+
+  const handleDownloadReceipt = () => {
+    if (!orderDetails) {
+      alert("No order details found.");
+      return;
+    }
+    generatePDFReceipt(orderDetails);
+  };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center bg-white px-4 py-8 text-center">
@@ -31,12 +42,21 @@ const OrderSuccess = () => {
           <Lottie animationData={riderAnimation} loop autoplay />
         </div>
 
-        <button
-          onClick={() => navigate("/store")}
-          className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-6 rounded-xl w-full sm:w-auto"
-        >
-          Back to Store
-        </button>
+        <div className="flex flex-col items-center gap-4">
+          <button
+            onClick={() => navigate("/store")}
+            className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-6 rounded-xl w-full sm:w-auto"
+          >
+            Back to Store
+          </button>
+
+          <button
+            onClick={handleDownloadReceipt}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-xl w-full sm:w-auto"
+          >
+            Download Receipt
+          </button>
+        </div>
       </div>
     </div>
   );

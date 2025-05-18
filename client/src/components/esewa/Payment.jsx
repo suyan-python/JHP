@@ -12,7 +12,7 @@ const PaymentComponent = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/initiate-payment",
+        "https://jhp-backend.onrender.com/initiate-payment",
         {
           amount: totalAmount,
           productId: generateUniqueId(),

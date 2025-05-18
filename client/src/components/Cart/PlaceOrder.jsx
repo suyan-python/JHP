@@ -9,13 +9,14 @@ import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
   const { getTotalPrice, cartItems, clearCart } = useStore();
-  const initialTotal = getTotalPrice(); // Get the initial total from the StoreContext
+  const initialTotal = getTotalPrice();
 
   const [finalTotal, setFinalTotal] = useState(initialTotal);
   const [hasPromo, setHasPromo] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [promoApplied, setPromoApplied] = useState(false);
   const [onlinePaymentOption, setOnlinePaymentOption] = useState("");
+  const [loading, setLoading] = useState(false); // Loader state
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -26,6 +27,7 @@ const PlaceOrder = () => {
     subscribe: false,
     paymentMethod: "Cash",
   });
+
   const navigate = useNavigate();
 
   const paymentMethods = [
@@ -49,15 +51,8 @@ const PlaceOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Gather form data from state (since you're using controlled components)
     const orderDetails = {
-      firstName: formData.firstName, // Accessing formData state
-      lastName: formData.lastName,
-      phone: formData.phone,
-      email: formData.email,
-      deliveryTime: formData.deliveryTime,
-      subscribe: formData.subscribe,
-      paymentMethod: formData.paymentMethod,
+      ...formData,
       total: initialTotal,
       discountedTotal: finalTotal,
       shipping: 100,
@@ -75,17 +70,10 @@ const PlaceOrder = () => {
             shipping,
           } = item;
 
-          // Ensure that name and price are included in the item object
-          if (!name || !price) {
-            console.error(`Missing name or price for item: ${item.id}`);
-            return null; // Or handle this error as per your requirements
-          }
-
+          if (!name || !price) return null;
           const size = selectedSize || 250;
-
           const pricePerUnit =
             type === "washed process" ? pricesBySize?.[size] || price : price;
-
           const totalPrice = (pricePerUnit * quantity).toFixed(2);
 
           return {
@@ -99,34 +87,29 @@ const PlaceOrder = () => {
             shipping: shipping,
           };
         })
-        .filter(Boolean), // Remove null values if any items are missing required fields
+        .filter(Boolean),
     };
 
-    // Ensure items have the required fields before sending
     if (orderDetails.items.length === 0) {
       toast.error("No valid items to submit");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderDetails),
-      });
+      setLoading(true);
+      const response = await fetch(
+        "https://jhp-backend.onrender.com/api/orders",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderDetails),
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to place order");
 
-      toast.success("Order placed and saved to database!");
-      try {
-        console.log("Generating PDF with:", orderDetails);
-        generatePDFReceipt(orderDetails);
-      } catch (err) {
-        console.error("PDF generation failed:", err);
-        toast.error("Failed to generate PDF receipt.");
-      }
+      toast.success("Order placed success!");
 
-      // Clear form and cart
       setFormData({
         firstName: "",
         lastName: "",
@@ -142,10 +125,12 @@ const PlaceOrder = () => {
       setFinalTotal(0);
       setOnlinePaymentOption("");
       clearCart();
-      navigate("/order-success");
+      navigate("/order-success", { state: { orderDetails } });
     } catch (error) {
       console.error("Error placing order:", error);
       toast.error("Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -181,6 +166,7 @@ const PlaceOrder = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-lg max-w-md mx-auto my-44 p-6 md:p-8">
+      <ToastContainer />
       <div className="mb-6">
         <p className="text-sm font-semibold text-red-600">
           Total (Tax included):
@@ -193,6 +179,7 @@ const PlaceOrder = () => {
       <hr className="border-gray-200 mb-6" />
 
       {/* Payment selection */}
+
       <section className="mb-8">
         <p className="text-gray-700 font-semibold mb-2">
           Payment for bill of NRs.{" "}
@@ -210,11 +197,11 @@ const PlaceOrder = () => {
                 setFormData((prev) => ({ ...prev, paymentMethod: method }))
               }
               className={`px-5 py-2 rounded-md font-semibold text-sm transition-colors 
-            ${
-              formData.paymentMethod === method
-                ? "bg-blue-600 text-white shadow-md"
-                : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-            }`}
+              ${
+                formData.paymentMethod === method
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+              }`}
             >
               {method}
             </button>
@@ -330,10 +317,16 @@ const PlaceOrder = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg flex items-center justify-center gap-3 text-lg transition"
+          disabled={loading}
+          className={`w-full ${
+            loading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
+          } text-white font-bold py-4 rounded-lg flex items-center justify-center gap-3 text-lg transition`}
         >
-          <FaTruck size={20} />
-          Place Order
+          {loading && (
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          )}
+          <FaTruck />
+          {loading ? "Placing Order..." : "Place Order"}
         </button>
       </form>
 

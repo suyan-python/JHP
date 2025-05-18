@@ -50,16 +50,20 @@ const FoodDisplay = () => {
           >
             <Link to={`/store/${product._id}`}>
               <div className="relative h-72 sm:h-80 overflow-hidden">
-                <img
-                  src={itemImages[product._id]}
-                  alt={itemNames[product._id]}
-                  className="w-full h-full object-cover group-hover:opacity-0 transition duration-300 rounded-t-2xl"
-                />
-                <img
-                  src={product.hoverImage}
-                  alt="Hover"
-                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition duration-300 rounded-t-2xl"
-                />
+                <div className="relative h-72 sm:h-80 overflow-hidden">
+                  <img
+                    loading="lazy"
+                    src={itemImages[product._id]}
+                    alt={itemNames[product._id]}
+                    className="w-full h-full object-cover transition-opacity duration-300 rounded-t-2xl"
+                  />
+                  <img
+                    loading="lazy"
+                    src={product.hoverImage}
+                    alt="Hover"
+                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition duration-300 rounded-t-2xl"
+                  />
+                </div>
 
                 {/* Tag badge */}
                 <span className="absolute top-3 left-3 bg-yellow-400 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
