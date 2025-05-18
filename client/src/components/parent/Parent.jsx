@@ -32,7 +32,7 @@ function Parent() {
         </p>
 
         <a
-          href="https://about.jewelhimalayanproducts.com/"
+          href="https://jewelhimalayanproducts.com/"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-md hover:shadow-lg animate-fade-in delay-300 text-sm sm:text-base"
