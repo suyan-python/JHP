@@ -49,8 +49,8 @@ export function Navbar() {
           <div className="bg-[#E4C16F] py-2 md:py-3 px-4 text-center text-brownn text-sm md:text-base font-medium">
             <div className="relative flex items-center justify-center max-w-6xl mx-auto">
               <span className="mx-auto leading-tight">
-                Pay now!{" "}
-                <strong className="font-bold">Get Free Delivery</strong>
+                Get Exclusive offers!{" "}
+                <strong className="font-bold">From Seeds to Cup</strong>
               </span>
               <button
                 onClick={closeNotification}

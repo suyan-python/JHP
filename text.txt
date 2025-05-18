@@ -1,0 +1,1 @@
+ssh -i "jhpstore_back_end_key.pem" ubuntu@ec2-16-171-199-15.eu-north-1.compute.amazonaws.com
