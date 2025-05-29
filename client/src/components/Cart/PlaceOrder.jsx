@@ -171,9 +171,16 @@ const PlaceOrder = () => {
         <p className="text-sm font-semibold text-red-600">
           Total (Tax included):
         </p>
-        <h2 className="text-3xl font-extrabold text-blue-600 mt-1">
+        <h2 className="text-3xl font-extrabold text-bluee mt-1">
           NRs. {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
         </h2>
+
+        <div className="mt-2 text-sm text-gray-600 flex items-center gap-2">
+          <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 font-semibold rounded-md">
+            + Rs.100 shipping fee
+          </span>
+          <span className="italic text-gray-400">applied during checkout</span>
+        </div>
       </div>
 
       <hr className="border-gray-200 mb-6" />
@@ -199,8 +206,8 @@ const PlaceOrder = () => {
               className={`px-5 py-2 rounded-md font-semibold text-sm transition-colors 
               ${
                 formData.paymentMethod === method
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                  ? "bg-bluee text-white shadow-md"
+                  : "border border-bluee text-bluee hover:bg-bluee hover:text-white"
               }`}
             >
               {method}
@@ -217,24 +224,28 @@ const PlaceOrder = () => {
         </p>
 
         <div className="flex flex-col md:flex-row gap-4">
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            required
-            value={formData.firstName}
-            onChange={handleChange}
-            className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            required
-            value={formData.lastName}
-            onChange={handleChange}
-            className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <div className="w-full">
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              required
+              value={formData.firstName}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="w-full">
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              required
+              value={formData.lastName}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
         </div>
 
         <input
@@ -278,7 +289,7 @@ const PlaceOrder = () => {
               type="checkbox"
               checked={hasPromo}
               onChange={() => setHasPromo(!hasPromo)}
-              className="w-5 h-5 accent-blue-600 cursor-pointer"
+              className="w-5 h-5 accent-bluee cursor-pointer"
             />
             I have a promo code
           </label>
@@ -296,7 +307,7 @@ const PlaceOrder = () => {
               <button
                 type="button"
                 onClick={applyPromo}
-                className="px-5 py-3 bg-blue-600 text-white rounded-lg font-semibold text-sm hover:bg-blue-700 transition"
+                className="px-5 py-3 bg-bluee text-white rounded-lg font-semibold text-sm hover:bg-blue-700 transition"
               >
                 Apply
               </button>
@@ -310,7 +321,7 @@ const PlaceOrder = () => {
             name="subscribe"
             checked={formData.subscribe}
             onChange={handleChange}
-            className="w-5 h-5 accent-blue-600 cursor-pointer"
+            className="w-5 h-5 accent-bluee cursor-pointer"
           />
           Keep me up to date on news and exclusive offers.
         </label>
@@ -319,7 +330,7 @@ const PlaceOrder = () => {
           type="submit"
           disabled={loading}
           className={`w-full ${
-            loading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
+            loading ? "bg-blue-400" : "bg-bluee hover:bg-blue-700"
           } text-white font-bold py-4 rounded-lg flex items-center justify-center gap-3 text-lg transition`}
         >
           {loading && (

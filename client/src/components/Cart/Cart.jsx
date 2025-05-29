@@ -55,7 +55,7 @@ export function Cart() {
       </h2>
 
       <AnimatePresence>
-        <div className="space-y-6">
+        <div className="space-y-8">
           {cartEntries.map(([cartKey, { quantity, selectedSize }]) => {
             const [id] = cartKey.split("-");
             const name = itemNames[id];
@@ -72,43 +72,28 @@ export function Cart() {
             return (
               <motion.div
                 key={cartKey}
-                className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white p-5 rounded-2xl shadow-md"
+                className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition duration-300"
                 variants={itemVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
                 layout
               >
-                <div className="flex items-center gap-5 w-full md:w-auto">
+                {/* Product Info Section */}
+                <div className="flex items-center gap-6 w-full md:w-auto">
                   <img
                     src={image}
                     alt={name}
-                    className="w-20 h-20 object-cover rounded-lg border"
+                    className="w-24 h-24 object-cover rounded-xl border border-gray-300"
                   />
-                  <div>
+                  <div className="space-y-2">
                     <h3 className="text-lg font-semibold text-gray-800">
                       {name}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-500">
                       Size: {selectedSize}g
                     </p>
-                    <div className="flex items-center gap-3 mt-2">
-                      <span className="text-sm text-gray-600">Quantity:</span>
-                      <button
-                        onClick={() => removeFromCart(id, selectedSize)}
-                        className="p-1 rounded bg-gray-100 hover:bg-gray-200"
-                      >
-                        <FaMinus className="text-sm" />
-                      </button>
-                      <span className="text-base font-medium">{quantity}</span>
-                      <button
-                        onClick={() => addToCart(id, 1, selectedSize)}
-                        className="p-1 rounded bg-gray-100 hover:bg-gray-200"
-                      >
-                        <FaPlus className="text-sm" />
-                      </button>
-                    </div>
-                    <p className="text-sm mt-2 text-gray-700">
+                    <p className="text-sm text-gray-700">
                       <span className="font-medium">Rs. {pricePerUnit}</span>{" "}
                       each
                     </p>
@@ -118,13 +103,36 @@ export function Cart() {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => handleRemoveItem(cartKey)}
-                  className="text-red-500 hover:text-red-700 transition"
-                  title="Remove item"
-                >
-                  <FaTrashAlt className="text-xl" />
-                </button>
+                {/* Quantity + Remove */}
+                <div className="flex flex-col md:items-end items-center gap-4 w-full md:w-auto">
+                  <div className="flex items-center gap-3 bg-gray-100 px-3 py-1.5 rounded-lg shadow-inner">
+                    <button
+                      onClick={() => removeFromCart(id, selectedSize)}
+                      className="p-1 text-gray-600 hover:text-gray-800 transition"
+                      title="Decrease quantity"
+                    >
+                      <FaMinus />
+                    </button>
+                    <span className="text-base font-medium px-2">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={() => addToCart(id, 1, selectedSize)}
+                      className="p-1 text-gray-600 hover:text-gray-800 transition"
+                      title="Increase quantity"
+                    >
+                      <FaPlus />
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => handleRemoveItem(cartKey)}
+                    className="text-red-500 hover:text-red-600 transition"
+                    title="Remove item"
+                  >
+                    <FaTrashAlt className="text-xl" />
+                  </button>
+                </div>
               </motion.div>
             );
           })}
@@ -132,22 +140,22 @@ export function Cart() {
       </AnimatePresence>
 
       {/* Cart Summary */}
-      <div className="mt-10 border-t pt-6 text-right">
-        <p className="text-xl font-semibold text-gray-800">
+      <div className="mt-12 border-t border-gray-200 pt-6  mx-auto sm:mx-0 text-right">
+        <p className="text-2xl font-bold text-gray-900 mb-6">
           Total: Rs. {getTotalPrice()}
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-end gap-4 mt-6">
+        <div className="flex flex-col sm:flex-row sm:justify-end gap-4">
           <button
             onClick={clearCart}
-            className="px-5 py-2 border border-red-400 text-red-500 font-medium rounded-md hover:bg-red-50 transition duration-200"
+            className="w-full sm:w-40 px-6 py-3 border border-red-400 text-red-600 font-medium rounded-md hover:bg-red-100 transition duration-300"
           >
             Clear Cart
           </button>
 
-          <NavLink to="/payment" className="w-full sm:w-auto">
-            <button className="w-full sm:w-auto px-6 py-2 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition duration-200">
-              Proceed to Payment
+          <NavLink to="/payment" className="w-full sm:w-40">
+            <button className="w-full px-6 py-3 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition duration-300">
+              Proceed to Pay
             </button>
           </NavLink>
         </div>

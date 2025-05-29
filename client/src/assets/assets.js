@@ -26,7 +26,11 @@ import menu_20 from "./menu_8.png";
 import food_1 from "./image1.png";
 import med from "./med.jpg";
 import med2 from "./med2.JPG";
-import drip from "./drip.JPG";
+import drip from "./prodc/drip.JPG";
+import drip2 from "./prodc/drip2.JPG";
+import drip3 from "./prodc/drip3.JPG";
+import pack from "./prodc/pack.JPG";
+import pack2 from "./prodc/pack2.JPG";
 import dripH from "./dripH.JPG";
 import special from "./special.JPG";
 import specialH from "./specialH.JPG";
@@ -191,84 +195,40 @@ export const menu_list = [
 export const food_list = [
   {
     _id: 1,
-    name: "Special Edition",
-    image: special,
-    hoverImage: specialH,
-    price: 1800,
+    name: "Single Origin Espresso",
+    image: pack,
+    hoverImage: pack2,
+    price: 1000,
     description:
-      "Food provides essential nutrients for overall health and well-being",
+      "A bold, rich espresso made from carefully selected single-origin beans. Perfectly roasted to unlock deep chocolate notes and a smooth crema finish. Ideal for espresso lovers who savor intensity and precision.",
     category: "coffee",
-    flavors: ["flavor1", "flavor2"],
-    type: "special editions",
+    flavors: ["WASHED", "NATURAL", "EXPERIMENTAL"],
+    type: "espresso",
   },
 
   {
     _id: 2,
-    name: "Washed",
-    image: drip,
-    hoverImage: dripH,
+    name: "Drip Boxes",
+    image: drip2,
+    hoverImage: drip3,
     price: 600,
-    description: "5pcs per box. Per sachets = 14grams",
+    description:
+      "Brew café-quality coffee anywhere with our Drip Box set. Each box contains 5 individually packed sachets (14g each), delivering convenience without compromising flavor. Ideal for travelers, campers, or busy mornings.",
     category: "coffee",
-    flavors: ["flavor1", "flavor2"],
-    type: "drip box",
-  },
-  {
-    _id: 3,
-    name: "Natural",
-    image: drip,
-    hoverImage: dripH,
-    price: 700,
-    description: "5pcs per box. Per sachets = 14grams",
-    category: "coffee",
-    flavors: ["flavor1", "flavor2"],
+    flavors: ["WASHED", "NATURAL", "EXPERIMENTAL"],
     type: "drip box",
   },
 
   {
-    _id: 4,
-    name: "Filter Roast",
+    _id: 3,
+    name: "Filter Roasted Coffee Beans",
     image: med2,
     hoverImage: med,
     price: 1000,
     description:
-      "Food provides essential nutrients for overall health and well-being",
+      "Artisanally roasted for filter brewing, this coffee brings out vibrant acidity, floral undertones, and a clean finish. Available in 250g, 500g, and 1kg — choose your size and enjoy the purity of the washed process.",
     category: "coffee",
-    flavors: ["flavor1", "flavor2"],
-    type: "washed process",
-    pricesBySize: {
-      250: 1000,
-      500: 1800,
-      1000: 3200,
-    },
-  },
-  {
-    _id: 5,
-    name: "Med Roast",
-    image: med2,
-    hoverImage: med,
-    price: 1000,
-    description:
-      "Food provides essential nutrients for overall health and well-being",
-    category: "coffee",
-    flavors: ["flavor1", "flavor2"],
-    type: "washed process",
-    pricesBySize: {
-      250: 1000,
-      500: 1800,
-      1000: 3200,
-    },
-  },
-  {
-    _id: 6,
-    name: "Med Dark Roast",
-    image: med2,
-    hoverImage: med,
-    price: 1000,
-    description:
-      "Food provides essential nutrients for overall health and well-being",
-    category: "coffee",
-    flavors: ["flavor1", "flavor2"],
+    flavors: ["WASHED", "NATURAL", "EXPERIMENTAL"],
     type: "washed process",
     pricesBySize: {
       250: 1000,
