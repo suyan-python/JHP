@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Story } from "./Story";
-import { WhyJHP } from "./Hero2";
-import { ExperienceVideo } from "./Hero3";
 import { NavLink } from "react-router-dom";
 
-// Import all images
 import img1 from "../assets/farm/1.JPG";
 import img2 from "../assets/farm/2.JPG";
 import img3 from "../assets/farm/3.JPG";
@@ -14,9 +10,12 @@ import img6 from "../assets/farm/6.JPG";
 import img7 from "../assets/farm/7.JPG";
 import img8 from "../assets/farm/8.JPG";
 import img9 from "../assets/farm/9.JPG";
-import TrustedBy from "./TrustedBy";
+
 import SlideCard from "./SlideCard";
+import { Story } from "./Story";
 import Partners from "./Partners";
+import { WhyJHP } from "./Hero2";
+import TrustedBy from "./TrustedBy";
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
@@ -31,55 +30,60 @@ const HomeHero = () => {
   }, []);
 
   return (
-    <div className="relative my-40 overflow-hidden rounded-[30px] sm:rounded-[40px] lg:rounded-[60px] ">
-      {/* Slideshow Background with Gradient Overlay */}
-      <div className="absolute inset-0 w-full h-[55vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[90vh] z-0">
+    <div className="relative overflow-hidden my-20 sm:my-32 md:my-40 rounded-[30px] sm:rounded-[40px] lg:rounded-[60px] shadow-xl">
+      {/* Background Slideshow */}
+      <div className="absolute inset-0 h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-[95vh]">
         {images.map((img, index) => (
           <img
             key={index}
             src={img}
             alt={`Slide ${index + 1}`}
-            className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out rounded-[30px] sm:rounded-[40px] lg:rounded-[60px] ${
+            className={`absolute inset-0 w-full h-full object-cover rounded-[30px] sm:rounded-[40px] lg:rounded-[60px] transition-opacity duration-[2000ms] ease-in-out ${
               index === current ? "opacity-100" : "opacity-0"
             }`}
           />
         ))}
-
-        {/* Dark Gradient Overlay for Text Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-[30px] sm:rounded-[40px] lg:rounded-[60px]" />
+        {/* Dark overlay for contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent rounded-[30px] sm:rounded-[40px] lg:rounded-[60px]" />
       </div>
 
       {/* Hero Content */}
       <div
-        className="relative z-10 flex items-center justify-center text-center px-4 sm:px-6 lg:px-12 h-[55vh] sm:h-[60vh] md:h-[70vh] lg:h-[72vh] xl:h-[90vh]"
+        className="relative z-10 flex flex-col items-center justify-center text-center px-6 md:px-10 h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-[95vh] text-white"
         id="home"
       >
-        <div className="max-w-3xl mx-auto text-white drop-shadow-xl">
-          <h1 className="header text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
-            Discover the Art of Fine Coffee
-          </h1>
-          <p className="text-sm sm:text-base md:text-lg mb-6 sm:mb-8 text-white/90">
-            Jewel Himalayan Products (JHP) delivers 100% premium organic Arabica
-            beans while empowering local farmers with expert support in
-            cultivation and processing.
-          </p>
-
-          <NavLink
-            to="/store"
-            className="header inline-block border border-white text-white hover:bg-white hover:text-black px-6 sm:px-8 py-2 sm:py-3 rounded-2xl text-sm sm:text-lg font-semibold transition-all duration-300"
-          >
-            Order Coffee Beans
-          </NavLink>
-        </div>
+        <h1 className=" header animate-fade-in-up text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 sm:mb-6 leading-tight drop-shadow-lg">
+          Discover the Art of Fine Coffee
+        </h1>
+        <p className="animate-fade-in-up text-base sm:text-lg md:text-xl mb-8 text-white/90 max-w-2xl drop-shadow-md">
+          Jewel Himalayan Products (JHP) brings you 100% premium organic Arabica
+          beans, empowering local farmers with expert support in cultivation and
+          processing.
+        </p>
+        <NavLink
+          to="/store"
+          className="animate-fade-in-up inline-block border border-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-black px-8 py-3 sm:px-10 sm:py-4 rounded-full text-lg sm:text-xl font-semibold transition-all duration-300"
+        >
+          Order Coffee Beans
+        </NavLink>
       </div>
 
-      {/* Below Hero Sections */}
+      {/* Rest of homepage sections */}
       <SlideCard />
       <Story />
       <Partners />
       <WhyJHP />
-      {/* <ExperienceVideo /> */}
       <TrustedBy />
+
+      <style>{`
+        @keyframes fadeInUp {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 1s ease both;
+        }
+      `}</style>
     </div>
   );
 };

@@ -39,7 +39,7 @@ export function Navbar() {
   ];
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 transition-all duration-500">
+    <div className="fixed top-0 left-0 w-full z-20 transition-all duration-500">
       {/* Notification Bar */}
       <div className="w-full py-2.5 font-medium text-xs sm:text-sm text-white text-center bg-gradient-to-r from-[#5A3825] via-[#7A4B35] to-[#A66548] shadow">
         Special Deal: Free Shipping on Orders Above Rs.2500 Purchase
@@ -53,9 +53,14 @@ export function Navbar() {
             : "bg-transparent py-7"
         }`}
       >
+        {/* className="h-20 md:h-24" */}
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2">
-          <img src={JHPstore} alt="JHP Store" className="h-20 md:h-24" />
+          <img
+            src={JHPstore}
+            alt="JHP Store"
+            className={`${scrolled ? "h-16 p-2" : "h-20 md:h-20 py-4"}`}
+          />
         </NavLink>
 
         {/* Desktop Nav */}

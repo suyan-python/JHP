@@ -56,19 +56,19 @@ export function Footer() {
               <li>
                 Phone:{" "}
                 <a
-                  href="tel:+9779800000000"
+                  href="tel:+9779849121515"
                   className="hover:text-amber-400 transition-colors duration-200"
                 >
-                  +977 980-000-0000
+                  +977 9849121515
                 </a>
               </li>
               <li>
                 Email:{" "}
                 <a
-                  href="mailto:contact@jhpstore.com"
+                  href="mailto:jhpstore2025@gmail.com"
                   className="hover:text-amber-400 transition-colors duration-200"
                 >
-                  contact@jhpstore.com
+                  jhpstore2025@gmail.com
                 </a>
               </li>
             </ul>
