@@ -49,7 +49,7 @@ export function Cart() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 md:px-6 py-12 my-36">
+    <div className="max-w-full mx-auto px-4 md:px-6 py-12 my-36 bg-slate-50 rounded">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">
         Your Cart
       </h2>
@@ -72,7 +72,7 @@ export function Cart() {
             return (
               <motion.div
                 key={cartKey}
-                className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition duration-300"
+                className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white p-6 rounded-3xl border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-300"
                 variants={itemVariants}
                 initial="hidden"
                 animate="visible"
@@ -84,17 +84,17 @@ export function Cart() {
                   <img
                     src={image}
                     alt={name}
-                    className="w-24 h-24 object-cover rounded-xl border border-gray-300"
+                    className="w-24 h-24 object-cover rounded-xl border border-gray-200 shadow-sm"
                   />
                   <div className="space-y-2">
-                    <h3 className="text-lg font-semibold text-gray-800">
+                    <h3 className="text-lg font-semibold text-gray-900">
                       {name}
                     </h3>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-600">
                       Size: {selectedSize}g
                     </p>
-                    <p className="text-sm text-gray-700">
-                      <span className="font-medium">Rs. {pricePerUnit}</span>{" "}
+                    <p className="text-sm text-gray-800">
+                      <span className="font-semibold">Rs. {pricePerUnit}</span>{" "}
                       each
                     </p>
                     <p className="text-sm font-semibold text-gray-900">
@@ -105,20 +105,20 @@ export function Cart() {
 
                 {/* Quantity + Remove */}
                 <div className="flex flex-col md:items-end items-center gap-4 w-full md:w-auto">
-                  <div className="flex items-center gap-3 bg-gray-100 px-3 py-1.5 rounded-lg shadow-inner">
+                  <div className="flex items-center gap-3 bg-gray-100 px-4 py-2 rounded-lg shadow-inner">
                     <button
                       onClick={() => removeFromCart(id, selectedSize)}
-                      className="p-1 text-gray-600 hover:text-gray-800 transition"
+                      className="p-2 text-gray-700 hover:text-gray-900 transition"
                       title="Decrease quantity"
                     >
                       <FaMinus />
                     </button>
-                    <span className="text-base font-medium px-2">
+                    <span className="text-base font-semibold px-3">
                       {quantity}
                     </span>
                     <button
                       onClick={() => addToCart(id, 1, selectedSize)}
-                      className="p-1 text-gray-600 hover:text-gray-800 transition"
+                      className="p-2 text-gray-700 hover:text-gray-900 transition"
                       title="Increase quantity"
                     >
                       <FaPlus />
@@ -127,10 +127,10 @@ export function Cart() {
 
                   <button
                     onClick={() => handleRemoveItem(cartKey)}
-                    className="text-red-500 hover:text-red-600 transition"
+                    className="text-red-600 hover:text-red-700 transition font-semibold"
                     title="Remove item"
                   >
-                    <FaTrashAlt className="text-xl" />
+                    <FaTrashAlt className="text-2xl" />
                   </button>
                 </div>
               </motion.div>

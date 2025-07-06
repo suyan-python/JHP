@@ -14,22 +14,21 @@ import StoreContextProvider from "./context/StoreContext.jsx";
 import Success from "./components/esewa/Success.jsx";
 import Failure from "./components/esewa/Failure.jsx";
 import Payment from "./components/esewa/Payment.jsx";
-import PopupOffer from "./popup.jsx";
 import PlaceOrder from "./components/Cart/PlaceOrder.jsx";
-import JHPHome from "./components/JHP/jhpHome.jsx";
-import JHP from "./components/JHP/jhp.jsx";
-import JHCB from "./components/JHCB/JHCB.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
-import Inaya from "./components/iNaya/Inaya.jsx";
 import Parent from "./components/Parent/Parent.jsx";
 import StoreDetail from "./components/FoodDisplay/StoreDetail.jsx";
 import { Cart } from "./components/Cart/Cart.jsx";
 import OrderSuccess from "./components/Cart/OrderSuccess.jsx";
 import Popup from "./components/Popup.jsx";
+import SEOObjective from "./components/SEO.jsx";
+import AdminDashboard from "./components/admin/AdminDashboard.jsx";
 
 function AppContent() {
   const location = useLocation();
-  const hideNavbarFooter = location.pathname === "/order-success";
+  const hideNavbarFooter =
+    location.pathname === "/order-success" ||
+    location.pathname === "/admin9841";
 
   return (
     <>
@@ -37,13 +36,13 @@ function AppContent() {
       <ScrollToTop />
       {!hideNavbarFooter && <Navbar />}
       <Routes>
+        <Route path="/admin9841" element={<AdminDashboard />} />
         <Route path="/" element={<Hero />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/store" element={<FoodDisplay />} />
         <Route path="/store/:id" element={<StoreDetail />} />
-        {/* <Route path="/JHP" element={<JHP />} />
-        <Route path="/JHCB" element={<JHCB />} />
-        <Route path="/inaya" element={<Inaya />} /> */}
+        <Route path="/seo" element={<SEOObjective />} />
+
         <Route path="/parent" element={<Parent />} />
         <Route path="/payment" element={<PlaceOrder />} />
         <Route path="/order-success" element={<OrderSuccess />} />

@@ -12,10 +12,7 @@ export function Navbar() {
 
   const location = useLocation();
 
-  const handleScroll = () => {
-    setScrolled(window.scrollY > 10);
-  };
-
+  const handleScroll = () => setScrolled(window.scrollY > 10);
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
   useEffect(() => {
@@ -53,7 +50,6 @@ export function Navbar() {
             : "bg-transparent py-7"
         }`}
       >
-        {/* className="h-20 md:h-24" */}
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2">
           <img
@@ -126,7 +122,7 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Desktop Cart */}
+        {/* Cart Icon for Desktop */}
         <div className="hidden md:flex items-center gap-4">
           <NavLink to="/cart" className="relative p-2 rounded-full">
             <ShoppingCart
@@ -214,6 +210,22 @@ export function Navbar() {
           </div>
         </div>
       </nav>
+
+      {/* Floating Cart Icon for Mobile */}
+      <div className="fixed bottom-6 right-6 z-50 md:hidden">
+        <NavLink
+          to="/cart"
+          className="relative bg-[#A66548] shadow-lg hover:scale-105 transition transform"
+          aria-label="Cart"
+        >
+          <ShoppingCart className="w-12 h-12 text-soft bg-brownn p-2 rounded-2xl" />
+          {Object.keys(cartItems || {}).length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs px-1">
+              {Object.keys(cartItems).length}
+            </span>
+          )}
+        </NavLink>
+      </div>
     </div>
   );
 }

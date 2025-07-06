@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaTruck } from "react-icons/fa";
-import PaymentComponent from "../esewa/Payment";
 import { useStore } from "../../context/StoreContext";
 import { ToastContainer, toast } from "react-toastify";
-import { generatePDFReceipt } from "../utils/generatePDFReceipt";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
@@ -15,8 +13,7 @@ const PlaceOrder = () => {
   const [hasPromo, setHasPromo] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [promoApplied, setPromoApplied] = useState(false);
-  const [onlinePaymentOption, setOnlinePaymentOption] = useState("");
-  const [loading, setLoading] = useState(false); // Loader state
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -123,7 +120,6 @@ const PlaceOrder = () => {
       setPromoCode("");
       setPromoApplied(false);
       setFinalTotal(0);
-      setOnlinePaymentOption("");
       clearCart();
       navigate("/order-success", { state: { orderDetails } });
     } catch (error) {
@@ -165,66 +161,22 @@ const PlaceOrder = () => {
   }, [hasPromo, initialTotal]);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg max-w-md mx-auto my-44 p-6 md:p-8">
+    <div className="bg-white rounded-3xl shadow-xl max-w-7xl mx-auto my-20 p-10 md:p-16 flex flex-col md:flex-row gap-12">
       <ToastContainer />
-      <div className="mb-6">
-        <p className="text-sm font-semibold text-red-600">
-          Total (Tax included):
-        </p>
-        <h2 className="text-3xl font-extrabold text-bluee mt-1">
-          NRs. {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
+
+      {/* LEFT: Form */}
+      <div className="flex-1 max-w-lg">
+        <h2 className="text-4xl font-extrabold text-gray-900 mb-8">
+          Place Your Order
         </h2>
 
-        <div className="mt-2 text-sm text-gray-600 flex items-center gap-2">
-          <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 font-semibold rounded-md">
-            + Rs.100 shipping fee
-          </span>
-          <span className="italic text-gray-400">applied during checkout</span>
-        </div>
-      </div>
+        <form onSubmit={handleSubmit} className="space-y-7">
+          <p className="text-gray-700 mb-4">
+            Please fill in your details so we can call you for delivery
+            confirmation.
+          </p>
 
-      <hr className="border-gray-200 mb-6" />
-
-      {/* Payment selection */}
-
-      <section className="mb-8">
-        <p className="text-gray-700 font-semibold mb-2">
-          Payment for bill of NRs.{" "}
-          {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
-        </p>
-        <p className="text-gray-500 font-medium mb-3">
-          On Delivery Payment Options:
-        </p>
-        <div className="flex flex-wrap gap-3">
-          {paymentMethods.map((method) => (
-            <button
-              key={method}
-              type="button"
-              onClick={() =>
-                setFormData((prev) => ({ ...prev, paymentMethod: method }))
-              }
-              className={`px-5 py-2 rounded-md font-semibold text-sm transition-colors 
-              ${
-                formData.paymentMethod === method
-                  ? "bg-bluee text-white shadow-md"
-                  : "border border-bluee text-bluee hover:bg-bluee hover:text-white"
-              }`}
-            >
-              {method}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <p className="text-gray-600 text-sm mb-4">
-          Please fill in your details so we can call you for delivery
-          confirmation.
-        </p>
-
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <input
               type="text"
               name="firstName"
@@ -232,10 +184,8 @@ const PlaceOrder = () => {
               required
               value={formData.firstName}
               onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
             />
-          </div>
-          <div className="w-full">
             <input
               type="text"
               name="lastName"
@@ -243,33 +193,31 @@ const PlaceOrder = () => {
               required
               value={formData.lastName}
               onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
             />
           </div>
-        </div>
 
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Mobile Number"
-          required
-          value={formData.phone}
-          onChange={handleChange}
-          className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Mobile Number"
+            required
+            value={formData.phone}
+            onChange={handleChange}
+            className="w-full rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+          />
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          required
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            required
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+          />
 
-        <div className="flex items-center gap-3">
-          <label className="font-medium text-gray-600 text-sm">
+          <label className="block text-gray-700 font-medium mb-2">
             Delivery Time:
           </label>
           <input
@@ -278,70 +226,116 @@ const PlaceOrder = () => {
             required
             value={formData.deliveryTime}
             onChange={handleChange}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
           />
-        </div>
 
-        {/* Promo Section */}
-        <div className="space-y-3">
-          <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer select-none">
+          {/* Promo Section */}
+          <div className="mt-6">
+            <label className="flex items-center gap-3 text-gray-700 font-semibold cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={hasPromo}
+                onChange={() => setHasPromo(!hasPromo)}
+                className="w-6 h-6 accent-blue-600 cursor-pointer"
+              />
+              I have a promo code
+            </label>
+
+            {hasPromo && (
+              <div className="flex gap-4 mt-4">
+                <input
+                  type="text"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                  placeholder="Enter Promo Code"
+                  className="flex-grow rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+                />
+                <button
+                  type="button"
+                  onClick={applyPromo}
+                  className="px-6 py-4 bg-blue-600 text-white rounded-xl font-semibold text-lg hover:bg-blue-700 transition"
+                >
+                  Apply
+                </button>
+              </div>
+            )}
+          </div>
+
+          <label className="flex items-center gap-3 mt-8 text-gray-700 font-semibold cursor-pointer select-none">
             <input
               type="checkbox"
-              checked={hasPromo}
-              onChange={() => setHasPromo(!hasPromo)}
-              className="w-5 h-5 accent-bluee cursor-pointer"
+              name="subscribe"
+              checked={formData.subscribe}
+              onChange={handleChange}
+              className="w-6 h-6 accent-blue-600 cursor-pointer"
             />
-            I have a promo code
+            Keep me up to date on news and exclusive offers.
           </label>
 
-          {hasPromo && (
-            <div className="flex gap-3 items-center">
-              <input
-                type="text"
-                value={promoCode}
-                onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
-                placeholder="Enter Promo Code"
-                className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full mt-8 ${
+              loading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
+            } text-white font-extrabold py-5 rounded-xl flex items-center justify-center gap-4 text-xl transition`}
+          >
+            {loading && (
+              <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            )}
 
+            <FaTruck />
+            {loading ? "Placing Order..." : "Place Order"}
+          </button>
+        </form>
+      </div>
+
+      {/* RIGHT: Order summary & Payment */}
+      <div className="flex-1 max-w-md bg-gray-50 rounded-3xl p-10 shadow-lg flex flex-col justify-between">
+        <div>
+          <h3 className="text-3xl font-extrabold text-gray-900 mb-6">
+            Order Summary
+          </h3>
+
+          <p className="text-gray-600 mb-3">
+            Total (Tax included):{" "}
+            <span className="font-bold text-xl text-blue-700">
+              NRs. {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
+            </span>
+          </p>
+          <p className="mb-8 text-yellow-900 bg-yellow-100 font-semibold px-4 py-2 rounded-xl inline-block">
+            + Rs. 100 shipping fee (applied at checkout)
+          </p>
+
+          <p className="mb-3 text-gray-700 font-semibold">Payment Options:</p>
+          <div className="flex flex-wrap gap-3">
+            {paymentMethods.map((method) => (
               <button
+                key={method}
                 type="button"
-                onClick={applyPromo}
-                className="px-5 py-3 bg-bluee text-white rounded-lg font-semibold text-sm hover:bg-blue-700 transition"
+                onClick={() =>
+                  setFormData((prev) => ({ ...prev, paymentMethod: method }))
+                }
+                className={`px-6 py-3 rounded-2xl font-semibold text-sm transition-colors ${
+                  formData.paymentMethod === method
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                }`}
               >
-                Apply
+                {method}
               </button>
-            </div>
-          )}
+            ))}
+          </div>
         </div>
 
-        <label className="flex items-center gap-2 text-gray-600 text-sm cursor-pointer select-none">
-          <input
-            type="checkbox"
-            name="subscribe"
-            checked={formData.subscribe}
-            onChange={handleChange}
-            className="w-5 h-5 accent-bluee cursor-pointer"
-          />
-          Keep me up to date on news and exclusive offers.
-        </label>
-
-        <button
-          type="submit"
-          disabled={loading}
-          className={`w-full ${
-            loading ? "bg-blue-400" : "bg-bluee hover:bg-blue-700"
-          } text-white font-bold py-4 rounded-lg flex items-center justify-center gap-3 text-lg transition`}
-        >
-          {loading && (
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-          )}
-          <FaTruck />
-          {loading ? "Placing Order..." : "Place Order"}
-        </button>
-      </form>
-
-      <ToastContainer />
+        <div className="mt-10">
+          <p className="text-gray-700 mb-1">
+            Selected payment method:
+            <span className="font-semibold ml-2 text-blue-700">
+              {formData.paymentMethod}
+            </span>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

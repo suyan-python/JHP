@@ -62,7 +62,7 @@ export const generatePDFReceipt = (order) => {
   doc.setFontSize(16);
   doc.setTextColor(40);
   doc.setFont("helvetica", "bold");
-  doc.text("Order Receipt", pageWidth / 2, currentY, null, null, "center");
+  doc.text("Invoice", pageWidth / 2, currentY, null, null, "right");
   currentY += lineSpacing + 4;
 
   // === Order Info ===
