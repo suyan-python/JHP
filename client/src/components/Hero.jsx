@@ -16,6 +16,7 @@ import img8 from "../assets/farm/8.JPG";
 import img9 from "../assets/farm/9.JPG";
 import TrustedBy from "./TrustedBy";
 import SlideCard from "./SlideCard";
+import Partners from "./Partners";
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
@@ -75,6 +76,7 @@ const HomeHero = () => {
       {/* Below Hero Sections */}
       <SlideCard />
       <Story />
+      <Partners />
       <WhyJHP />
       {/* <ExperienceVideo /> */}
       <TrustedBy />

@@ -25,6 +25,7 @@ import Parent from "./components/Parent/Parent.jsx";
 import StoreDetail from "./components/FoodDisplay/StoreDetail.jsx";
 import { Cart } from "./components/Cart/Cart.jsx";
 import OrderSuccess from "./components/Cart/OrderSuccess.jsx";
+import Popup from "./components/Popup.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -32,6 +33,7 @@ function AppContent() {
 
   return (
     <>
+      <Popup /> {/* <-- Add your popup here so it always loads */}
       <ScrollToTop />
       {!hideNavbarFooter && <Navbar />}
       <Routes>
