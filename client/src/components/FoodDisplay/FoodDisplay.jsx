@@ -141,7 +141,7 @@ const FoodDisplay = () => {
       : food_list.filter((product) => product.category === selectedCategory);
 
   const filterRoast = applySorting(
-    allProducts.filter((product) => product.type === "espresso")
+    allProducts.filter((product) => product.type === "cold brew")
   );
   const dripBox = applySorting(
     allProducts.filter((product) => product.type === "drip box")

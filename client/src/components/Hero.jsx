@@ -14,6 +14,8 @@ import img6 from "../assets/farm/6.JPG";
 import img7 from "../assets/farm/7.JPG";
 import img8 from "../assets/farm/8.JPG";
 import img9 from "../assets/farm/9.JPG";
+import TrustedBy from "./TrustedBy";
+import SlideCard from "./SlideCard";
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
@@ -71,9 +73,11 @@ const HomeHero = () => {
       </div>
 
       {/* Below Hero Sections */}
+      <SlideCard />
       <Story />
       <WhyJHP />
-      <ExperienceVideo />
+      {/* <ExperienceVideo /> */}
+      <TrustedBy />
     </div>
   );
 };

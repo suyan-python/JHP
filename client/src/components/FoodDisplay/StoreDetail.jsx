@@ -37,14 +37,16 @@ function StoreDetail() {
   const flavorDescriptions = {
     WASHED:
       "Clean, bright, and vibrant — our washed coffees highlight the pure essence of the bean. Expect crisp acidity, floral aromatics, and a refined, tea-like clarity that showcases origin at its finest.",
-    NATURAL:
+    ANEROBIC:
       "Sweet, bold, and full-bodied — natural process coffees are sun-dried inside the cherry, giving you a fruit-forward cup with notes of berries, tropical fruit, and a rich, wine-like depth.",
     EXPERIMENTAL:
       "Innovative and intriguing — our experimental lots explore unique fermentation techniques to unlock complex layers of flavor. Expect adventurous profiles, from jammy sweetness to spicy or boozy undertones.",
   };
 
   const priceBySize =
-    productType === "washed process"
+    productType === "washed process" ||
+    productType === "anerobic process" ||
+    productType === "cold brew"
       ? itemPricesBySize[id]?.[selectedSize] || productPrice
       : productPrice;
 
@@ -129,7 +131,11 @@ function StoreDetail() {
                     onChange={(e) => setSelectedSize(Number(e.target.value))}
                   >
                     <option value={250}>250g</option>
-                    {productType === "washed process" && (
+                    {[
+                      "washed process",
+                      "anerobic process",
+                      "cold brew",
+                    ].includes(productType) && (
                       <>
                         <option value={500}>500g</option>
                         <option value={1000}>1kg</option>
@@ -204,7 +210,7 @@ function StoreDetail() {
               </button>
             </div>
             <div className="text-red-500 font-semibold pt-4">
-              **Note: EXPERIMENTAL are only available after pre-orders**
+              *Note: EXPERIMENTAL are only available after pre-orders
             </div>
           </div>
 

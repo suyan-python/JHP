@@ -18,7 +18,9 @@ const CartProvider = ({ children }) => {
   const itemTypes = Object.fromEntries(food_list.map((i) => [i._id, i.type]));
   const itemPricesBySize = Object.fromEntries(
     food_list
-      .filter((i) => i.type === "washed process")
+      .filter((i) =>
+        ["washed process", "anerobic process", "cold brew"].includes(i.type)
+      )
       .map((i) => [i._id, i.pricesBySize || {}])
   );
 
@@ -43,7 +45,9 @@ const CartProvider = ({ children }) => {
       // new entry → gather full data for PlaceOrder
       const type = itemTypes[itemId];
       const pricePerUnit =
-        type === "washed process"
+        type === "washed process" ||
+        type === "anerobic process" ||
+        type === "cold brew"
           ? itemPricesBySize[itemId]?.[selectedSize] ?? itemPrices[itemId]
           : itemPrices[itemId];
 
@@ -54,7 +58,7 @@ const CartProvider = ({ children }) => {
           name: itemNames[itemId],
           image: itemImages[itemId],
           type,
-          pricesBySize: itemPricesBySize[itemId], // undefined for non‑washed items
+          pricesBySize: itemPricesBySize[itemId], // undefined for non-washed items
           price: pricePerUnit, // always something
           quantity,
           selectedSize,
