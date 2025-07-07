@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaBoxOpen, FaClock, FaCheckCircle, FaSyncAlt } from "react-icons/fa";
+import {
+  FaBoxOpen,
+  FaClock,
+  FaCheckCircle,
+  FaSyncAlt,
+  FaTrash,
+} from "react-icons/fa";
 
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lastRefreshed, setLastRefreshed] = useState(null);
+  // const server = process.env.REACT_APP_BACKEND_SERVER;
+  // const server = process.env.BACKEND_SERVER;
 
   const fetchOrders = async () => {
     try {
@@ -48,6 +56,20 @@ const AdminDashboard = () => {
     }
   };
 
+  const deleteOrder = async (orderId) => {
+    if (!window.confirm("Are you sure you want to delete this order?")) return;
+
+    try {
+      await axios.delete(
+        `https://jhp-backend.onrender.com/api/admin/orders/${orderId}`
+      );
+
+      setOrders((prev) => prev.filter((order) => order._id !== orderId));
+    } catch (error) {
+      console.error("Error deleting order:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 py-10 px-4 sm:px-6 md:px-12 py-36">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8">
@@ -84,9 +106,13 @@ const AdminDashboard = () => {
                   <th className="px-4 py-4 text-left">Payment</th>
                   <th className="px-4 py-4 text-left">Total</th>
                   <th className="px-4 py-4 text-left">Items</th>
+                  <th className="px-4 py-4 text-left">Delivery Time</th>
                   <th className="px-4 py-4 text-left">Time</th>
+                  <th className="px-4 py-4 text-left">Actions</th>{" "}
+                  {/* NEW COLUMN */}
                 </tr>
               </thead>
+
               <tbody className="text-gray-700 text-xs sm:text-sm divide-y divide-gray-200">
                 {orders.map((order, index) => (
                   <tr
@@ -145,12 +171,33 @@ const AdminDashboard = () => {
                         {order.items.map((item, idx) => (
                           <li key={idx}>
                             {item.name} × {item.quantity} ({item.selectedSize}g)
+                            {item.process && (
+                              <div className="text-xs text-gray-500 ml-2">
+                                Process:{" "}
+                                <span className="font-medium">
+                                  {item.process}
+                                </span>
+                              </div>
+                            )}
                           </li>
                         ))}
                       </ul>
                     </td>
+                    <td className="px-4 py-4 text-xs text-gray-600 whitespace-nowrap">
+                      {order.deliveryTime ? order.deliveryTime : "-"}
+                    </td>
                     <td className="px-4 py-4 text-xs text-gray-500 whitespace-nowrap">
                       {new Date(order.createdAt).toLocaleString()}
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      <button
+                        onClick={() => deleteOrder(order._id)}
+                        className="bg-red-600 hover:bg-red-700 active:scale-95 text-white px-3 py-1.5 rounded-full flex items-center gap-1 text-xs font-semibold transition"
+                        title="Delete Order"
+                      >
+                        <FaTrash className="text-white w-4 h-4" />
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
