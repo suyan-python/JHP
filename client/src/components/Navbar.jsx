@@ -114,7 +114,7 @@ export function Navbar() {
                     to="/store#washed-process"
                     className="block px-4 py-2 hover:bg-[#A66548] hover:text-white rounded"
                   >
-                    Washed Process
+                    filter roasted
                   </NavLink>
                 </li>
               </ul>
@@ -205,7 +205,7 @@ export function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className="block text-[#4b2e1a] hover:text-[#A66548]"
             >
-              Washed Process
+              filter roasted
             </NavLink>
           </div>
         </div>

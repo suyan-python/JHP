@@ -19,7 +19,7 @@ const CartProvider = ({ children }) => {
   const itemPricesBySize = Object.fromEntries(
     food_list
       .filter((i) =>
-        ["washed process", "anerobic process", "cold brew"].includes(i.type)
+        ["filter roasted", "anerobic process", "cold brew"].includes(i.type)
       )
       .map((i) => [i._id, i.pricesBySize || {}])
   );
@@ -45,7 +45,7 @@ const CartProvider = ({ children }) => {
       // new entry → gather full data for PlaceOrder
       const type = itemTypes[itemId];
       const pricePerUnit =
-        type === "washed process" ||
+        type === "filter roasted" ||
         type === "anerobic process" ||
         type === "cold brew"
           ? itemPricesBySize[itemId]?.[selectedSize] ?? itemPrices[itemId]

@@ -147,7 +147,7 @@ const FoodDisplay = () => {
     allProducts.filter((product) => product.type === "drip box")
   );
   const washedProcess = applySorting(
-    allProducts.filter((product) => product.type === "washed process")
+    allProducts.filter((product) => product.type === "filter roasted")
   );
 
   const categories = [
@@ -157,20 +157,20 @@ const FoodDisplay = () => {
   ];
 
   return (
-    <section className="py-16 sm:py-24 lg:py-32 mt-14" id="products">
+    <section className="pt-16 sm:pt-24 lg:pt-32 mt-14" id="products">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Header */}
-        <div className="mb-8 text-center">
+        <div className="mb-8 sm:mb-12 text-center">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-brownn leading-tight">
             We provide best Handpicked. Roasted. Loved.
           </h1>
-          <p className="text-gray-700 max-w-2xl mx-auto text-sm sm:text-base mt-2">
-            Explore our curated selection of premium coffee
+          <p className="text-gray-700 max-w-2xl mx-auto text-sm sm:text-base mt-2 sm:mt-4">
+            Explore our curated selection of premium coffee.
           </p>
         </div>
 
         {/* Filter Controls */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 mb-8 sm:mb-12">
           <div className="flex flex-wrap gap-2 sm:gap-3">
             {categories.map((category) => (
               <button
@@ -178,7 +178,7 @@ const FoodDisplay = () => {
                 onClick={() => setSelectedCategory(category.value)}
                 className={`px-4 sm:px-6 py-2 rounded-full text-sm font-medium capitalize border transition ${
                   selectedCategory === category.value
-                    ? "bg-brownn text-white border-transparent"
+                    ? "bg-brownn text-white border-transparent shadow"
                     : "text-gray-700 bg-white border-gray-300 hover:bg-brownn hover:text-white"
                 }`}
               >
@@ -187,15 +187,15 @@ const FoodDisplay = () => {
             ))}
           </div>
 
-          <div className="flex items-center gap-3">
-            <label htmlFor="sort" className="text-sm text-gray-700">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
+            <label htmlFor="sort" className="text-sm text-gray-700 font-medium">
               Refine by Price:
             </label>
             <select
               id="sort"
               onChange={(e) => setSortOrder(e.target.value)}
               value={sortOrder}
-              className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brownn"
+              className="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brownn transition"
             >
               <option value="default">Choose...</option>
               <option value="asc">Low to High</option>
@@ -221,7 +221,7 @@ const FoodDisplay = () => {
               )}
             {washedProcess.length > 0 &&
               renderProductSection(
-                "Clean Washed Craft – Flavor Unfiltered",
+                "Roasted Craft – Flavor Unfiltered",
                 washedProcess,
                 "Grown in the highlands of Illam, our washed-process beans offer floral clarity and smooth finishes."
               )}

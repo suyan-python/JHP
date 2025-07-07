@@ -52,7 +52,7 @@ const HomeHero = () => {
         className="relative z-10 flex flex-col items-center justify-center text-center px-6 md:px-10 h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-[95vh] text-white"
         id="home"
       >
-        <h1 className=" header animate-fade-in-up text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 sm:mb-6 leading-tight drop-shadow-lg">
+        <h1 className=" animate-fade-in-up text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-extrabold mb-4 sm:mb-6 leading-tight drop-shadow-lg">
           Discover the Art of Fine Coffee
         </h1>
         <p className="animate-fade-in-up text-base sm:text-lg md:text-xl mb-8 text-white/90 max-w-2xl drop-shadow-md">

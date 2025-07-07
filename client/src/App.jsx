@@ -23,6 +23,7 @@ import OrderSuccess from "./components/Cart/OrderSuccess.jsx";
 import Popup from "./components/Popup.jsx";
 import SEOObjective from "./components/SEO.jsx";
 import AdminDashboard from "./components/admin/AdminDashboard.jsx";
+import StoreSection from "./components/StoreSection.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -32,14 +33,14 @@ function AppContent() {
 
   return (
     <>
-      <Popup /> {/* <-- Add your popup here so it always loads */}
+      {/* <Popup /> */}
       <ScrollToTop />
       {!hideNavbarFooter && <Navbar />}
       <Routes>
         <Route path="/admin9841" element={<AdminDashboard />} />
         <Route path="/" element={<Hero />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/store" element={<FoodDisplay />} />
+        <Route path="/store" element={<StoreSection />} />
         <Route path="/store/:id" element={<StoreDetail />} />
         <Route path="/seo" element={<SEOObjective />} />
 

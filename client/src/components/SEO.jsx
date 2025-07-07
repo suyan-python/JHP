@@ -29,7 +29,7 @@ const SEOObjective = () => {
 
       <p className="text-lg text-gray-700 mb-6">
         Our carefully curated range includes{" "}
-        <strong>washed process coffee</strong>,<strong> drip box kits</strong>,
+        <strong>filter roasted coffee</strong>,<strong> drip box kits</strong>,
         and <strong>special edition beans</strong>, all roasted in small batches
         for maximum flavor and freshness. We prioritize{" "}
         <strong>low-carbon footprint production</strong> and eco-friendly

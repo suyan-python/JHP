@@ -14,7 +14,9 @@ export function Footer() {
           {/* Brand Info */}
           <div>
             <div className="text-3xl font-bold mb-4 tracking-wide text-white">
-              <img src={footer} alt="" />
+              <Link to={"/"}>
+                <img src={footer} alt="" />
+              </Link>
             </div>
             <p className="text-sm leading-relaxed text-[#d3c3b3]">
               Discover the purity of the Himalayas. Ethically sourced,

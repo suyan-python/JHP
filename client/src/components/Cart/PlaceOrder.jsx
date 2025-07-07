@@ -70,7 +70,7 @@ const PlaceOrder = () => {
           if (!name || !price) return null;
           const size = selectedSize || 250;
           const pricePerUnit =
-            type === "washed process" ? pricesBySize?.[size] || price : price;
+            type === "filter roasted" ? pricesBySize?.[size] || price : price;
           const totalPrice = (pricePerUnit * quantity).toFixed(2);
 
           return {
@@ -161,22 +161,22 @@ const PlaceOrder = () => {
   }, [hasPromo, initialTotal]);
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl max-w-7xl mx-auto my-20 p-10 md:p-16 flex flex-col md:flex-row gap-12">
+    <div className="bg-white rounded-3xl shadow-xl max-w-7xl mx-auto my-28 p-6 sm:p-8 md:p-16 flex flex-col md:flex-row gap-6 md:gap-12 w-full">
       <ToastContainer />
 
       {/* LEFT: Form */}
-      <div className="flex-1 max-w-lg">
-        <h2 className="text-4xl font-extrabold text-gray-900 mb-8">
+      <div className="flex-1 w-full max-w-lg">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-600 mb-6 sm:mb-8">
           Place Your Order
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-7">
-          <p className="text-gray-700 mb-4">
+        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-7">
+          <p className="text-gray-700 mb-4 text-sm sm:text-base">
             Please fill in your details so we can call you for delivery
             confirmation.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <input
               type="text"
               name="firstName"
@@ -184,7 +184,7 @@ const PlaceOrder = () => {
               required
               value={formData.firstName}
               onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 sm:px-5 sm:py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
             />
             <input
               type="text"
@@ -193,7 +193,7 @@ const PlaceOrder = () => {
               required
               value={formData.lastName}
               onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 sm:px-5 sm:py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
             />
           </div>
 
@@ -204,7 +204,7 @@ const PlaceOrder = () => {
             required
             value={formData.phone}
             onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+            className="w-full rounded-xl border border-gray-300 px-4 py-3 sm:px-5 sm:py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
           />
 
           <input
@@ -214,7 +214,7 @@ const PlaceOrder = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+            className="w-full rounded-xl border border-gray-300 px-4 py-3 sm:px-5 sm:py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
           />
 
           <label className="block text-gray-700 font-medium mb-2">
@@ -226,7 +226,7 @@ const PlaceOrder = () => {
             required
             value={formData.deliveryTime}
             onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+            className="w-full rounded-xl border border-gray-300 px-4 py-3 sm:px-5 sm:py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
           />
 
           {/* Promo Section */}
@@ -236,24 +236,24 @@ const PlaceOrder = () => {
                 type="checkbox"
                 checked={hasPromo}
                 onChange={() => setHasPromo(!hasPromo)}
-                className="w-6 h-6 accent-blue-600 cursor-pointer"
+                className="w-5 h-5 sm:w-6 sm:h-6 accent-blue-600 cursor-pointer"
               />
               I have a promo code
             </label>
 
             {hasPromo && (
-              <div className="flex gap-4 mt-4">
+              <div className="flex flex-col sm:flex-row gap-4 mt-4">
                 <input
                   type="text"
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
                   placeholder="Enter Promo Code"
-                  className="flex-grow rounded-xl border border-gray-300 px-5 py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+                  className="flex-grow rounded-xl border border-gray-300 px-4 py-3 sm:px-5 sm:py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
                 />
                 <button
                   type="button"
                   onClick={applyPromo}
-                  className="px-6 py-4 bg-blue-600 text-white rounded-xl font-semibold text-lg hover:bg-blue-700 transition"
+                  className="px-6 py-3 sm:py-4 bg-blue-600 text-white rounded-xl font-semibold text-base hover:bg-blue-700 transition"
                 >
                   Apply
                 </button>
@@ -267,7 +267,7 @@ const PlaceOrder = () => {
               name="subscribe"
               checked={formData.subscribe}
               onChange={handleChange}
-              className="w-6 h-6 accent-blue-600 cursor-pointer"
+              className="w-5 h-5 sm:w-6 sm:h-6 accent-blue-600 cursor-pointer"
             />
             Keep me up to date on news and exclusive offers.
           </label>
@@ -277,10 +277,10 @@ const PlaceOrder = () => {
             disabled={loading}
             className={`w-full mt-8 ${
               loading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
-            } text-white font-extrabold py-5 rounded-xl flex items-center justify-center gap-4 text-xl transition`}
+            } text-white font-extrabold py-4 sm:py-5 rounded-xl flex items-center justify-center gap-4 text-lg sm:text-xl transition`}
           >
             {loading && (
-              <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-5 h-5 sm:w-6 sm:h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
             )}
 
             <FaTruck />
@@ -290,23 +290,25 @@ const PlaceOrder = () => {
       </div>
 
       {/* RIGHT: Order summary & Payment */}
-      <div className="flex-1 max-w-md bg-gray-50 rounded-3xl p-10 shadow-lg flex flex-col justify-between">
+      <div className="flex-1 w-full max-w-md bg-gray-50 rounded-3xl p-6 sm:p-8 md:p-10 shadow-lg flex flex-col justify-between">
         <div>
-          <h3 className="text-3xl font-extrabold text-gray-900 mb-6">
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6">
             Order Summary
           </h3>
 
-          <p className="text-gray-600 mb-3">
+          <p className="text-gray-600 mb-3 text-base sm:text-lg">
             Total (Tax included):{" "}
-            <span className="font-bold text-xl text-blue-700">
+            <span className="font-bold text-lg sm:text-xl text-blue-700">
               NRs. {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
             </span>
           </p>
-          <p className="mb-8 text-yellow-900 bg-yellow-100 font-semibold px-4 py-2 rounded-xl inline-block">
+          <p className="mb-8 text-yellow-900 bg-yellow-100 font-semibold px-4 py-2 rounded-xl inline-block text-sm sm:text-base">
             + Rs. 100 shipping fee (applied at checkout)
           </p>
 
-          <p className="mb-3 text-gray-700 font-semibold">Payment Options:</p>
+          <p className="mb-3 text-gray-700 font-semibold text-base sm:text-lg">
+            Payment Options:
+          </p>
           <div className="flex flex-wrap gap-3">
             {paymentMethods.map((method) => (
               <button
@@ -315,7 +317,7 @@ const PlaceOrder = () => {
                 onClick={() =>
                   setFormData((prev) => ({ ...prev, paymentMethod: method }))
                 }
-                className={`px-6 py-3 rounded-2xl font-semibold text-sm transition-colors ${
+                className={`px-5 py-3 sm:px-6 sm:py-3.5 rounded-2xl font-semibold text-sm transition-colors ${
                   formData.paymentMethod === method
                     ? "bg-blue-600 text-white shadow-md"
                     : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
@@ -327,8 +329,8 @@ const PlaceOrder = () => {
           </div>
         </div>
 
-        <div className="mt-10">
-          <p className="text-gray-700 mb-1">
+        <div className="mt-8 sm:mt-10">
+          <p className="text-gray-700 text-base sm:text-lg">
             Selected payment method:
             <span className="font-semibold ml-2 text-blue-700">
               {formData.paymentMethod}

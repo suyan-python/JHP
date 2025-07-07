@@ -20,7 +20,7 @@ const orderSchema = new mongoose.Schema(
         selectedSize: { type: Number, required: true }, // e.g., 250, 500, 1000
         quantity: { type: Number, required: true },
         price: { type: Number, required: true }, // unit price
-        type: { type: String }, // optional, e.g., "washed process"
+        type: { type: String }, // optional, e.g., "filter roasted"
       },
     ],
   },

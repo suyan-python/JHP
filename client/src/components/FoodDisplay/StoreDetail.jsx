@@ -44,7 +44,7 @@ function StoreDetail() {
   };
 
   const priceBySize =
-    productType === "washed process" ||
+    productType === "filter roasted" ||
     productType === "anerobic process" ||
     productType === "cold brew"
       ? itemPricesBySize[id]?.[selectedSize] || productPrice
@@ -69,7 +69,7 @@ function StoreDetail() {
     setTimeout(() => {
       setAddedToCart(false);
       setShowToast(false);
-    }, 4000);
+    }, 3000);
   };
 
   if (!productName || !productImage || !productDescription) {
@@ -85,7 +85,7 @@ function StoreDetail() {
       {showToast && (
         <div
           role="alert"
-          className={`fixed bottom-5 right-5 z-50 px-6 py-4 rounded-lg text-sm font-medium flex items-center space-x-3 shadow-lg transition ${
+          className={`fixed top-20 right-5 z-50 px-6 py-4 rounded-lg text-sm font-medium flex items-center space-x-3 shadow-lg transition ${
             toastType === "success"
               ? "bg-white border border-green-500 text-green-700"
               : "bg-white border border-red-500 text-red-700"
@@ -132,7 +132,7 @@ function StoreDetail() {
                   >
                     <option value={250}>250g</option>
                     {[
-                      "washed process",
+                      "filter roasted",
                       "anerobic process",
                       "cold brew",
                     ].includes(productType) && (

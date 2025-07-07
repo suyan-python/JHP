@@ -63,7 +63,7 @@ export function Cart() {
             const type = itemTypes[id];
 
             const pricePerUnit =
-              type === "washed process"
+              type === "filter roasted" || type === "cold brew"
                 ? itemPricesBySize[id]?.[selectedSize] || itemPrices[id]
                 : itemPrices[id];
 
