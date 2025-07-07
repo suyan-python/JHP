@@ -27,8 +27,14 @@ const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
 
   /* ---------- cart helpers ---------- */
-  const addToCart = (itemId, quantity = 1, selectedSize = 250) => {
-    const cartKey = `${itemId}-${selectedSize}`;
+  const addToCart = (
+    itemId,
+    quantity = 1,
+    selectedSize = 250,
+    selectedProcess = ""
+  ) => {
+    // Include process in key for uniqueness if process exists
+    const cartKey = `${itemId}-${selectedSize}-${selectedProcess}`;
 
     setCartItems((prev) => {
       // already in cart → just bump quantity
@@ -42,7 +48,6 @@ const CartProvider = ({ children }) => {
         };
       }
 
-      // new entry → gather full data for PlaceOrder
       const type = itemTypes[itemId];
       const pricePerUnit =
         type === "filter roasted" ||
@@ -58,10 +63,11 @@ const CartProvider = ({ children }) => {
           name: itemNames[itemId],
           image: itemImages[itemId],
           type,
-          pricesBySize: itemPricesBySize[itemId], // undefined for non-washed items
-          price: pricePerUnit, // always something
+          pricesBySize: itemPricesBySize[itemId],
+          price: pricePerUnit,
           quantity,
           selectedSize,
+          process: selectedProcess, // ✅ Store selected process in cart item
         },
       };
     });

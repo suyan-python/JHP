@@ -9,7 +9,6 @@ import {
 import { Navbar } from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import { Footer } from "./components/Footer.jsx";
-import FoodDisplay from "./components/FoodDisplay/FoodDisplay.jsx";
 import StoreContextProvider from "./context/StoreContext.jsx";
 import Success from "./components/esewa/Success.jsx";
 import Failure from "./components/esewa/Failure.jsx";

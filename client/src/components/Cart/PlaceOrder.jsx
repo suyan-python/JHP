@@ -65,6 +65,7 @@ const PlaceOrder = () => {
             pricesBySize,
             price,
             shipping,
+            process,
           } = item;
 
           if (!name || !price) return null;
@@ -82,6 +83,7 @@ const PlaceOrder = () => {
             totalPrice,
             image,
             shipping: shipping,
+            process,
           };
         })
         .filter(Boolean),
