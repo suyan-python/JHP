@@ -16,20 +16,20 @@ const FoodImage = () => {
 
   const cardData = useMemo(
     () => [
-      { title: "Unlock Your Creative Flow", image: prod6 },
+      { title: "Packed With Love and Beans", image: prod6 },
       { title: "Build with Passion, Ship with Pride", image: prod7 },
-      { title: "Think Big, Code Smart", image: prod2 },
-      { title: "Design Your Digital Future", image: prod3 },
-      { title: "Think Big, Think Drip", image: prod5 },
-      { title: "Think Big, Think Drip", image: prod4 },
-      { title: "Think Big, Think Drip", image: prod6 },
-      { title: "Think Big, Think Drip", image: prod5 },
-      { title: "Think Big, Think Drip", image: prod7 },
-      { title: "Think Big, Think Drip", image: prod3 },
-      { title: "Think Big, Think Drip", image: prod8 },
-      { title: "Think Big, Think Drip", image: prod9 },
-      { title: "Think Big, Think Drip", image: prod10 },
-      { title: "Think Big, Think Drip", image: prod11 },
+      { title: "Unlock Your Drip Flow-Sip", image: prod2 },
+      { title: "Packed with style", image: prod3 },
+      { title: "Authentic Beans", image: prod5 },
+      { title: "Buy me Open me", image: prod4 },
+      { title: "Packed With Love and Beans", image: prod6 },
+      { title: "Authentic Beans", image: prod5 },
+      { title: "Build with Passion, Ship with Pride", image: prod7 },
+      { title: "Packed with style", image: prod3 },
+      { title: "Family Pack, Packed with Love", image: prod8 },
+      { title: "Buy me Open me", image: prod9 },
+      { title: "Mystical at your doorsteps", image: prod10 },
+      { title: "Build with Passion, Ship with Pride", image: prod11 },
     ],
     []
   );
@@ -74,7 +74,7 @@ const FoodImage = () => {
                   loading="lazy"
                   className="w-full h-full object-cover object-center"
                 />
-                <div className="flex items-center justify-center px-4 opacity-0 group-hover:opacity-100 transition-all duration-500 absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/60 via-black/30 to-transparent backdrop-blur-md rounded-3xl">
+                <div className="flex items-center justify-center px-4 opacity-0 group-hover:opacity-100 transition-all duration-500 absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/60 via-black/30 to-transparent bg-transparent rounded-3xl">
                   <p className="text-white text-lg md:text-xl font-bold text-center drop-shadow-md">
                     {card.title}
                   </p>

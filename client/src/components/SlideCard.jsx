@@ -16,16 +16,16 @@ const SlideCard = () => {
 
   const cardData = useMemo(
     () => [
-      { title: "Unlock Your Creative Flow", image: prod2 },
-      { title: "Build with Passion, Ship with Pride", image: farm1 },
-      { title: "Think Big, Code Smart", image: farm2 },
-      { title: "Design Your Digital Future", image: prod3 },
-      { title: "Think Big, Think Drip", image: farm3 },
-      { title: "Think Big, Think Drip", image: farm4 },
-      { title: "Think Big, Think Drip", image: prod4 },
-      { title: "Think Big, Think Drip", image: farm5 },
-      { title: "Think Big, Think Drip", image: farm7 },
-      { title: "Think Big, Think Drip", image: brew },
+      { title: "Unlock Your Drip Flow-Sip", image: prod2 },
+      { title: "Build with Authenticity", image: farm1 },
+      { title: "Think Green, Grown Green", image: farm2 },
+      { title: "Build with Passion, Ship with Pride", image: prod3 },
+      { title: "Beans made with Hands", image: farm3 },
+      { title: "Washed Beans, Unfiltered", image: farm4 },
+      { title: "Unfiltered, Washed, Natural", image: prod4 },
+      { title: "Roasted with Love", image: farm5 },
+      { title: "Where it comes from", image: farm7 },
+      { title: "Think Big, Think Brew", image: brew },
     ],
     []
   );
@@ -70,7 +70,7 @@ const SlideCard = () => {
                   loading="lazy"
                   className="w-full h-full object-cover object-center"
                 />
-                <div className="flex items-center justify-center px-4 opacity-0 group-hover:opacity-100 transition-all duration-500 absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/60 via-black/30 to-transparent backdrop-blur-md rounded-3xl">
+                <div className="flex items-center justify-center px-4 opacity-0 group-hover:opacity-100 transition-all duration-500 absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/60 via-black/30 to-transparent bg-transparent  rounded-3xl">
                   <p className="text-white text-lg md:text-xl font-bold text-center drop-shadow-md">
                     {card.title}
                   </p>

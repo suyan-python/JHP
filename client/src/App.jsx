@@ -32,7 +32,7 @@ function AppContent() {
 
   return (
     <>
-      {/* <Popup /> */}
+      <Popup />
       <ScrollToTop />
       {!hideNavbarFooter && <Navbar />}
       <Routes>

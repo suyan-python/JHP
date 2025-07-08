@@ -33,15 +33,16 @@ const TrustedBy = () => {
   ];
 
   const CreateCard = ({ card }) => (
-    <div className="bg-white p-4 rounded-xl mx-4 shadow hover:shadow-2xl transition-all duration-300 w-64 sm:w-72 flex-shrink-0">
+    <div className="bg-white p-4 rounded-xl mx-2 shadow hover:shadow-xl transition-all duration-300 w-64 sm:w-72 flex-shrink-0">
       <div className="flex items-center gap-3">
         <img
-          className="w-12 h-12 rounded-full object-cover"
+          loading="lazy"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
           src={card.image}
           alt={card.name}
         />
         <div>
-          <div className="flex items-center gap-1 font-semibold text-gray-800">
+          <div className="flex items-center gap-1 font-semibold text-gray-800 text-sm sm:text-base">
             <p>{card.name}</p>
             <svg
               className="mt-0.5"
@@ -62,7 +63,7 @@ const TrustedBy = () => {
           <span className="text-xs text-gray-500">{card.handle}</span>
         </div>
       </div>
-      <p className="text-sm py-4 text-gray-700">
+      <p className="text-sm py-3 text-gray-700">
         Radiant made undercutting all of our competitors an absolute breeze.
       </p>
       <div className="flex items-center justify-between text-gray-500 text-xs">
@@ -96,45 +97,55 @@ const TrustedBy = () => {
   return (
     <>
       <style>{`
-        @keyframes marqueeScroll {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
-        }
-        .marquee-inner {
-          animation: marqueeScroll 40s linear infinite;
-        }
-        .marquee-reverse {
-          animation-direction: reverse;
-        }
-      `}</style>
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-80%); }
+  }
 
-      <div className="text-center py-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+  .marquee-inner {
+    animation: marqueeScroll 30s linear infinite;
+    display: flex;
+    min-width: 200%;
+  }
+
+  .marquee-reverse {
+    animation-direction: reverse;
+  }
+
+  @media (max-width: 639px) {
+    .marquee-inner {
+      animation-duration: 10s;
+    }
+  }
+`}</style>
+
+      <div className="text-center px-4 sm:px-6 py-6 sm:py-10">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800">
           Trusted by Professionals Worldwide
         </h2>
-        <p className="text-gray-600 text-sm md:text-base mt-2">
+        <p className="text-gray-600 text-sm sm:text-base mt-2">
           See what our partners have to say
         </p>
       </div>
 
       <div className="marquee-row w-full overflow-hidden relative mb-10">
-        <div className="absolute left-0 top-0 h-full w-16 sm:w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div className="marquee-inner flex min-w-[200%] py-6 gap-6">
+        <div className="absolute left-0 top-0 h-full w-12 sm:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="marquee-inner flex min-w-[200%] py-4 gap-4 sm:gap-6">
           {[...cardsData, ...cardsData].map((card, index) => (
             <CreateCard key={index} card={card} />
           ))}
         </div>
-        <div className="absolute right-0 top-0 h-full w-16 sm:w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 h-full w-12 sm:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
       </div>
 
       <div className="marquee-row w-full overflow-hidden relative">
-        <div className="absolute left-0 top-0 h-full w-16 sm:w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div className="marquee-inner marquee-reverse flex min-w-[200%] py-6 gap-6">
+        <div className="absolute left-0 top-0 h-full w-12 sm:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="marquee-inner marquee-reverse flex min-w-[200%] py-4 gap-4 sm:gap-6">
           {[...cardsData, ...cardsData].map((card, index) => (
             <CreateCard key={index} card={card} />
           ))}
         </div>
-        <div className="absolute right-0 top-0 h-full w-16 sm:w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 h-full w-12 sm:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
       </div>
     </>
   );

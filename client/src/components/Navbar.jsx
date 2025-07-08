@@ -29,6 +29,27 @@ export function Navbar() {
     setActiveSection(pathToIdMap[location.pathname] || "");
   }, [location.pathname]);
 
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 10) {
+        // Scrolling down
+        setScrolled(true);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setScrolled(false);
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const navLinks = [
     { to: "/", label: "ABOUT", id: "home" },
     { to: "/store", label: "STORE", id: "store" },
@@ -36,19 +57,27 @@ export function Navbar() {
   ];
 
   return (
-    <div className="fixed top-0 left-0 w-full z-20 transition-all duration-500">
+    <div
+      className={` fixed top-0 left-0 w-full z-20 transition-all duration-500 `}
+    >
       {/* Notification Bar */}
-      <div className="w-full py-2.5 font-medium text-xs sm:text-sm text-white text-center bg-gradient-to-r from-[#5A3825] via-[#7A4B35] to-[#A66548] shadow">
+      <div
+        className={`w-full py-2.5 font-medium text-xs sm:text-sm text-white text-center bg-gradient-to-r from-[#5A3825] via-[#7A4B35] to-[#A66548] shadow transition-all duration-500  ${
+          scrolled ? "hidden" : ""
+        } `}
+      >
         Special Deal: Free Shipping on Orders Above Rs.2500 Purchase
       </div>
 
       {/* Navbar */}
       <nav
-        className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-8 lg:px-16 xl:px-24 transition-all duration-500 z-10 ${
-          scrolled
-            ? "bg-[#fdfaf6] shadow-md text-[#4b2e1a]"
-            : "bg-transparent py-7"
-        }`}
+        className={`fixed top-0 left-0 right-0  flex items-center justify-between 
+    px-4 md:px-8 lg:px-16 xl:px-24  transition-all duration-500 z-10
+    ${
+      scrolled
+        ? "bg-[#fdfaf6] shadow-md text-[#4b2e1a] mx-28 rounded-full my-2"
+        : "bg-transparent my-7"
+    }`}
       >
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2">
