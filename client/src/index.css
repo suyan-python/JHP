@@ -114,3 +114,24 @@ body {
 .animate-pulse-slow {
   animation: pulse-slow 8s ease-in-out infinite;
 }
+
+@keyframes bannerScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-bannerScroll {
+  animation: bannerScroll 15s linear infinite;
+  will-change: transform;
+}
+
+@media (max-width: 640px) {
+  .animate-bannerScroll {
+    font-size: 12px;
+    animation-duration: 10s;
+  }
+}

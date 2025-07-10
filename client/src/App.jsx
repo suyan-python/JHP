@@ -6,6 +6,8 @@ import {
   useLocation,
 } from "react-router-dom";
 
+import { ToastContainer } from "react-toastify";
+
 import { Navbar } from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import { Footer } from "./components/Footer.jsx";
@@ -24,25 +26,41 @@ import SEOObjective from "./components/SEO.jsx";
 import AdminDashboard from "./components/admin/AdminDashboard.jsx";
 import StoreSection from "./components/StoreSection.jsx";
 
+import AdminLogin from "./components/admin/AdminLogin";
+
 function AppContent() {
   const location = useLocation();
   const hideNavbarFooter =
     location.pathname === "/order-success" ||
-    location.pathname === "/admin9841";
+    location.pathname === "/admin9841" ||
+    location.pathname === "/admin-login";
+
+  const hidePopup =
+    location.pathname === "/admin9841" || location.pathname === "/admin-login";
 
   return (
     <>
-      <Popup />
+      {!hidePopup && <Popup />}
       <ScrollToTop />
       {!hideNavbarFooter && <Navbar />}
       <Routes>
-        <Route path="/admin9841" element={<AdminDashboard />} />
+        {/* <Route path="/admin9841" element={<AdminDashboard />} /> */}
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route
+          path="/admin9841"
+          element={
+            localStorage.getItem("isAdmin") === "true" ? (
+              <AdminDashboard />
+            ) : (
+              <AdminLogin />
+            )
+          }
+        />
         <Route path="/" element={<Hero />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/store" element={<StoreSection />} />
         <Route path="/store/:id" element={<StoreDetail />} />
         <Route path="/seo" element={<SEOObjective />} />
-
         <Route path="/parent" element={<Parent />} />
         <Route path="/payment" element={<PlaceOrder />} />
         <Route path="/order-success" element={<OrderSuccess />} />
@@ -59,6 +77,7 @@ function App() {
   return (
     <StoreContextProvider>
       <Router>
+        <ToastContainer />
         <AppContent />
       </Router>
     </StoreContextProvider>

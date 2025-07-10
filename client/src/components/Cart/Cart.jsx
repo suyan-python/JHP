@@ -93,6 +93,12 @@ export function Cart() {
                     <p className="text-sm text-gray-600">
                       Size: {selectedSize}g
                     </p>
+                    {process && (
+                      <p className="text-sm text-gray-600 capitalize">
+                        Process: {process.replace(/-/g, " ")}
+                      </p>
+                    )}
+
                     <p className="text-sm text-gray-800">
                       <span className="font-semibold">Rs. {pricePerUnit}</span>{" "}
                       each

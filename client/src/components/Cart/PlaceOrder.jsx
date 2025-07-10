@@ -36,6 +36,14 @@ const PlaceOrder = () => {
     "NepalPay",
     "Bank Transfer",
   ];
+  // Calculate total weight in grams
+  const getTotalWeightInGrams = () => {
+    return Object.values(cartItems).reduce((total, item) => {
+      const quantity = item.quantity || 1;
+      const size = item.selectedSize || 250;
+      return total + quantity * size;
+    }, 0);
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -48,11 +56,30 @@ const PlaceOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const totalWeightGrams = getTotalWeightInGrams();
+    const totalWeightKg = totalWeightGrams / 1000;
+
+    let shipping = 100;
+    let discount = 0;
+    let discountedTotal = initialTotal;
+
+    // Apply free shipping if more than 5kg
+    if (totalWeightKg >= 5) {
+      shipping = 0;
+    }
+
+    // Apply 20% discount if more than 10kg
+    if (totalWeightKg >= 10) {
+      discount = initialTotal * 0.2;
+      discountedTotal = initialTotal - discount;
+    }
+
     const orderDetails = {
       ...formData,
       total: initialTotal,
-      discountedTotal: finalTotal,
-      shipping: 100,
+      discountedTotal: discountedTotal.toFixed(2),
+      totalWeight: totalWeightKg.toFixed(2),
+      shipping,
       items: Object.entries(cartItems)
         .map(([key, item]) => {
           const {
@@ -64,7 +91,6 @@ const PlaceOrder = () => {
             type,
             pricesBySize,
             price,
-            shipping,
             process,
           } = item;
 
@@ -82,7 +108,7 @@ const PlaceOrder = () => {
             price: pricePerUnit,
             totalPrice,
             image,
-            shipping: shipping,
+            shipping,
             process,
           };
         })
@@ -108,20 +134,6 @@ const PlaceOrder = () => {
       if (!response.ok) throw new Error("Failed to place order");
 
       toast.success("Order placed success!");
-
-      setFormData({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        email: "",
-        deliveryTime: "",
-        subscribe: false,
-        paymentMethod: "Cash",
-      });
-      setHasPromo(false);
-      setPromoCode("");
-      setPromoApplied(false);
-      setFinalTotal(0);
       clearCart();
       navigate("/order-success", { state: { orderDetails } });
     } catch (error) {
@@ -155,12 +167,29 @@ const PlaceOrder = () => {
   };
 
   useEffect(() => {
-    if (!hasPromo) {
-      setPromoCode("");
-      setPromoApplied(false);
-      setFinalTotal(initialTotal);
+    const totalWeightKg = getTotalWeightInGrams() / 1000;
+    let updatedTotal = initialTotal;
+    let shippingCharge = 0;
+
+    // Add shipping charge if less than 5kg
+    if (totalWeightKg < 5) {
+      shippingCharge = 100;
     }
-  }, [hasPromo, initialTotal]);
+
+    // 20% discount if >= 10kg
+    if (totalWeightKg >= 10) {
+      updatedTotal = initialTotal * 0.8;
+    }
+
+    // Promo overrides with 10% discount (you can customize priority)
+    if (hasPromo && promoApplied) {
+      updatedTotal = initialTotal * 0.9;
+    }
+
+    // Add shipping charge to final
+    const finalWithShipping = updatedTotal + shippingCharge;
+    setFinalTotal(finalWithShipping.toFixed(2));
+  }, [initialTotal, hasPromo, promoApplied, cartItems]);
 
   return (
     <div className="bg-white rounded-3xl shadow-xl max-w-7xl mx-auto my-28 p-6 sm:p-8 md:p-16 flex flex-col md:flex-row gap-6 md:gap-12 w-full">
@@ -292,6 +321,7 @@ const PlaceOrder = () => {
       </div>
 
       {/* RIGHT: Order summary & Payment */}
+      {/* RIGHT: Order summary & Payment */}
       <div className="flex-1 w-full max-w-md bg-gray-50 rounded-3xl p-6 sm:p-8 md:p-10 shadow-lg flex flex-col justify-between">
         <div>
           <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6">
@@ -299,14 +329,43 @@ const PlaceOrder = () => {
           </h3>
 
           <p className="text-gray-600 mb-3 text-base sm:text-lg">
-            Total (Tax included):{" "}
-            <span className="font-bold text-lg sm:text-xl text-blue-700">
-              NRs. {finalTotal ? parseFloat(finalTotal).toFixed(2) : "0.00"}
+            Total Weight:{" "}
+            <span className="font-bold text-blue-700">
+              {(getTotalWeightInGrams() / 1000).toFixed(2)} kg
             </span>
           </p>
-          <p className="mb-8 text-yellow-900 bg-yellow-100 font-semibold px-4 py-2 rounded-xl inline-block text-sm sm:text-base">
-            + Rs. 100 shipping fee (applied at checkout)
+
+          <p className="text-gray-600 text-base sm:text-lg">
+            Original Total:{" "}
+            <span className="font-semibold text-gray-800">
+              Rs. {initialTotal.toFixed(2)}
+            </span>
           </p>
+
+          {getTotalWeightInGrams() / 1000 >= 10 && (
+            <p className="text-green-700 font-medium bg-green-100 px-4 py-2 rounded-xl text-sm sm:text-base my-2">
+              20% discount applied!
+            </p>
+          )}
+
+          {getTotalWeightInGrams() / 1000 >= 5 && (
+            <p className="text-blue-700 font-medium bg-blue-100 px-4 py-2 rounded-xl text-sm sm:text-base my-2">
+              Free shipping applied!
+            </p>
+          )}
+
+          <p className="text-gray-600 text-base sm:text-lg">
+            Shipping Fee:{" "}
+            <span className="font-semibold text-gray-800">
+              Rs. {getTotalWeightInGrams() / 1000 < 5 ? "100.00" : "0.00"}
+            </span>
+          </p>
+
+          <p className="text-xl sm:text-2xl font-bold text-blue-700 mt-4">
+            Final Total: Rs. {finalTotal}
+          </p>
+
+          <hr className="my-6 border-gray-300" />
 
           <p className="mb-3 text-gray-700 font-semibold text-base sm:text-lg">
             Payment Options:

@@ -62,11 +62,22 @@ export function Navbar() {
     >
       {/* Notification Bar */}
       <div
-        className={`w-full py-2.5 font-medium text-xs sm:text-sm text-white text-center bg-gradient-to-r from-[#5A3825] via-[#7A4B35] to-[#A66548] shadow transition-all duration-500  ${
+        className={`w-full overflow-hidden py-2.5 font-semibold text-xs sm:text-sm md:text-base text-white bg-gradient-to-r from-[#5A3825] via-[#7A4B35] to-[#A66548] shadow transition-all duration-500 ${
           scrolled ? "hidden" : ""
-        } `}
+        }`}
       >
-        Special Deal: Free Shipping on Orders Above Rs.2500 Purchase
+        <div className="relative w-full">
+          <div className="animate-bannerScroll flex whitespace-nowrap gap-16 leading-relaxed">
+            {/* Repeat the message multiple times for smooth continuous scroll */}
+            {Array.from({ length: 6 }).map((_, i) => (
+              <span key={i}>
+                FREE SHIPPING ON ORDERS OVER
+                5KG&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; SPECIAL
+                DISCOUNT OVER 10KG
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Navbar */}
