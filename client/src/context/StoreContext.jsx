@@ -73,8 +73,8 @@ const CartProvider = ({ children }) => {
     });
   };
 
-  const removeFromCart = (id, size) => {
-    const cartKey = `${id}-${size}`;
+  const removeFromCart = (id, size = 250, process = "") => {
+    const cartKey = `${id}-${size}-${process}`;
     setCartItems((prev) => {
       const item = prev[cartKey];
       if (!item) return prev;

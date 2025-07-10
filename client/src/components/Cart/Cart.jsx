@@ -49,7 +49,7 @@ export function Cart() {
   };
 
   return (
-    <div className="max-w-full mx-auto px-4 md:px-6 py-12 my-36 bg-slate-50 rounded">
+    <div className="max-w-full mx-auto px-4 md:px-6 py-12 my-36 bg-slate-50 rounded-3xl">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">
         Your Cart
       </h2>
@@ -57,7 +57,7 @@ export function Cart() {
       <AnimatePresence>
         <div className="space-y-8">
           {cartEntries.map(([cartKey, { quantity, selectedSize }]) => {
-            const [id] = cartKey.split("-");
+            const [id, size, process] = cartKey.split("-");
             const name = itemNames[id];
             const image = itemImages[id];
             const type = itemTypes[id];
@@ -105,19 +105,22 @@ export function Cart() {
 
                 {/* Quantity + Remove */}
                 <div className="flex flex-col md:items-end items-center gap-4 w-full md:w-auto">
-                  <div className="flex items-center gap-3 bg-gray-100 px-4 py-2 rounded-lg shadow-inner">
+                  <div className="flex items-center gap-3 bg-slate-200 px-4 py-2 rounded-lg shadow-inner">
                     <button
-                      onClick={() => removeFromCart(id, selectedSize)}
+                      onClick={() => removeFromCart(id, size, process)}
                       className="p-2 text-gray-700 hover:text-gray-900 transition"
                       title="Decrease quantity"
                     >
                       <FaMinus />
                     </button>
+
+                    {/* ✅ Quantity Display */}
                     <span className="text-base font-semibold px-3">
                       {quantity}
                     </span>
+
                     <button
-                      onClick={() => addToCart(id, 1, selectedSize)}
+                      onClick={() => addToCart(id, 1, Number(size), process)}
                       className="p-2 text-gray-700 hover:text-gray-900 transition"
                       title="Increase quantity"
                     >
