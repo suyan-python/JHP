@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import riderAnimation from "../../assets/rider-animation.json";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -10,7 +10,25 @@ const OrderSuccess = () => {
   const navigate = useNavigate();
   const { width, height } = useWindowSize();
   const location = useLocation();
-  const orderDetails = location.state?.orderDetails;
+  const [orderDetails, setOrderDetails] = useState(
+    location.state?.orderDetails
+  );
+
+  useEffect(() => {
+    if (location.state?.orderDetails) {
+      // Save to localStorage if coming from PlaceOrder
+      localStorage.setItem(
+        "lastOrder",
+        JSON.stringify(location.state.orderDetails)
+      );
+    } else {
+      // Try loading from localStorage on refresh
+      const stored = localStorage.getItem("lastOrder");
+      if (stored) {
+        setOrderDetails(JSON.parse(stored));
+      }
+    }
+  }, [location.state]);
 
   const handleDownloadReceipt = () => {
     if (!orderDetails) {
@@ -19,6 +37,14 @@ const OrderSuccess = () => {
     }
     generatePDFReceipt(orderDetails);
   };
+
+  if (!orderDetails) {
+    return (
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center text-gray-600 text-lg">
+        Loading your order details...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center bg-white px-4 py-8 text-center">
@@ -34,8 +60,8 @@ const OrderSuccess = () => {
           Your Order Has Been Placed Successfully!
         </h1>
         <p className="text-gray-700 text-base sm:text-lg mb-6 leading-relaxed">
-          We're packing your order! <br className="hidden sm:block" />
-          Our team will get back to you sooner...
+          Thank you, <strong>{orderDetails.firstName}</strong>! <br />
+          We're packing your order and will contact you shortly.
         </p>
 
         <div className="w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-8">
@@ -44,7 +70,10 @@ const OrderSuccess = () => {
 
         <div className="flex flex-col items-center gap-4">
           <button
-            onClick={() => navigate("/store")}
+            onClick={() => {
+              localStorage.removeItem("lastOrder");
+              navigate("/store");
+            }}
             className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-6 rounded-xl w-full sm:w-auto"
           >
             Back to Store

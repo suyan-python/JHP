@@ -3,7 +3,8 @@ import autoTable from "jspdf-autotable";
 import logo from "../../assets/logo/JHPstore.png"; // Ensure this is base64 or publicly accessible if needed
 
 export const generatePDFReceipt = (order) => {
-  const doc = new jsPDF();
+  const doc = new jsPDF({ compress: true });
+
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const lineSpacing = 8;
@@ -32,7 +33,7 @@ export const generatePDFReceipt = (order) => {
     const x = xCenter - width / 2;
     const y = yCenter - height / 2;
 
-    doc.addImage(img, "PNG", x, y, width, height);
+    doc.addImage(img, "JPEG", x, y, width, height);
   };
 
   // === Watermark ===
@@ -51,7 +52,7 @@ export const generatePDFReceipt = (order) => {
 
   // === Top Logo (Centered) ===
   try {
-    addImageWithAspectRatio(logo, pageWidth / 2, currentY + 10, 80, 50);
+    addImageWithAspectRatio(logo, pageWidth / 2, currentY + 10, 80, 20);
     currentY += 30;
   } catch (err) {
     console.warn("Top logo could not be added:", err);

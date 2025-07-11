@@ -87,14 +87,14 @@ export function Navbar() {
     ${
       scrolled
         ? "bg-[#fdfaf6] shadow-md text-[#4b2e1a] mx-28 rounded-full my-2"
-        : "bg-transparent my-7"
+        : "bg-transparent my-9 "
     }`}
       >
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2">
           <img
             src={JHPstore}
-            alt="JHP Store"
+            alt="Himalayan Arabica Coffee Beans - JHP Store"
             className={`${scrolled ? "h-16 p-2" : "h-20 md:h-20 py-4"}`}
           />
         </NavLink>
@@ -110,7 +110,7 @@ export function Navbar() {
                   ? "text-[#8B4513]"
                   : scrolled
                   ? "text-[#4b2e1a]"
-                  : "text-white"
+                  : "text-brownn"
               } hover:text-[#A66548]`}
             >
               {label}
@@ -125,8 +125,8 @@ export function Navbar() {
           {/* Browse Dropdown */}
           <div className="relative group">
             <button
-              className={`text-sm font-semibold transition-colors ${
-                scrolled ? "text-[#4b2e1a]" : "text-white"
+              className={`text-sm font-semibold transition-colors border border-brownn rounded-xl p-2 ${
+                scrolled ? "text-[#4b2e1a]" : "text-brownn"
               } hover:text-[#A66548]`}
             >
               Browse
@@ -166,8 +166,8 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <NavLink to="/cart" className="relative p-2 rounded-full">
             <ShoppingCart
-              className={`h-6 w-6 ${
-                scrolled ? "text-[#4b2e1a]" : "text-white"
+              className={`h-6 w-6  ${
+                scrolled ? "text-[#4b2e1a]" : "text-brownn"
               }`}
             />
             {Object.keys(cartItems || {}).length > 0 && (

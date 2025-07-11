@@ -59,7 +59,7 @@ const FoodDisplay = () => {
         <div className="w-20 sm:w-24 h-1 bg-brownn mx-auto mt-4 rounded-full"></div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6">
         {products.map((product) => (
           <div
             key={product._id}
@@ -157,8 +157,8 @@ const FoodDisplay = () => {
   ];
 
   return (
-    <section className="pt-16 sm:pt-24 lg:pt-32 mt-14" id="products">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="pt-10 sm:pt-20 lg:pt-32 mt-8 sm:mt-14" id="products">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Header */}
         <div className="mb-8 sm:mb-12 text-center">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-brownn leading-tight">

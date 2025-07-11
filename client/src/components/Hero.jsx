@@ -53,13 +53,15 @@ const HomeHero = () => {
         id="home"
       >
         <h1 className=" animate-fade-in-up text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-extrabold mb-4 sm:mb-6 leading-tight drop-shadow-lg">
-          Discover the Art of Fine Coffee
+          Premium Nepali Coffee Beans <br /> Fresh from Illam to Your Cup
         </h1>
         <p className="animate-fade-in-up text-base sm:text-lg md:text-xl mb-8 text-white/90 max-w-2xl drop-shadow-md">
-          Jewel Himalayan Products (JHP) brings you 100% premium organic Arabica
-          beans, empowering local farmers with expert support in cultivation and
-          processing.
+          Jewel Himalayan Products (JHP) offers premium 100% organic Arabica
+          coffee beans grown in the highlands of Illam, Nepal. We support local
+          farmers with expert cultivation and sustainable processing—delivering
+          rich, authentic Himalayan coffee directly to your cup.
         </p>
+
         <NavLink
           to="/store"
           className="animate-fade-in-up inline-block border border-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-black px-8 py-3 sm:px-10 sm:py-4 rounded-full text-lg sm:text-xl font-semibold transition-all duration-300"

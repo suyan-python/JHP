@@ -3,23 +3,23 @@ import { FaLeaf, FaHandsHelping, FaMountain, FaRecycle } from "react-icons/fa";
 export function WhyJHP() {
   const features = [
     {
-      title: "100% Organic Arabica",
-      desc: "Grown without chemicals, delivering rich flavor and aroma in every cup.",
+      title: "100% Organic Arabica Beans",
+      desc: "Our coffee is grown naturally in the hills of Illam, Nepal — free from chemicals, rich in antioxidants, and bursting with bold Himalayan flavor.",
       icon: <FaLeaf className="text-green-600" />,
     },
     {
-      title: "Farmers First",
-      desc: "Empowering women and small farmers with ethical wages and training.",
+      title: "Empowering Local Farmers",
+      desc: "We prioritize ethical sourcing by supporting women and smallholder farmers through fair wages, skill training, and long-term partnerships.",
       icon: <FaHandsHelping className="text-yellow-700" />,
     },
     {
-      title: "From Illam, With Love",
-      desc: "Hand-harvested beans from Nepal’s finest coffee-growing region.",
+      title: "Sourced from Illam’s Highlands",
+      desc: "Handpicked at high altitudes, our beans reflect the unique terroir of Nepal’s premier coffee region — smooth, aromatic, and unforgettable.",
       icon: <FaMountain className="text-brown-600" />,
     },
     {
-      title: "Eco-Friendly Packaging",
-      desc: "We care about the planet as much as we care about your coffee.",
+      title: "Eco-Conscious, Always",
+      desc: "We use biodegradable and recyclable packaging to reduce waste and preserve the beauty of the Himalayas — one brew at a time.",
       icon: <FaRecycle className="text-green-700" />,
     },
   ];

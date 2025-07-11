@@ -4,6 +4,8 @@ import { useStore } from "../../context/StoreContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+// import MapPicker from "../MapPicker";
+import LocationPicker from "../LocationPicker";
 
 const PlaceOrder = () => {
   const { getTotalPrice, cartItems, clearCart } = useStore();
@@ -14,6 +16,16 @@ const PlaceOrder = () => {
   const [promoCode, setPromoCode] = useState("");
   const [promoApplied, setPromoApplied] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [deliveryLocation, setDeliveryLocation] = useState({
+    lat: null,
+    lng: null,
+  });
+  const [location, setLocation] = useState(null);
+
+  const navigate = useNavigate();
+  const handleLocationSelect = (loc) => {
+    setLocation(loc);
+  };
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -21,11 +33,10 @@ const PlaceOrder = () => {
     phone: "",
     email: "",
     deliveryTime: "",
+    deliveryAddress: "",
     subscribe: false,
     paymentMethod: "Cash",
   });
-
-  const navigate = useNavigate();
 
   const paymentMethods = [
     "Cash",
@@ -73,13 +84,20 @@ const PlaceOrder = () => {
       discount = initialTotal * 0.2;
       discountedTotal = initialTotal - discount;
     }
+    if (!location) {
+      toast.error("Please select your delivery location on the map.");
+      setLoading(false);
+      return;
+    }
 
     const orderDetails = {
       ...formData,
+      deliveryLocation,
       total: initialTotal,
       discountedTotal: discountedTotal.toFixed(2),
       totalWeight: totalWeightKg.toFixed(2),
       shipping,
+      location: location || null,
       items: Object.entries(cartItems)
         .map(([key, item]) => {
           const {
@@ -133,9 +151,15 @@ const PlaceOrder = () => {
 
       if (!response.ok) throw new Error("Failed to place order");
 
-      toast.success("Order placed success!");
-      clearCart();
-      navigate("/order-success", { state: { orderDetails } });
+      setTimeout(() => {
+        navigate("/order-success", { state: { orderDetails } });
+        toast.success("Order placed successfully!", {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "colored",
+        });
+        clearCart();
+      }, 3000);
     } catch (error) {
       console.error("Error placing order:", error);
       toast.error("Something went wrong. Try again.");
@@ -194,7 +218,6 @@ const PlaceOrder = () => {
   return (
     <div className="bg-white rounded-3xl shadow-xl max-w-7xl mx-auto my-28 p-6 sm:p-8 md:p-16 flex flex-col md:flex-row gap-6 md:gap-12 w-full">
       <ToastContainer />
-
       {/* LEFT: Form */}
       <div className="flex-1 w-full max-w-lg">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-600 mb-6 sm:mb-8">
@@ -260,6 +283,30 @@ const PlaceOrder = () => {
             className="w-full rounded-xl border border-gray-300 px-4 py-3 sm:px-5 sm:py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
           />
 
+          <label className="block text-gray-700 font-medium mb-2 mt-6">
+            Select Delivery Location (Map):
+          </label>
+
+          {/* <MapPicker onLocationSelect={setDeliveryLocation} />
+
+          {deliveryLocation.lat && (
+            <p className="mt-2 text-blue-600 text-sm">
+              Selected Coordinates: <br />
+              <strong>Lat:</strong> {deliveryLocation.lat.toFixed(5)} |{" "}
+              <strong>Lng:</strong> {deliveryLocation.lng.toFixed(5)}
+            </p>
+          )} */}
+
+          <LocationPicker onLocationSelect={handleLocationSelect} />
+
+          {/* Optionally show current coordinates */}
+          {location && (
+            <p className="mt-2 text-blue-700">
+              Selected Location: Lat {location.lat.toFixed(5)}, Lng{" "}
+              {location.lng.toFixed(5)}
+            </p>
+          )}
+
           {/* Promo Section */}
           <div className="mt-6">
             <label className="flex items-center gap-3 text-gray-700 font-semibold cursor-pointer select-none">
@@ -321,7 +368,6 @@ const PlaceOrder = () => {
       </div>
 
       {/* RIGHT: Order summary & Payment */}
-      {/* RIGHT: Order summary & Payment */}
       <div className="flex-1 w-full max-w-md bg-gray-50 rounded-3xl p-6 sm:p-8 md:p-10 shadow-lg flex flex-col justify-between">
         <div>
           <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6">
@@ -359,6 +405,12 @@ const PlaceOrder = () => {
             <span className="font-semibold text-gray-800">
               Rs. {getTotalWeightInGrams() / 1000 < 5 ? "100.00" : "0.00"}
             </span>
+          </p>
+
+          {/* Shipping note */}
+          <p className="text-sm sm:text-base text-yellow-700 bg-yellow-100 px-4 py-2 rounded-xl mt-2">
+            <strong>Note:</strong> Free shipping is only applicable inside Ring
+            Road, Kathmandu Valley.
           </p>
 
           <p className="text-xl sm:text-2xl font-bold text-blue-700 mt-4">

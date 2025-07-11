@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
 import axios from "axios";
 import {
   FaBoxOpen,
@@ -9,12 +11,12 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
-import logo from "../../assets/logo/JHPstore.png";
-
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lastRefreshed, setLastRefreshed] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const fetchOrders = async () => {
     try {
@@ -120,10 +122,9 @@ const AdminDashboard = () => {
                   <th className="px-4 py-4">Customer</th>
                   <th className="px-4 py-4">Contact</th>
                   <th className="px-4 py-4">Payment</th>
+                  <th className="px-4 py-4 text-center">Status</th>
                   <th className="px-4 py-4">Total</th>
                   <th className="px-4 py-4">Items</th>
-                  <th className="px-4 py-4">Delivery</th>
-                  <th className="px-4 py-4">Time</th>
                   <th className="px-4 py-4">Actions</th>
                 </tr>
               </thead>
@@ -156,12 +157,19 @@ const AdminDashboard = () => {
                     </td>
                     <td className="px-4 py-4 flex items-center gap-1">
                       {order.paymentMethod}
-                      {order.paymentMethod.toLowerCase() === "cash" ? (
-                        <FaClock className="text-yellow-500" />
-                      ) : (
-                        <FaCheckCircle className="text-green-600" />
-                      )}
                     </td>
+                    <td className="px-4 py-4 text-center">
+                      <span
+                        className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                          order.status === "paid"
+                            ? "bg-green-100 text-green-700 border border-green-300"
+                            : "bg-yellow-100 text-yellow-700 border border-yellow-300"
+                        }`}
+                      >
+                        {order.status === "paid" ? "Paid" : "Pending"}
+                      </span>
+                    </td>
+
                     <td className="px-4 py-4 font-bold text-blue-700">
                       NRs.{" "}
                       {(
@@ -183,19 +191,16 @@ const AdminDashboard = () => {
                         ))}
                       </ul>
                     </td>
-                    <td className="px-4 py-4 text-xs text-gray-600">
-                      {order.deliveryTime || "-"}
-                    </td>
-                    <td className="px-4 py-4 text-xs text-gray-500">
-                      {new Date(order.createdAt).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-4">
+
+                    <td className="px-4 py-4 flex gap-2">
                       <button
-                        onClick={() => deleteOrder(order._id)}
-                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-full text-xs font-semibold transition"
+                        onClick={() => {
+                          setSelectedOrder(order);
+                          setShowModal(true);
+                        }}
+                        className="text-sm font-medium text-gray-700 border border-gray-400 rounded-md px-3 py-1 hover:bg-gray-100  transition duration-500"
                       >
-                        <FaTrash className="inline-block mr-1" />
-                        Delete
+                        View Details
                       </button>
                     </td>
                   </tr>
@@ -209,6 +214,177 @@ const AdminDashboard = () => {
           Last refreshed:{" "}
           {lastRefreshed ? lastRefreshed.toLocaleTimeString() : "Never"}
         </div>
+        {showModal && selectedOrder && (
+          <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex justify-center items-center z-50">
+            <div className="bg-white w-full max-w-2xl rounded-xl shadow-lg p-6 relative overflow-y-auto max-h-[90vh]">
+              <button
+                onClick={() => setShowModal(false)}
+                className="absolute top-3 right-3 text-gray-600 hover:text-black text-xl"
+              >
+                &times;
+              </button>
+
+              <h2 className="text-2xl font-bold text-blue-800 mb-4">
+                Order #{selectedOrder._id.slice(-6)} Details
+              </h2>
+
+              <div className="space-y-4 text-gray-700 text-sm">
+                <p>
+                  <strong>Customer:</strong> {selectedOrder.firstName}{" "}
+                  {selectedOrder.lastName}
+                </p>
+                <p>
+                  <strong>Contact:</strong> {selectedOrder.phone},{" "}
+                  {selectedOrder.email}
+                </p>
+                <div className="flex items-center gap-4">
+                  <p>
+                    <strong>Payment Method:</strong>{" "}
+                    {selectedOrder.paymentMethod}
+                  </p>
+                  <span
+                    className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                      selectedOrder.status === "paid"
+                        ? "bg-green-100 text-green-700 border border-green-300"
+                        : "bg-yellow-100 text-yellow-700 border border-yellow-300"
+                    }`}
+                  >
+                    {selectedOrder.status === "paid" ? "Paid" : "Pending"}
+                  </span>
+                </div>
+
+                <p>
+                  <strong>Order Date: </strong>{" "}
+                  {new Date(selectedOrder.createdAt).toLocaleString()}
+                </p>
+                <p>
+                  <strong>Delivery Time:</strong>{" "}
+                  {selectedOrder.deliveryTime || "-"}
+                </p>
+                <p>
+                  <strong>Total:</strong> Rs.{" "}
+                  {(
+                    parseFloat(
+                      selectedOrder.discountedTotal || selectedOrder.total
+                    ) + (selectedOrder.shipping || 0)
+                  ).toFixed(2)}
+                </p>
+
+                <div>
+                  <strong>Items:</strong>
+                  <ul className="list-disc ml-5 mt-1">
+                    {selectedOrder.items.map((item, idx) => (
+                      <li key={idx}>
+                        {item.name} × {item.quantity} ({item.selectedSize}g)
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {selectedOrder.location && (
+                  <div className="mt-4">
+                    <strong>Delivery Map Location:</strong>
+                    <p>
+                      Lat: {selectedOrder.location.lat.toFixed(5)}, Lng:{" "}
+                      {selectedOrder.location.lng.toFixed(5)}
+                    </p>
+                    <div className="h-64 mt-2 rounded-xl overflow-hidden border border-gray-300">
+                      <iframe
+                        title="Delivery Location"
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        loading="lazy"
+                        allowFullScreen
+                        src={`https://www.google.com/maps?q=${selectedOrder.location.lat},${selectedOrder.location.lng}&z=15&output=embed`}
+                      ></iframe>
+                    </div>
+                  </div>
+                )}
+              </div>
+              {/* Admin Actions */}
+              <div className="mt-8 flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 border-t pt-5">
+                {/* Toggle Payment Status Button */}
+                <button
+                  onClick={async () => {
+                    const newStatus =
+                      selectedOrder.status?.toLowerCase() === "paid"
+                        ? "pending"
+                        : "paid";
+                    try {
+                      const res = await fetch(
+                        `https://jhp-backend.onrender.com/api/admin/orders/${selectedOrder._id}/status`,
+                        {
+                          method: "PATCH",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ status: newStatus }),
+                        }
+                      );
+                      if (res.ok) {
+                        setSelectedOrder({
+                          ...selectedOrder,
+                          status: newStatus,
+                        });
+                      } else {
+                        alert("Failed to update payment status.");
+                      }
+                    } catch (err) {
+                      console.error("Error updating status", err);
+                    }
+                  }}
+                  className={`flex items-center justify-center gap-2 px-5 py-2 rounded-md border text-sm font-medium transition-all ${
+                    selectedOrder.status?.toLowerCase() === "paid"
+                      ? "text-yellow-700 border-yellow-500 hover:bg-yellow-100"
+                      : "text-green-700 border-green-500 hover:bg-green-100"
+                  }`}
+                >
+                  {selectedOrder.status?.toLowerCase() === "paid"
+                    ? "Mark as Pending"
+                    : "Mark as Paid"}
+                </button>
+
+                {/* Delete Order Button */}
+                <button
+                  onClick={async () => {
+                    const confirmDelete = window.confirm(
+                      "Are you sure you want to delete this order?"
+                    );
+                    if (!confirmDelete) return;
+
+                    try {
+                      const res = await fetch(
+                        `https://jhp-backend.onrender.com/api/admin/orders/${selectedOrder._id}`,
+                        { method: "DELETE" }
+                      );
+                      if (res.ok) {
+                        setShowModal(false);
+                        setOrders((prev) =>
+                          prev.filter(
+                            (order) => order._id !== selectedOrder._id
+                          )
+                        );
+
+                        // ✅ Show toast after successful deletion
+                        toast.success(
+                          `Order for ${selectedOrder.firstName} ${selectedOrder.lastName} deleted successfully`
+                        );
+                      } else {
+                        toast.error("Failed to delete the order.");
+                      }
+                    } catch (err) {
+                      console.error("Error deleting order", err);
+                      toast.error("Error deleting order. Please try again.");
+                    }
+                  }}
+                  className="flex items-center justify-center gap-2 px-5 py-2 rounded-md border border-red-500 text-red-600 hover:bg-red-50 text-sm font-medium transition-all"
+                >
+                  <FaTrash className="text-sm" />
+                  Delete Order
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

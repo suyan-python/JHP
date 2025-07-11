@@ -34,13 +34,15 @@ export function Story() {
             Our Journey into the Brew
           </h2>
           <p className="text-lg sm:text-xl text-[#e8ddd1] mb-4 leading-relaxed font-light">
-            From the misty highlands of Illam to the cozy corners of our cafés,
-            each bean tells a story steeped in tradition, care, and craft.
+            From the misty highlands of Illam, Nepal, our organic Arabica coffee
+            beans begin their journey—handpicked by local farmers who carry
+            generations of tradition and care in every harvest.
           </p>
           <p className="text-lg sm:text-xl text-[#e8ddd1] mb-8 leading-relaxed font-light">
-            Our farmers nurture the land, our roasters perfect the flavor, and
-            you — our community — complete the circle. Every cup is a tribute to
-            mindful cultivation and soulful brewing.
+            Each batch is artisanally roasted to highlight the unique flavor of
+            Himalayan coffee. Rooted in sustainability and crafted with heart,
+            every cup brings the pure taste of Nepal from our farms to your
+            brew.
           </p>
           <NavLink to={"/parent"}>
             <button className="header bg-[#f4eadd] hover:bg-[#e0cdb9] text-[#3e2c1c] px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold shadow-md transition-all duration-300 transform hover:scale-105">

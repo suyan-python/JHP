@@ -53,16 +53,16 @@ function Parent() {
 
         <div
           aria-label="Photos of leaders"
-          className="mt-12 flex gap-6 max-w-4xl w-full pb-6 overflow-x-auto md:overflow-x-visible"
+          className="mt-12 flex flex-wrap md:flex-nowrap justify-center gap-6 max-w-4xl w-full pb-6 px-2 overflow-x-auto md:overflow-visible"
         >
           {[shekhar, binayak, pranit, dilasha].map((src, idx) => (
             <img
               key={idx}
-              alt=""
-              className="w-36 h-44 rounded-lg hover:-translate-y-1 transition duration-300 object-cover flex-shrink-0"
+              alt={`JHP Leader ${idx + 1}`}
+              className="w-36 sm:w-36 md:w-44 lg:w-56 h-auto aspect-[3/4] rounded-lg object-cover shadow-lg hover:-translate-y-1 transition duration-300 flex-shrink-0"
               src={src}
-              width="144"
-              height="176"
+              width="290"
+              height="270"
             />
           ))}
         </div>

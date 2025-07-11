@@ -15,7 +15,10 @@ export function Footer() {
           <div>
             <div className="text-3xl font-bold mb-4 tracking-wide text-white">
               <Link to={"/"}>
-                <img src={footer} alt="" />
+                <img
+                  src={footer}
+                  alt="Himalayan Arabica Coffee Beans - JHP Store"
+                />
               </Link>
             </div>
             <p className="text-sm leading-relaxed text-[#d3c3b3]">
