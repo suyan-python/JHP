@@ -170,7 +170,7 @@ const PlaceOrder = () => {
 
   const applyPromo = () => {
     const code = promoCode.trim().toUpperCase();
-    if (code === "FROMWEBSITE" || code === "BINAYAK") {
+    if (code === "INAYA" || code === "FROMWEBSITE") {
       const discounted = initialTotal * 0.9;
       setFinalTotal(discounted.toFixed(2));
       setPromoApplied(true);
