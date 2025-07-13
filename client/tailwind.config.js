@@ -13,9 +13,6 @@ export default {
         herobean: "url('./src/assets/background/herobean.jpg')",
         aboutback: "url('/src/assets/background/aboutus.jpg')",
       },
-      screens: {
-        "3xl": "2300px",
-      },
     },
   },
   plugins: [],
