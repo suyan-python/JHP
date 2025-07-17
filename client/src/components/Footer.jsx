@@ -38,6 +38,8 @@ export function Footer() {
                 { label: "Home", path: "/" },
                 { label: "Store", path: "/store" },
                 { label: "Our Journey", path: "/parent" },
+                { label: "Terms and Conditions", path: "/termsandconditions" },
+                { label: "Privacy Policy", path: "/privacy-policy" },
               ].map((item, i) => (
                 <li key={i}>
                   <Link
@@ -51,7 +53,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
           {/* Contact Info */}
           <div>
             <h4 className="text-xl font-semibold mb-4 text-white">Contact</h4>

@@ -70,7 +70,7 @@ const PlaceOrder = () => {
     const totalWeightGrams = getTotalWeightInGrams();
     const totalWeightKg = totalWeightGrams / 1000;
 
-    let shipping = 100;
+    let shipping = 0;
     let discount = 0;
     let discountedTotal = initialTotal;
 
@@ -196,7 +196,7 @@ const PlaceOrder = () => {
 
     // Add shipping charge if less than 5kg
     if (totalWeightKg < 5) {
-      shippingCharge = 100;
+      shippingCharge = 0;
     }
 
     // 20% discount if >= 10kg
@@ -402,7 +402,7 @@ const PlaceOrder = () => {
           <p className="text-gray-600 text-base sm:text-lg">
             Shipping Fee:{" "}
             <span className="font-semibold text-gray-800">
-              Rs. {getTotalWeightInGrams() / 1000 < 5 ? "100.00" : "0.00"}
+              Rs. {getTotalWeightInGrams() / 1000 < 5 ? "0.00" : "0.00"}
             </span>
           </p>
 

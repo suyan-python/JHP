@@ -27,6 +27,9 @@ import AdminDashboard from "./components/admin/AdminDashboard.jsx";
 import StoreSection from "./components/StoreSection.jsx";
 
 import AdminLogin from "./components/admin/AdminLogin";
+import TermsAndConditions from "./components/TermsAndConditions.jsx";
+import PrivacyPolicy from "./components/Policy.jsx";
+import CookieConsent from "./components/Consent.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -41,6 +44,7 @@ function AppContent() {
   return (
     <>
       {!hidePopup && <Popup />}
+      <CookieConsent />
       <ScrollToTop />
       {!hideNavbarFooter && <Navbar />}
       <Routes>
@@ -62,6 +66,8 @@ function AppContent() {
         <Route path="/store/:id" element={<StoreDetail />} />
         <Route path="/seo" element={<SEOObjective />} />
         <Route path="/parent" element={<Parent />} />
+        <Route path="/termsandconditions" element={<TermsAndConditions />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/payment" element={<PlaceOrder />} />
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/payment-success" element={<Success />} />

@@ -62,8 +62,8 @@ const Popup = () => {
             <span className="text-white/80">Don’t miss out</span> on our
             exclusive discounts
           </h1>
-          <p className="mt-3 md:mt-4 text-white/70 text-sm md:text-lg max-w-xs md:max-w-md">
-            Get amazing deals—shop now before they're gone!
+          <p className="mt-3 md:mt-4 text-green-300 text-sm md:text-lg max-w-xs md:max-w-md font-semibold">
+            FREE SHIPPING! Shop-now before they're gone!
           </p>
           <button
             onClick={handleCheckOut}
@@ -75,7 +75,7 @@ const Popup = () => {
             onClick={closePopup}
             className="px-5 py-2 mt-3 text-xs md:text-sm text-white/80 hover:underline"
           >
-            No thanks, I don’t want the discounts.
+            No thanks, I don’t want the offer.
           </button>
         </div>
       </div>
