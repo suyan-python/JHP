@@ -4,7 +4,8 @@ import { food_list } from "../assets/assets";
 export const CartContext = createContext();
 export const useStore = () => useContext(CartContext);
 
-const CartProvider = ({ children }) => {
+const CartProvider = ({ children }) =>
+{
   /* ---------- lookup tables built once ---------- */
   const itemPrices = Object.fromEntries(food_list.map((i) => [i._id, i.price]));
   const itemImages = Object.fromEntries(food_list.map((i) => [i._id, i.image]));
@@ -32,13 +33,21 @@ const CartProvider = ({ children }) => {
     quantity = 1,
     selectedSize = 250,
     selectedProcess = ""
-  ) => {
-    // Include process in key for uniqueness if process exists
-    const cartKey = `${itemId}-${selectedSize}-${selectedProcess}`;
+  ) =>
+  {
+    const type = itemTypes[itemId];
 
-    setCartItems((prev) => {
-      // already in cart → just bump quantity
-      if (prev[cartKey]) {
+    // Force 70g for drip box regardless of input
+    const finalSize = type === "drip box" ? 70 : selectedSize;
+
+    // Create unique key including process (if applicable)
+    const cartKey = `${itemId}-${finalSize}-${selectedProcess}`;
+
+    setCartItems((prev) =>
+    {
+      if (prev[cartKey])
+      {
+        // Item already exists, update quantity
         return {
           ...prev,
           [cartKey]: {
@@ -48,13 +57,13 @@ const CartProvider = ({ children }) => {
         };
       }
 
-      const type = itemTypes[itemId];
+      // Determine price logic
       const pricePerUnit =
-        type === "filter roasted" ||
-        type === "anerobic process" ||
-        type === "cold brew"
-          ? itemPricesBySize[itemId]?.[selectedSize] ?? itemPrices[itemId]
-          : itemPrices[itemId];
+        ["filter roasted", "anerobic process", "cold brew"].includes(type)
+          ? itemPricesBySize[itemId]?.[finalSize] ?? itemPrices[itemId]
+          : type === "drip box"
+            ? itemPricesBySize[itemId]?.[70] ?? itemPrices[itemId]
+            : itemPrices[itemId];
 
       return {
         ...prev,
@@ -66,20 +75,24 @@ const CartProvider = ({ children }) => {
           pricesBySize: itemPricesBySize[itemId],
           price: pricePerUnit,
           quantity,
-          selectedSize,
-          process: selectedProcess, // ✅ Store selected process in cart item
+          selectedSize: finalSize,
+          process: selectedProcess,
         },
       };
     });
   };
 
-  const removeFromCart = (id, size = 250, process = "") => {
+
+  const removeFromCart = (id, size = 250, process = "") =>
+  {
     const cartKey = `${id}-${size}-${process}`;
-    setCartItems((prev) => {
+    setCartItems((prev) =>
+    {
       const item = prev[cartKey];
       if (!item) return prev;
 
-      if (item.quantity <= 1) {
+      if (item.quantity <= 1)
+      {
         const { [cartKey]: _, ...rest } = prev;
         return rest;
       }
@@ -94,8 +107,10 @@ const CartProvider = ({ children }) => {
     });
   };
 
-  const deleteItemFromCart = (cartKey) => {
-    setCartItems((prev) => {
+  const deleteItemFromCart = (cartKey) =>
+  {
+    setCartItems((prev) =>
+    {
       const { [cartKey]: _, ...rest } = prev;
       return rest;
     });

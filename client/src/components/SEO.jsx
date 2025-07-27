@@ -1,6 +1,7 @@
 import React from "react";
 
-const SEOObjective = () => {
+const SEOObjective = () =>
+{
   return (
     <section className="max-w-5xl mx-auto px-6 py-16 text-center">
       <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6">
@@ -51,7 +52,7 @@ const SEOObjective = () => {
       </p>
 
       <a
-        href="/store"
+        href="/"
         className="inline-block rounded-full bg-brownn text-white px-8 py-4 text-lg font-semibold shadow hover:bg-soft hover:text-brownn transition"
       >
         Shop Premium Coffee Now

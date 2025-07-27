@@ -3,19 +3,23 @@ import { useStore } from "../../context/StoreContext.jsx";
 import { Link } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
 
-const FoodDisplay = () => {
+const FoodDisplay = () =>
+{
   const { food_list, addToCart, itemNames, itemPrices, itemImages } =
     useStore();
 
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOrder, setSortOrder] = useState("default");
 
-  const applySorting = (products) => {
-    if (sortOrder === "asc") {
+  const applySorting = (products) =>
+  {
+    if (sortOrder === "asc")
+    {
       return [...products].sort(
         (a, b) => itemPrices[a._id] - itemPrices[b._id]
       );
-    } else if (sortOrder === "desc") {
+    } else if (sortOrder === "desc")
+    {
       return [...products].sort(
         (a, b) => itemPrices[b._id] - itemPrices[a._id]
       );
@@ -65,7 +69,7 @@ const FoodDisplay = () => {
             key={product._id}
             className="w-full bg-white border rounded-3xl shadow-lg group hover:shadow-xl hover:scale-[1.015] transition-transform duration-300 flex flex-col overflow-hidden"
           >
-            <Link to={`/store/${product._id}`}>
+            <Link to={`/${product._id}`}>
               <div className="relative h-[350px] sm:h-[400px] md:h-[500px] overflow-hidden rounded-t-3xl">
                 {renderOptimizedImage(
                   itemImages[product._id],
@@ -76,8 +80,8 @@ const FoodDisplay = () => {
                   {product.type === "espresso"
                     ? "Premium"
                     : product.type === "drip box"
-                    ? "Best Seller"
-                    : "Classic"}
+                      ? "Best Seller"
+                      : "Classic"}
                 </span>
               </div>
             </Link>
@@ -87,12 +91,13 @@ const FoodDisplay = () => {
                 {itemNames[product._id]}
               </h3>
               <p className="text-xs sm:text-sm text-gray-500 mb-2">
-                250gm Pack
+                {product.type === "drip box" ? "70g Pack" : "250g Pack"}
               </p>
 
+
               <div className="flex items-center gap-1 text-yellow-600 text-sm font-medium mb-2">
-                <AiFillStar className="text-base sm:text-lg" /> 4.5 · 120
-                Reviews
+                <AiFillStar className="text-base sm:text-lg" />
+                {product.rating} · {product.reviews} Reviews
               </div>
 
               <p className="text-white font-semibold text-center bg-brownn rounded-md py-2 text-sm sm:text-base">
@@ -117,12 +122,12 @@ const FoodDisplay = () => {
                   {product.description
                     ? product.description
                     : product.type === "espresso"
-                    ? "Intense, syrupy, and made to cut through milk like a true classic."
-                    : product.type === "drip box"
-                    ? "Convenient brewing meets café-quality flavor – no equipment needed."
-                    : "Clarity and brightness in every cup, crafted with meticulous care."}
+                      ? "Intense, syrupy, and made to cut through milk like a true classic."
+                      : product.type === "drip box"
+                        ? "Convenient brewing meets café-quality flavor – no equipment needed."
+                        : "Clarity and brightness in every cup, crafted with meticulous care."}
                 </p>
-                <Link to={`/store/${product._id}`}>
+                <Link to={`/${product._id}`}>
                   <button className="w-full border border-brownn text-brownn font-semibold text-xs sm:text-sm rounded-md py-2 hover:bg-brownn hover:text-white transition duration-300">
                     Explore Brew Options
                   </button>
@@ -176,11 +181,10 @@ const FoodDisplay = () => {
               <button
                 key={category.value}
                 onClick={() => setSelectedCategory(category.value)}
-                className={`px-4 sm:px-6 py-2 rounded-full text-sm font-medium capitalize border transition ${
-                  selectedCategory === category.value
-                    ? "bg-brownn text-white border-transparent shadow"
-                    : "text-gray-700 bg-white border-gray-300 hover:bg-brownn hover:text-white"
-                }`}
+                className={`px-4 sm:px-6 py-2 rounded-full text-sm font-medium capitalize border transition ${selectedCategory === category.value
+                  ? "bg-brownn text-white border-transparent shadow"
+                  : "text-gray-700 bg-white border-gray-300 hover:bg-brownn hover:text-white"
+                  }`}
               >
                 {category.label}
               </button>

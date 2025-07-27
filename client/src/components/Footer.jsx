@@ -35,8 +35,8 @@ export function Footer() {
             </h4>
             <ul className="space-y-3 text-sm text-[#d3c3b3]">
               {[
-                { label: "Home", path: "/" },
-                { label: "Store", path: "/store" },
+                { label: "Store", path: "/" },
+                { label: "About", path: "/about" },
                 { label: "Our Journey", path: "/parent" },
                 { label: "Terms and Conditions", path: "/termsandconditions" },
                 { label: "Privacy Policy", path: "/privacy-policy" },

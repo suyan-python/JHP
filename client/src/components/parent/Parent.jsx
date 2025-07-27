@@ -6,8 +6,10 @@ import binayak from "../../assets/people/binayak.jpg";
 import pranit from "../../assets/people/pranit.jpg";
 import dilasha from "../../assets/people/dilasha.jpg";
 
-function Parent() {
-  useEffect(() => {
+function Parent()
+{
+  useEffect(() =>
+  {
     window.scrollTo(0, 0);
   }, []);
 
@@ -25,7 +27,7 @@ function Parent() {
       <div className="relative z-10 max-w-4xl w-full animate-fade-in">
         <div className="w-full max-w-2xl mx-auto">
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-extrabold tracking-tight mb-6 text-white drop-shadow-lg">
-            Discover The Story of{" "}
+            Discover The Story of{" "} <br />
             <span className="text-[#b3e5ff] font-semibold">
               Jewel Himalayan Products
             </span>

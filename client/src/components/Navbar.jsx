@@ -4,7 +4,8 @@ import { useStore } from "../context/StoreContext.jsx";
 import { NavLink, useLocation } from "react-router-dom";
 import JHPstore from "../assets/logo/JHPstore.png";
 
-export function Navbar() {
+export function Navbar()
+{
   const { cartItems } = useStore();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -15,30 +16,36 @@ export function Navbar() {
   const handleScroll = () => setScrolled(window.scrollY > 10);
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     const pathToIdMap = {
-      "/": "home",
-      "/store": "store",
+      "/": "store",
+      "/about": "home",
       "/parent": "Parent",
     };
     setActiveSection(pathToIdMap[location.pathname] || "");
   }, [location.pathname]);
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     let lastScrollY = window.scrollY;
 
-    const handleScroll = () => {
+    const handleScroll = () =>
+    {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 10) {
+      if (currentScrollY > lastScrollY && currentScrollY > 10)
+      {
         // Scrolling down
         setScrolled(true);
-      } else if (currentScrollY < lastScrollY) {
+      } else if (currentScrollY < lastScrollY)
+      {
         // Scrolling up
         setScrolled(false);
       }
@@ -51,8 +58,8 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { to: "/", label: "ABOUT", id: "home" },
-    { to: "/store", label: "STORE", id: "store" },
+    { to: "/", label: "STORE", id: "store" },
+    { to: "/about", label: "ABOUT", id: "home" },
     { to: "/parent", label: "COMPANY", id: "Parent" },
   ];
 
@@ -62,9 +69,8 @@ export function Navbar() {
     >
       {/* Notification Bar */}
       <div
-        className={`w-full overflow-hidden py-2.5 font-semibold text-xs sm:text-sm md:text-base text-white bg-gradient-to-r from-[#5A3825] via-[#7A4B35] to-[#A66548] shadow transition-all duration-500 ${
-          scrolled ? "hidden" : ""
-        }`}
+        className={`w-full overflow-hidden py-2.5 font-semibold text-xs sm:text-sm md:text-base text-white bg-gradient-to-r from-[#5A3825] via-[#7A4B35] to-[#A66548] shadow transition-all duration-500 ${scrolled ? "hidden" : ""
+          }`}
       >
         <div className="relative w-full">
           <div className="animate-bannerScroll flex whitespace-nowrap gap-16 leading-relaxed">
@@ -84,11 +90,10 @@ export function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0  flex items-center justify-between 
     px-4 md:px-8 lg:px-16 xl:px-24  transition-all duration-500 z-10
-    ${
-      scrolled
-        ? "bg-[#fdfaf6] shadow-md text-[#4b2e1a] mx-28 rounded-full my-2"
-        : "bg-transparent my-9 "
-    }`}
+    ${scrolled
+            ? "bg-[#fdfaf6] shadow-md text-[#4b2e1a] mx-28 lg:mx-44 rounded-full my-2"
+            : "bg-transparent my-9 "
+          }`}
       >
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2">
@@ -105,19 +110,17 @@ export function Navbar() {
             <NavLink
               key={id}
               to={to}
-              className={`group relative transition-colors duration-300 ${
-                activeSection === id
-                  ? "text-[#8B4513]"
-                  : scrolled
+              className={`group relative transition-colors duration-300 ${activeSection === id
+                ? "text-[#8B4513]"
+                : scrolled
                   ? "text-[#4b2e1a]"
                   : "text-brownn"
-              } hover:text-[#A66548]`}
+                } hover:text-[#A66548]`}
             >
               {label}
               <span
-                className={`absolute -bottom-1 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-300 ${
-                  activeSection === id ? "w-full bg-[#A66548]" : "bg-[#A66548]"
-                }`}
+                className={`absolute -bottom-1 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-300 ${activeSection === id ? "w-full bg-[#A66548]" : "bg-[#A66548]"
+                  }`}
               ></span>
             </NavLink>
           ))}
@@ -125,9 +128,8 @@ export function Navbar() {
           {/* Browse Dropdown */}
           <div className="relative group">
             <button
-              className={`text-sm font-semibold transition-colors border border-brownn rounded-xl p-2 ${
-                scrolled ? "text-[#4b2e1a]" : "text-brownn"
-              } hover:text-[#A66548]`}
+              className={`text-sm font-semibold transition-colors border border-brownn rounded-xl p-2 ${scrolled ? "text-[#4b2e1a]" : "text-brownn"
+                } hover:text-[#A66548]`}
             >
               Browse
             </button>
@@ -135,7 +137,7 @@ export function Navbar() {
               <ul className="py-2 text-sm text-[#4b2e1a]">
                 <li>
                   <NavLink
-                    to="/store#special-editions"
+                    to="/#special-editions"
                     className="block px-4 py-2 hover:bg-[#A66548] hover:text-white rounded"
                   >
                     Special Editions
@@ -143,7 +145,7 @@ export function Navbar() {
                 </li>
                 <li>
                   <NavLink
-                    to="/store#drip-box"
+                    to="/#drip-box"
                     className="block px-4 py-2 hover:bg-[#A66548] hover:text-white rounded"
                   >
                     Drip Box
@@ -151,7 +153,7 @@ export function Navbar() {
                 </li>
                 <li>
                   <NavLink
-                    to="/store#washed-process"
+                    to="/#washed-process"
                     className="block px-4 py-2 hover:bg-[#A66548] hover:text-white rounded"
                   >
                     filter roasted
@@ -166,9 +168,8 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <NavLink to="/cart" className="relative p-2 rounded-full">
             <ShoppingCart
-              className={`h-6 w-6  ${
-                scrolled ? "text-[#4b2e1a]" : "text-brownn"
-              }`}
+              className={`h-6 w-6  ${scrolled ? "text-[#4b2e1a]" : "text-brownn"
+                }`}
             />
             {Object.keys(cartItems || {}).length > 0 && (
               <span className="absolute -top-2 -right-2 bg-[#A66548] text-white rounded-full text-xs px-1">
@@ -183,25 +184,22 @@ export function Navbar() {
           {mobileMenuOpen ? (
             <X
               onClick={toggleMobileMenu}
-              className={`h-6 w-6 cursor-pointer ${
-                scrolled ? "text-[#4b2e1a]" : "text-white"
-              }`}
+              className={`h-6 w-6 cursor-pointer ${scrolled ? "text-[#4b2e1a]" : "text-white"
+                }`}
             />
           ) : (
             <Menu
               onClick={toggleMobileMenu}
-              className={`h-6 w-6 cursor-pointer ${
-                scrolled ? "text-[#4b2e1a]" : "text-white"
-              }`}
+              className={`h-6 w-6 cursor-pointer ${scrolled ? "text-[#4b2e1a]" : "text-white"
+                }`}
             />
           )}
         </div>
 
         {/* Mobile Menu */}
         <div
-          className={`fixed top-0 left-0 w-full h-screen bg-[#fdfaf6] text-base flex flex-col md:hidden items-center justify-center gap-8 font-semibold text-[#4b2e1a] transition-all duration-500 z-50 ${
-            mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`fixed top-0 left-0 w-full h-screen bg-[#fdfaf6] text-base flex flex-col md:hidden items-center justify-center gap-8 font-semibold text-[#4b2e1a] transition-all duration-500 z-50 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
         >
           <button
             className="absolute top-4 right-4"
@@ -216,9 +214,8 @@ export function Navbar() {
               key={id}
               to={to}
               onClick={() => setMobileMenuOpen(false)}
-              className={`text-lg transition-colors hover:text-[#A66548] ${
-                activeSection === id ? "text-[#A66548]" : ""
-              }`}
+              className={`text-lg transition-colors hover:text-[#A66548] ${activeSection === id ? "text-[#A66548]" : ""
+                }`}
             >
               {label}
             </NavLink>
@@ -227,21 +224,21 @@ export function Navbar() {
           <div className="space-y-3 text-base">
             <p className="font-bold text-[#4b2e1a]">Browse</p>
             <NavLink
-              to="/store#special-editions"
+              to="/#special-editions"
               onClick={() => setMobileMenuOpen(false)}
               className="block text-[#4b2e1a] hover:text-[#A66548]"
             >
               Special Editions
             </NavLink>
             <NavLink
-              to="/store#drip-box"
+              to="/#drip-box"
               onClick={() => setMobileMenuOpen(false)}
               className="block text-[#4b2e1a] hover:text-[#A66548]"
             >
               Drip Box
             </NavLink>
             <NavLink
-              to="/store#washed-process"
+              to="/#washed-process"
               onClick={() => setMobileMenuOpen(false)}
               className="block text-[#4b2e1a] hover:text-[#A66548]"
             >

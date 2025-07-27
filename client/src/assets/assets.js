@@ -22,6 +22,8 @@ export const food_list = [
       500: 2500,
       1000: 4000,
     },
+    rating: 4.8,
+    reviews: 87,
   },
   {
     _id: 2,
@@ -39,6 +41,8 @@ export const food_list = [
       500: 3200,
       1000: 6000,
     },
+    rating: 4.4,
+    reviews: 53,
   },
 
   {
@@ -52,6 +56,11 @@ export const food_list = [
     category: "coffee",
     flavors: ["WASHED", "EXPERIMENTAL"],
     type: "drip box",
+    pricesBySize: {
+      70: 565,
+    },
+    rating: 4.8,
+    reviews: 96,
   },
   {
     _id: 4,
@@ -64,6 +73,11 @@ export const food_list = [
     category: "coffee",
     flavors: ["ANEROBIC", "EXPERIMENTAL"],
     type: "drip box",
+    pricesBySize: {
+      70: 1500,
+    },
+    rating: 4.9,
+    reviews: 100,
   },
 
   {
@@ -82,6 +96,8 @@ export const food_list = [
       500: 1800,
       1000: 3200,
     },
+    rating: 4.5,
+    reviews: 70,
   },
   {
     _id: 6,
@@ -99,5 +115,7 @@ export const food_list = [
       500: 2700,
       1000: 5000,
     },
+    rating: 4.6,
+    reviews: 77,
   },
 ];

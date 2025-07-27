@@ -6,7 +6,8 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 import { generatePDFReceipt } from "../../components/utils/generatePDFReceipt"; // adjust the path as needed
 
-const OrderSuccess = () => {
+const OrderSuccess = () =>
+{
   const navigate = useNavigate();
   const { width, height } = useWindowSize();
   const location = useLocation();
@@ -14,31 +15,38 @@ const OrderSuccess = () => {
     location.state?.orderDetails
   );
 
-  useEffect(() => {
-    if (location.state?.orderDetails) {
+  useEffect(() =>
+  {
+    if (location.state?.orderDetails)
+    {
       // Save to localStorage if coming from PlaceOrder
       localStorage.setItem(
         "lastOrder",
         JSON.stringify(location.state.orderDetails)
       );
-    } else {
+    } else
+    {
       // Try loading from localStorage on refresh
       const stored = localStorage.getItem("lastOrder");
-      if (stored) {
+      if (stored)
+      {
         setOrderDetails(JSON.parse(stored));
       }
     }
   }, [location.state]);
 
-  const handleDownloadReceipt = () => {
-    if (!orderDetails) {
+  const handleDownloadReceipt = () =>
+  {
+    if (!orderDetails)
+    {
       alert("No order details found.");
       return;
     }
     generatePDFReceipt(orderDetails);
   };
 
-  if (!orderDetails) {
+  if (!orderDetails)
+  {
     return (
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center text-gray-600 text-lg">
         Loading your order details...
@@ -70,9 +78,10 @@ const OrderSuccess = () => {
 
         <div className="flex flex-col items-center gap-4">
           <button
-            onClick={() => {
+            onClick={() =>
+            {
               localStorage.removeItem("lastOrder");
-              navigate("/store");
+              navigate("/");
             }}
             className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-6 rounded-xl w-full sm:w-auto"
           >

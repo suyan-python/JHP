@@ -1,5 +1,6 @@
 import React from "react";
-import {
+import
+{
   BrowserRouter as Router,
   Route,
   Routes,
@@ -31,7 +32,8 @@ import TermsAndConditions from "./components/TermsAndConditions.jsx";
 import PrivacyPolicy from "./components/Policy.jsx";
 import CookieConsent from "./components/Consent.jsx";
 
-function AppContent() {
+function AppContent()
+{
   const location = useLocation();
   const hideNavbarFooter =
     location.pathname === "/order-success" ||
@@ -43,7 +45,7 @@ function AppContent() {
 
   return (
     <>
-      {!hidePopup && <Popup />}
+      {/* {!hidePopup && <Popup />} */}
       <CookieConsent />
       <ScrollToTop />
       {!hideNavbarFooter && <Navbar />}
@@ -60,10 +62,11 @@ function AppContent() {
             )
           }
         />
-        <Route path="/" element={<Hero />} />
+
+        <Route path="/" element={<StoreSection />} />
+        <Route path="/:id" element={<StoreDetail />} />
+        <Route path="/about" element={<Hero />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/store" element={<StoreSection />} />
-        <Route path="/store/:id" element={<StoreDetail />} />
         <Route path="/seo" element={<SEOObjective />} />
         <Route path="/parent" element={<Parent />} />
         <Route path="/termsandconditions" element={<TermsAndConditions />} />
@@ -79,7 +82,8 @@ function AppContent() {
   );
 }
 
-function App() {
+function App()
+{
   return (
     <StoreContextProvider>
       <Router>

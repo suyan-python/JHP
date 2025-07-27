@@ -2,21 +2,25 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import drip from "../assets/prodc/drip2.JPG";
 
-const Popup = () => {
+const Popup = () =>
+{
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     setIsVisible(true);
   }, []);
 
-  const closePopup = () => {
+  const closePopup = () =>
+  {
     setIsVisible(false);
   };
 
-  const handleCheckOut = () => {
+  const handleCheckOut = () =>
+  {
     closePopup();
-    navigate("/store/3");
+    navigate("/3");
   };
 
   if (!isVisible) return null;

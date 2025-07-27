@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useStore } from "../../context/StoreContext";
 import { Star } from "lucide-react";
+import notfound from '../../assets/notfound.svg'
 
-function StoreDetail() {
+function StoreDetail()
+{
   const { id } = useParams();
   const {
     addToCart,
@@ -45,14 +47,16 @@ function StoreDetail() {
 
   const priceBySize =
     productType === "filter roasted" ||
-    productType === "anerobic process" ||
-    productType === "cold brew"
+      productType === "anerobic process" ||
+      productType === "cold brew"
       ? itemPricesBySize[id]?.[selectedSize] || productPrice
       : productPrice;
 
-  const handleAddToCart = () => {
+  const handleAddToCart = () =>
+  {
     const cartKey = `${id}-${selectedSize}-${selectedProcess}`;
-    if (cartItems[cartKey]) {
+    if (cartItems[cartKey])
+    {
       setToastMessage("Item already in cart!");
       setToastType("error");
       setShowToast(true);
@@ -66,16 +70,31 @@ function StoreDetail() {
     setAddedToCart(true);
     setShowToast(true);
 
-    setTimeout(() => {
+    setTimeout(() =>
+    {
       setAddedToCart(false);
       setShowToast(false);
     }, 3000);
   };
 
-  if (!productName || !productImage || !productDescription) {
+  if (!productName || !productImage || !productDescription)
+  {
     return (
-      <div className="text-center py-20">
-        <h1 className="text-2xl font-bold">Product not found</h1>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] bg-gray-50 px-6 py-16">
+        <img
+          src={notfound}
+          alt="Not Found"
+          className="w-48 mb-6 opacity-80"
+        />
+        <h1 className="text-3xl font-semibold text-gray-800 mb-2">Product Not Found</h1>
+        <p className="text-gray-600 text-center max-w-md">
+          We couldn’t find the product you’re looking for. It may have been removed, renamed, or temporarily unavailable.
+        </p>
+        <Link to={'/'}
+          className="mt-6 px-6 py-3 bg-brownn text-white rounded transition"
+        >
+          Return to Store
+        </Link>
       </div>
     );
   }
@@ -85,11 +104,10 @@ function StoreDetail() {
       {showToast && (
         <div
           role="alert"
-          className={`fixed top-20 right-5 z-50 px-6 py-4 rounded-lg text-sm font-medium flex items-center space-x-3 shadow-lg transition ${
-            toastType === "success"
-              ? "bg-white border border-green-500 text-green-700"
-              : "bg-white border border-red-500 text-red-700"
-          }`}
+          className={`fixed top-20 right-5 z-50 px-6 py-4 rounded-lg text-sm font-medium flex items-center space-x-3 shadow-lg transition ${toastType === "success"
+            ? "bg-white border border-green-500 text-green-700"
+            : "bg-white border border-red-500 text-red-700"
+            }`}
         >
           <span>{toastMessage}</span>
         </div>
@@ -130,18 +148,21 @@ function StoreDetail() {
                     value={selectedSize}
                     onChange={(e) => setSelectedSize(Number(e.target.value))}
                   >
-                    <option value={250}>250g</option>
-                    {[
-                      "filter roasted",
-                      "anerobic process",
-                      "cold brew",
-                    ].includes(productType) && (
+                    {productType === "drip box" ? (
+                      <option value={70}>70g</option>
+                    ) : (
                       <>
-                        <option value={500}>500g</option>
-                        <option value={1000}>1kg</option>
+                        <option value={250}>250g</option>
+                        {["filter roasted", "anerobic process", "cold brew"].includes(productType) && (
+                          <>
+                            <option value={500}>500g</option>
+                            <option value={1000}>1kg</option>
+                          </>
+                        )}
                       </>
                     )}
                   </select>
+
                 </div>
 
                 {/* PROCESS SELECTOR */}
@@ -199,11 +220,10 @@ function StoreDetail() {
 
               {/* ADD TO CART */}
               <button
-                className={`w-full sm:w-fit px-6 py-3 font-semibold rounded-lg shadow-md transition ${
-                  addedToCart
-                    ? "bg-green-600 text-white hover:bg-green-700"
-                    : "bg-gray-900 text-white hover:bg-gray-800"
-                }`}
+                className={`w-full sm:w-fit px-6 py-3 font-semibold rounded-lg shadow-md transition ${addedToCart
+                  ? "bg-green-600 text-white hover:bg-green-700"
+                  : "bg-gray-900 text-white hover:bg-gray-800"
+                  }`}
                 onClick={handleAddToCart}
               >
                 {addedToCart ? "✔ Added to Cart" : "Add to Cart"}

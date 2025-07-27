@@ -19,11 +19,14 @@ import TrustedBy from "./TrustedBy";
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
-const HomeHero = () => {
+const HomeHero = () =>
+{
   const [current, setCurrent] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
+  useEffect(() =>
+  {
+    const timer = setInterval(() =>
+    {
       setCurrent((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(timer);
@@ -38,9 +41,8 @@ const HomeHero = () => {
             key={index}
             src={img}
             alt={`Slide ${index + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover rounded-[30px] sm:rounded-[40px] lg:rounded-[60px] transition-opacity duration-[2000ms] ease-in-out ${
-              index === current ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute inset-0 w-full h-full object-cover rounded-[30px] sm:rounded-[40px] lg:rounded-[60px] transition-opacity duration-[2000ms] ease-in-out ${index === current ? "opacity-100" : "opacity-0"
+              }`}
           />
         ))}
         {/* Dark overlay for contrast */}
@@ -63,7 +65,7 @@ const HomeHero = () => {
         </p>
 
         <NavLink
-          to="/store"
+          to="/"
           className="animate-fade-in-up inline-block border border-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-black px-8 py-3 sm:px-10 sm:py-4 rounded-full text-lg sm:text-xl font-semibold transition-all duration-300"
         >
           Order Coffee Beans

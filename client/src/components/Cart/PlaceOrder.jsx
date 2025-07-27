@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 // import MapPicker from "../MapPicker";
 import LocationPicker from "../LocationPicker";
 
-const PlaceOrder = () => {
+const PlaceOrder = () =>
+{
   const { getTotalPrice, cartItems, clearCart } = useStore();
   const initialTotal = getTotalPrice();
 
@@ -21,9 +22,19 @@ const PlaceOrder = () => {
     lng: null,
   });
   const [location, setLocation] = useState(null);
+  const [minDateTime, setMinDateTime] = useState("");
+
+  useEffect(() =>
+  {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // Handle local timezone
+    const formatted = now.toISOString().slice(0, 16); // "YYYY-MM-DDTHH:MM"
+    setMinDateTime(formatted);
+  }, []);
 
   const navigate = useNavigate();
-  const handleLocationSelect = (loc) => {
+  const handleLocationSelect = (loc) =>
+  {
     setLocation(loc);
   };
 
@@ -48,15 +59,18 @@ const PlaceOrder = () => {
     "Bank Transfer",
   ];
   // Calculate total weight in grams
-  const getTotalWeightInGrams = () => {
-    return Object.values(cartItems).reduce((total, item) => {
+  const getTotalWeightInGrams = () =>
+  {
+    return Object.values(cartItems).reduce((total, item) =>
+    {
       const quantity = item.quantity || 1;
       const size = item.selectedSize || 250;
       return total + quantity * size;
     }, 0);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
+  {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -64,7 +78,8 @@ const PlaceOrder = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) =>
+  {
     e.preventDefault();
 
     const totalWeightGrams = getTotalWeightInGrams();
@@ -74,17 +89,21 @@ const PlaceOrder = () => {
     let discount = 0;
     let discountedTotal = initialTotal;
 
-    // Apply free shipping if more than 5kg
-    if (totalWeightKg >= 5) {
+    // ✅ Apply free shipping if more than 5kg
+    if (totalWeightKg >= 5)
+    {
       shipping = 0;
     }
 
-    // Apply 20% discount if more than 10kg
-    if (totalWeightKg >= 10) {
-      discount = initialTotal * 0.2;
+    // ✅ Apply 5% discount if more than 10kg
+    if (totalWeightKg >= 10)
+    {
+      discount = initialTotal * 0.05;
       discountedTotal = initialTotal - discount;
     }
-    if (!location) {
+
+    if (!location)
+    {
       toast.error("Please select your delivery location on the map.");
       setLoading(false);
       return;
@@ -94,12 +113,13 @@ const PlaceOrder = () => {
       ...formData,
       deliveryLocation,
       total: initialTotal,
-      discountedTotal: discountedTotal.toFixed(2),
-      totalWeight: totalWeightKg.toFixed(2),
+      discountedTotal: Number(discountedTotal.toFixed(2)),
+      totalWeight: Number(totalWeightKg.toFixed(2)),
       shipping,
       location: location || null,
       items: Object.entries(cartItems)
-        .map(([key, item]) => {
+        .map(([key, item]) =>
+        {
           const {
             id,
             name,
@@ -133,12 +153,14 @@ const PlaceOrder = () => {
         .filter(Boolean),
     };
 
-    if (orderDetails.items.length === 0) {
+    if (orderDetails.items.length === 0)
+    {
       toast.error("No valid items to submit");
       return;
     }
 
-    try {
+    try
+    {
       setLoading(true);
       const response = await fetch(
         "https://jhp-backend.onrender.com/api/orders",
@@ -151,7 +173,8 @@ const PlaceOrder = () => {
 
       if (!response.ok) throw new Error("Failed to place order");
 
-      setTimeout(() => {
+      setTimeout(() =>
+      {
         navigate("/order-success", { state: { orderDetails } });
         toast.success("Order placed successfully!", {
           position: "top-center",
@@ -160,17 +183,22 @@ const PlaceOrder = () => {
         });
         clearCart();
       }, 3000);
-    } catch (error) {
+    } catch (error)
+    {
       console.error("Error placing order:", error);
       toast.error("Something went wrong. Try again.");
-    } finally {
+    } finally
+    {
       setLoading(false);
     }
   };
 
-  const applyPromo = () => {
+
+  const applyPromo = () =>
+  {
     const code = promoCode.trim().toUpperCase();
-    if (code === "INAYA" || code === "FROMWEBSITE") {
+    if (code === "INAYA" || code === "FROMWEBSITE")
+    {
       const discounted = initialTotal * 0.9;
       setFinalTotal(discounted.toFixed(2));
       setPromoApplied(true);
@@ -179,7 +207,8 @@ const PlaceOrder = () => {
         autoClose: 4000,
         theme: "colored",
       });
-    } else {
+    } else
+    {
       setPromoApplied(false);
       toast.error("Invalid promo code", {
         position: "top-center",
@@ -189,23 +218,27 @@ const PlaceOrder = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     const totalWeightKg = getTotalWeightInGrams() / 1000;
     let updatedTotal = initialTotal;
     let shippingCharge = 0;
 
     // Add shipping charge if less than 5kg
-    if (totalWeightKg < 5) {
+    if (totalWeightKg < 5)
+    {
       shippingCharge = 0;
     }
 
     // 20% discount if >= 10kg
-    if (totalWeightKg >= 10) {
+    if (totalWeightKg >= 10)
+    {
       updatedTotal = initialTotal * 0.8;
     }
 
     // Promo overrides with 10% discount (you can customize priority)
-    if (hasPromo && promoApplied) {
+    if (hasPromo && promoApplied)
+    {
       updatedTotal = initialTotal * 0.9;
     }
 
@@ -277,6 +310,7 @@ const PlaceOrder = () => {
             type="datetime-local"
             name="deliveryTime"
             required
+            min={minDateTime}
             value={formData.deliveryTime}
             onChange={handleChange}
             className="w-full rounded-xl border border-gray-300 px-4 py-3 sm:px-5 sm:py-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
@@ -352,9 +386,8 @@ const PlaceOrder = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full mt-8 ${
-              loading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
-            } text-white font-extrabold py-4 sm:py-5 rounded-xl flex items-center justify-center gap-4 text-lg sm:text-xl transition`}
+            className={`w-full mt-8 ${loading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
+              } text-white font-extrabold py-4 sm:py-5 rounded-xl flex items-center justify-center gap-4 text-lg sm:text-xl transition`}
           >
             {loading && (
               <div className="w-5 h-5 sm:w-6 sm:h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -429,11 +462,10 @@ const PlaceOrder = () => {
                 onClick={() =>
                   setFormData((prev) => ({ ...prev, paymentMethod: method }))
                 }
-                className={`px-5 py-3 sm:px-6 sm:py-3.5 rounded-2xl font-semibold text-sm transition-colors ${
-                  formData.paymentMethod === method
-                    ? "bg-blue-600 text-white shadow-md"
-                    : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-                }`}
+                className={`px-5 py-3 sm:px-6 sm:py-3.5 rounded-2xl font-semibold text-sm transition-colors ${formData.paymentMethod === method
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                  }`}
               >
                 {method}
               </button>
