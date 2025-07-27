@@ -92,7 +92,7 @@ export function Navbar()
     px-4 md:px-8 lg:px-16 xl:px-24  transition-all duration-500 z-10
     ${scrolled
             ? "bg-[#fdfaf6] shadow-md text-[#4b2e1a] mx-28 lg:mx-44 rounded-full my-2"
-            : "bg-transparent my-9 "
+            : "bg-transparent my-10"
           }`}
       >
         {/* Logo */}

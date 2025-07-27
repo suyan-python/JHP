@@ -11,7 +11,8 @@ import farm5 from "../assets/farm/5.JPG";
 import farm7 from "../assets/farm/7.JPG";
 import brew from "../assets/brew.JPG";
 
-const SlideCard = () => {
+const SlideCard = () =>
+{
   const [stopScroll, setStopScroll] = useState(false);
 
   const cardData = useMemo(
@@ -33,16 +34,17 @@ const SlideCard = () => {
   return (
     <>
       <style>{`
-        .marquee-inner {
-          animation: marqueeScroll linear infinite;
-          will-change: transform;
-        }
+  .marquee-inner {
+    animation: marqueeScroll 40s linear infinite;
+    will-change: transform;
+  }
 
-        @keyframes marqueeScroll {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+`}</style>
+
 
       <div
         className="overflow-hidden w-full relative max-w-full mx-auto rounded-3xl my-24"

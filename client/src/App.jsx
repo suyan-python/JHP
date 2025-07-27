@@ -45,7 +45,7 @@ function AppContent()
 
   return (
     <>
-      {/* {!hidePopup && <Popup />} */}
+      {!hidePopup && <Popup />}
       <CookieConsent />
       <ScrollToTop />
       {!hideNavbarFooter && <Navbar />}
