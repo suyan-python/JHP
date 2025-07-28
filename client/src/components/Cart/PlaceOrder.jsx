@@ -113,7 +113,7 @@ const PlaceOrder = () =>
       ...formData,
       deliveryLocation,
       total: initialTotal,
-      discountedTotal: Number(discountedTotal.toFixed(2)),
+      discountedTotal: Number(finalTotal),
       totalWeight: Number(totalWeightKg.toFixed(2)),
       shipping,
       location: location || null,
@@ -197,12 +197,15 @@ const PlaceOrder = () =>
   const applyPromo = () =>
   {
     const code = promoCode.trim().toUpperCase();
+
     if (code === "INAYA" || code === "FROMWEBSITE")
     {
-      const discounted = initialTotal * 0.9;
+      const discountAmount = initialTotal * 0.05;
+      const discounted = initialTotal - discountAmount;
       setFinalTotal(discounted.toFixed(2));
       setPromoApplied(true);
-      toast.success("You've received 10% discount!", {
+      setHasPromo(true); // ✅ ensure hasPromo is true
+      toast.success("You've received 5% discount!", {
         position: "top-center",
         autoClose: 4000,
         theme: "colored",
@@ -210,6 +213,7 @@ const PlaceOrder = () =>
     } else
     {
       setPromoApplied(false);
+      // ✅ reset if invalid
       toast.error("Invalid promo code", {
         position: "top-center",
         autoClose: 3000,
@@ -217,6 +221,8 @@ const PlaceOrder = () =>
       });
     }
   };
+
+
 
   useEffect(() =>
   {
@@ -230,22 +236,23 @@ const PlaceOrder = () =>
       shippingCharge = 0;
     }
 
-    // 20% discount if >= 10kg
+    // 5% discount if >= 10kg
     if (totalWeightKg >= 10)
     {
-      updatedTotal = initialTotal * 0.8;
+      updatedTotal = initialTotal * 0.05;
     }
 
     // Promo overrides with 10% discount (you can customize priority)
     if (hasPromo && promoApplied)
     {
-      updatedTotal = initialTotal * 0.9;
+      updatedTotal = initialTotal - (initialTotal * 0.05);
     }
 
     // Add shipping charge to final
     const finalWithShipping = updatedTotal + shippingCharge;
     setFinalTotal(finalWithShipping.toFixed(2));
   }, [initialTotal, hasPromo, promoApplied, cartItems]);
+
 
   return (
     <div className="bg-white rounded-3xl shadow-xl max-w-7xl mx-auto my-28 p-6 sm:p-8 md:p-16 flex flex-col md:flex-row gap-6 md:gap-12 w-full">
@@ -334,10 +341,16 @@ const PlaceOrder = () =>
 
           {/* Optionally show current coordinates */}
           {location && (
-            <p className="mt-2 text-blue-700">
-              Selected Location: Lat {location.lat.toFixed(5)}, Lng{" "}
-              {location.lng.toFixed(5)}
-            </p>
+
+            <div className="text-blue-700">
+              <p className="mt-2">
+                Selected Location: Lat {location.lat.toFixed(5)}, Lng{" "}
+                {location.lng.toFixed(5)}
+              </p>
+              <p>
+                Address: {location.address}
+              </p>
+            </div>
           )}
 
           {/* Promo Section */}

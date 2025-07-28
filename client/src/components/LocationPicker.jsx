@@ -14,9 +14,11 @@ L.Icon.Default.mergeOptions({
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
 });
 
-function LocationMarker({ position, setPosition }) {
+function LocationMarker({ position, setPosition })
+{
   useMapEvents({
-    click(e) {
+    click(e)
+    {
       setPosition(e.latlng);
     },
   });
@@ -24,26 +26,54 @@ function LocationMarker({ position, setPosition }) {
   return position === null ? null : <Marker position={position}></Marker>;
 }
 
-export default function LocationPicker({ onLocationSelect }) {
+export default function LocationPicker({ onLocationSelect })
+{
   const [position, setPosition] = useState(null);
+  const [address, setAddress] = useState("");
 
   // Stable callback to prevent unnecessary re-renders
   const stableOnLocationSelect = useCallback(onLocationSelect, []);
 
-  // Notify parent only when position changes
-  useEffect(() => {
-    if (position) {
-      stableOnLocationSelect({
-        lat: position.lat,
-        lng: position.lng,
-      });
+  // Fetch address from lat/lng using Nominatim reverse geocoding
+  const fetchAddress = async (lat, lng) =>
+  {
+    try
+    {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+      );
+      const data = await response.json();
+      return data.display_name || "Address not found";
+    } catch (error)
+    {
+      console.error("Error fetching address:", error);
+      return "Address not found";
     }
+  };
+
+  // Handle when position changes
+  useEffect(() =>
+  {
+    const handleLocationChange = async () =>
+    {
+      if (position)
+      {
+        const fetchedAddress = await fetchAddress(position.lat, position.lng);
+        setAddress(fetchedAddress);
+        stableOnLocationSelect({
+          lat: position.lat,
+          lng: position.lng,
+          address: fetchedAddress,
+        });
+      }
+    };
+    handleLocationChange();
   }, [position, stableOnLocationSelect]);
 
   return (
     <div className="w-full h-64 sm:h-96 rounded-xl overflow-hidden border border-gray-300">
       <MapContainer
-        center={[27.7172, 85.324]} // Kathmandu center coordinates
+        center={[27.7172, 85.324]} // Kathmandu center
         zoom={12}
         scrollWheelZoom={true}
         style={{ height: "100%", width: "100%" }}
@@ -54,9 +84,16 @@ export default function LocationPicker({ onLocationSelect }) {
         />
         <LocationMarker position={position} setPosition={setPosition} />
       </MapContainer>
+
       <p className="text-center mt-2 text-sm text-gray-600">
         Click on the map to select your delivery location
       </p>
+
+      {address && (
+        <p className="text-center mt-1 text-sm text-green-600">
+          📍 <strong>Selected Address:</strong> {address}
+        </p>
+      )}
     </div>
   );
 }
