@@ -15,7 +15,7 @@ function Parent()
 
   return (
     <section
-      className="relative flex flex-col items-center justify-center min-h-[80vh] md:min-h-[85vh] py-24 sm:py-32 max-w-full w-full text-center rounded-[30px] sm:rounded-[40px] lg:rounded-[60px] overflow-hidden shadow-2xl bg-gradient-to-b from-[#f7f9ff] via-[#fffbee] to-[#f7f9ff] my-36"
+      className="relative flex flex-col items-center justify-center min-h-[80vh] md:min-h-[85vh] py-36 sm:py-32 max-w-full w-full text-center overflow-hidden shadow-2xl bg-gradient-to-b from-[#f7f9ff] via-[#fffbee] to-[#f7f9ff]"
       style={{
         backgroundImage: `linear-gradient(to bottom right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)), url(${backgroundImage})`,
         backgroundSize: "cover",
@@ -25,7 +25,7 @@ function Parent()
     >
       {/* Content */}
       <div className="relative z-10 max-w-4xl w-full animate-fade-in">
-        <div className="w-full max-w-2xl mx-auto">
+        <div className="w-full max-w-3xl mx-auto">
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-extrabold tracking-tight mb-6 text-white drop-shadow-lg">
             Discover The Story of{" "} <br />
             <span className="text-[#b3e5ff] font-semibold">

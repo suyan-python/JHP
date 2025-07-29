@@ -1,6 +1,7 @@
 import { FaLeaf, FaHandsHelping, FaMountain, FaRecycle } from "react-icons/fa";
 
-export function WhyJHP() {
+export function WhyJHP()
+{
   const features = [
     {
       title: "100% Organic Arabica Beans",
@@ -25,7 +26,7 @@ export function WhyJHP() {
   ];
 
   return (
-    <section className="bg-[#f7f3ed] py-16 px-4 sm:px-6 rounded-[40px] sm:rounded-[50px] lg:rounded-[70px] shadow-inner my-16">
+    <section className=" py-16 px-4 sm:px-6 rounded-[40px] sm:rounded-[50px] lg:rounded-[70px]  my-16">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="header text-5xl sm:text-4xl font-bold mb-16 text-[#5B3A29]">
           Why JHP Coffee?

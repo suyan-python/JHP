@@ -27,7 +27,6 @@ export function Navbar()
     const pathToIdMap = {
       "/": "store",
       "/about": "home",
-      "/parent": "Parent",
     };
     setActiveSection(pathToIdMap[location.pathname] || "");
   }, [location.pathname]);
@@ -59,8 +58,7 @@ export function Navbar()
 
   const navLinks = [
     { to: "/", label: "STORE", id: "store" },
-    { to: "/about", label: "ABOUT", id: "home" },
-    { to: "/parent", label: "COMPANY", id: "Parent" },
+    { to: "/about", label: "STORY", id: "home" },
   ];
 
   return (
@@ -69,19 +67,23 @@ export function Navbar()
     >
       {/* Notification Bar */}
       <div
-        className={`w-full overflow-hidden py-2.5 font-semibold text-xs sm:text-sm md:text-base text-white bg-gradient-to-r from-[#5A3825] via-[#7A4B35] to-[#A66548] shadow transition-all duration-500 ${scrolled ? "hidden" : ""
+        className={`w-full overflow-hidden py-1 font-semibold text-xs sm:text-sm md:text-base text-white bg-gradient-to-r from-[#5A3825] via-[#7A4B35] to-[#A66548] shadow transition-all duration-500 ${scrolled ? "hidden" : ""
           }`}
       >
         <div className="relative w-full">
-          <div className="animate-bannerScroll flex whitespace-nowrap gap-16 leading-relaxed">
-            {/* Repeat the message multiple times for smooth continuous scroll */}
-            {Array.from({ length: 6 }).map((_, i) => (
-              <span key={i}>
-                FREE SHIPPING ON ORDERS OVER
-                5KG&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; SPECIAL
-                DISCOUNT OVER 10KG
-              </span>
-            ))}
+          <div className=" flex whitespace-nowrap gap-16 leading-relaxed justify-center">
+            <span className="text-center">
+              OFFER! FREE SHIPPING LIMITED TIME
+            </span>
+            {
+              // Array.from({ length: 6 }).map((_, i) => (
+              //   <span key={i}>
+              //     OFFER! FREE SHIPPING LIMITED TIME
+              //     {/* 5KG&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; SPECIAL
+              //     DISCOUNT OVER 10KG */}
+              //   </span>
+              // ))
+            }
           </div>
         </div>
       </div>

@@ -162,7 +162,7 @@ const FoodDisplay = () =>
   ];
 
   return (
-    <section className="pt-10 sm:pt-20 lg:pt-32 mt-8 sm:mt-14" id="products">
+    <section className="pt-10 sm:pt-20 lg:pt-20  sm:mt-14" id="products">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Header */}
         <div className="mb-8 sm:mb-12 text-center">
