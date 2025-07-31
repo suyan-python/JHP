@@ -198,14 +198,14 @@ const PlaceOrder = () =>
   {
     const code = promoCode.trim().toUpperCase();
 
-    if (code === "INAYA" || code === "FROMWEBSITE")
+    if (code === "INAYA" || code === "FROMWEBSITE" || code === "JHPFAMILY")
     {
       const discountAmount = initialTotal * 0.05;
       const discounted = initialTotal - discountAmount;
       setFinalTotal(discounted.toFixed(2));
       setPromoApplied(true);
       setHasPromo(true); // ✅ ensure hasPromo is true
-      toast.success("You've received 5% discount!", {
+      toast.success("You've received discount!", {
         position: "top-center",
         autoClose: 4000,
         theme: "colored",
@@ -222,13 +222,12 @@ const PlaceOrder = () =>
     }
   };
 
-
-
   useEffect(() =>
   {
     const totalWeightKg = getTotalWeightInGrams() / 1000;
     let updatedTotal = initialTotal;
     let shippingCharge = 0;
+    let discount
 
     // Add shipping charge if less than 5kg
     if (totalWeightKg < 5)
@@ -239,7 +238,8 @@ const PlaceOrder = () =>
     // 5% discount if >= 10kg
     if (totalWeightKg >= 10)
     {
-      updatedTotal = initialTotal * 0.05;
+      discount = initialTotal * 0.05;
+      updatedTotal = initialTotal - discount
     }
 
     // Promo overrides with 10% discount (you can customize priority)
@@ -435,13 +435,18 @@ const PlaceOrder = () =>
 
           {getTotalWeightInGrams() / 1000 >= 10 && (
             <p className="text-green-700 font-medium bg-green-100 px-4 py-2 rounded-xl text-sm sm:text-base my-2">
-              20% discount applied!
+              You get a Discount!
             </p>
           )}
 
           {getTotalWeightInGrams() / 1000 >= 5 && (
             <p className="text-blue-700 font-medium bg-blue-100 px-4 py-2 rounded-xl text-sm sm:text-base my-2">
               Free shipping applied!
+            </p>
+          )}
+          {promoApplied && hasPromo && (
+            <p className="text-purple-700 font-medium bg-purple-100 px-4 py-2 rounded-xl text-sm sm:text-base my-2">
+              Coupon discount applied!
             </p>
           )}
 

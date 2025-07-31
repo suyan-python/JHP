@@ -24,7 +24,7 @@ export const food_list = [
     description:
       "A bold, rich espresso made from carefully selected single-origin beans. Perfectly roasted to unlock deep chocolate notes and a smooth crema finish. Ideal for espresso lovers who savor intensity and precision.",
     category: "coffee",
-    flavors: ["WASHED", "EXPERIMENTAL"],
+    flavors: ["WASHED"],
     type: "cold brew",
     pricesBySize: {
       250: 1200,
@@ -43,7 +43,7 @@ export const food_list = [
     description:
       "A bold, rich espresso made from carefully selected single-origin beans. Perfectly roasted to unlock deep chocolate notes and a smooth crema finish. Ideal for espresso lovers who savor intensity and precision.",
     category: "coffee",
-    flavors: ["ANEROBIC", "EXPERIMENTAL"],
+    flavors: ["ANEROBIC"],
     type: "cold brew",
     pricesBySize: {
       250: 1500,
@@ -63,7 +63,7 @@ export const food_list = [
     description:
       "Brew café-quality coffee anywhere with our Drip Box set. Each box contains 5 individually packed sachets (14g each), delivering convenience without compromising flavor. Ideal for travelers, campers, or busy mornings.",
     category: "coffee",
-    flavors: ["WASHED", "EXPERIMENTAL"],
+    flavors: ["WASHED"],
     type: "drip box",
     pricesBySize: {
       70: 565,
@@ -80,7 +80,7 @@ export const food_list = [
     description:
       "Brew café-quality coffee anywhere with our Drip Box set. Each box contains 5 individually packed sachets (14g each), delivering convenience without compromising flavor. Ideal for travelers, campers, or busy mornings.",
     category: "coffee",
-    flavors: ["ANEROBIC", "EXPERIMENTAL"],
+    flavors: ["ANEROBIC"],
     type: "drip box",
     pricesBySize: {
       70: 1500,
@@ -98,7 +98,7 @@ export const food_list = [
     description:
       "Artisanally roasted for filter brewing, this coffee brings out vibrant acidity, floral undertones, and a clean finish. Available in 250g, 500g, and 1kg — choose your size and enjoy the purity of the filter roasted.",
     category: "coffee",
-    flavors: ["WASHED", "EXPERIMENTAL"],
+    flavors: ["WASHED"],
     type: "filter roasted",
     pricesBySize: {
       250: 900,
@@ -117,7 +117,7 @@ export const food_list = [
     description:
       "Artisanally roasted for filter brewing, this coffee brings out vibrant acidity, floral undertones, and a clean finish. Available in 250g, 500g, and 1kg — choose your size and enjoy the purity of the filter roasted.",
     category: "coffee",
-    flavors: ["ANEROBIC", "EXPERIMENTAL"],
+    flavors: ["ANEROBIC"],
     type: "filter roasted",
     pricesBySize: {
       250: 1250,

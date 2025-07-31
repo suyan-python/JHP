@@ -21,11 +21,11 @@ body {
   font-family: "Cormorant Garamond", serif;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   body {
-    margin: 0 30px; /* Removes horizontal margin for tablets and mobile */
+    margin: 0 30px;
   }
-}
+} */
 
 @keyframes fadeIn {
   from {

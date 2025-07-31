@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { ExternalLink } from "lucide-react";
 import backgroundImage from "../../assets/background/aboutus.JPG";
+import bijaya from "../../assets/people/bijaya.jpeg";
 import shekhar from "../../assets/people/shekhar.jpg";
 import binayak from "../../assets/people/binayak.jpg";
 import pranit from "../../assets/people/pranit.jpg";
-import dilasha from "../../assets/people/dilasha.jpg";
+import moonmoon from "../../assets/people/moonmoon.jpeg";
+
 
 function Parent()
 {
@@ -15,7 +17,7 @@ function Parent()
 
   return (
     <section
-      className="relative flex flex-col items-center justify-center min-h-[80vh] md:min-h-[85vh] py-36 sm:py-32 max-w-full w-full text-center overflow-hidden shadow-2xl bg-gradient-to-b from-[#f7f9ff] via-[#fffbee] to-[#f7f9ff]"
+      className="relative flex flex-col items-center justify-center max-h-screen py-36 sm:py-32 max-w-full w-full text-center overflow-hidden shadow-2xl bg-gradient-to-b from-[#f7f9ff] via-[#fffbee] to-[#f7f9ff]"
       style={{
         backgroundImage: `linear-gradient(to bottom right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)), url(${backgroundImage})`,
         backgroundSize: "cover",
@@ -57,7 +59,7 @@ function Parent()
           aria-label="Photos of leaders"
           className="mt-12 flex flex-wrap md:flex-nowrap justify-center gap-6 max-w-4xl w-full pb-6 px-2 overflow-x-auto md:overflow-visible"
         >
-          {[shekhar, binayak, pranit, dilasha].map((src, idx) => (
+          {[bijaya, shekhar, binayak, pranit, moonmoon].map((src, idx) => (
             <img
               key={idx}
               alt={`JHP Leader ${idx + 1}`}

@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import footer from "../assets/logo/footer.png";
 
-export function Footer() {
+export function Footer()
+{
   return (
     <footer
       className="w-full bg-[#1c130f] text-[#e6dccf] pt-16 pb-10 rounded-t-3xl"
@@ -62,10 +63,17 @@ export function Footer() {
               <li>
                 Phone:{" "}
                 <a
-                  href="tel:+9779849121515"
+                  href="tel:+9779817576110"
                   className="hover:text-amber-400 transition-colors duration-200"
                 >
-                  +977 9849121515
+                  +977 9817576110
+                </a>
+                {", "}
+                <a
+                  href="tel:+9779841208219"
+                  className="hover:text-amber-400 transition-colors duration-200"
+                >
+                  +977 9841208219
                 </a>
               </li>
               <li>

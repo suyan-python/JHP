@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import axios from "axios";
-import {
+import
+{
   FaBoxOpen,
   FaClock,
   FaCheckCircle,
@@ -10,37 +11,46 @@ import {
   FaTrash,
   FaSignOutAlt,
 } from "react-icons/fa";
+import DiscountEmailButton from "../layout/DiscountEmailButton";
 
-const AdminDashboard = () => {
+const AdminDashboard = () =>
+{
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lastRefreshed, setLastRefreshed] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const fetchOrders = async () => {
-    try {
+  const fetchOrders = async () =>
+  {
+    try
+    {
       setLoading(true);
       const response = await axios.get(
         "https://jhp-backend.onrender.com/api/admin/orders"
       );
       setOrders(response.data);
       setLastRefreshed(new Date());
-    } catch (error) {
+    } catch (error)
+    {
       console.error("Error fetching orders:", error);
-    } finally {
+    } finally
+    {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     fetchOrders();
     const interval = setInterval(fetchOrders, 60000);
     return () => clearInterval(interval);
   }, []);
 
-  const toggleCompleted = async (orderId, currentStatus) => {
-    try {
+  const toggleCompleted = async (orderId, currentStatus) =>
+  {
+    try
+    {
       const response = await axios.patch(
         `https://jhp-backend.onrender.com/api/admin/orders/${orderId}/completed`,
         { completed: !currentStatus }
@@ -53,21 +63,25 @@ const AdminDashboard = () => {
             : order
         )
       );
-    } catch (error) {
+    } catch (error)
+    {
       console.error("Error updating order completion:", error);
     }
   };
 
-  const deleteOrder = async (orderId) => {
+  const deleteOrder = async (orderId) =>
+  {
     if (!window.confirm("Are you sure you want to delete this order?")) return;
 
-    try {
+    try
+    {
       await axios.delete(
         `https://jhp-backend.onrender.com/api/admin/orders/${orderId}`
       );
 
       setOrders((prev) => prev.filter((order) => order._id !== orderId));
-    } catch (error) {
+    } catch (error)
+    {
       console.error("Error deleting order:", error);
     }
   };
@@ -90,7 +104,8 @@ const AdminDashboard = () => {
             Refresh
           </button>
           <button
-            onClick={() => {
+            onClick={() =>
+            {
               localStorage.removeItem("isAdmin");
               window.location.href = "/";
             }}
@@ -160,11 +175,10 @@ const AdminDashboard = () => {
                     </td>
                     <td className="px-4 py-4 text-center">
                       <span
-                        className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                          order.status === "paid"
-                            ? "bg-green-100 text-green-700 border border-green-300"
-                            : "bg-yellow-100 text-yellow-700 border border-yellow-300"
-                        }`}
+                        className={`text-xs font-semibold px-3 py-1 rounded-full ${order.status === "paid"
+                          ? "bg-green-100 text-green-700 border border-green-300"
+                          : "bg-yellow-100 text-yellow-700 border border-yellow-300"
+                          }`}
                       >
                         {order.status === "paid" ? "Paid" : "Pending"}
                       </span>
@@ -194,7 +208,8 @@ const AdminDashboard = () => {
 
                     <td className="px-4 py-4 flex gap-2">
                       <button
-                        onClick={() => {
+                        onClick={() =>
+                        {
                           setSelectedOrder(order);
                           setShowModal(true);
                         }}
@@ -243,11 +258,10 @@ const AdminDashboard = () => {
                     {selectedOrder.paymentMethod}
                   </p>
                   <span
-                    className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                      selectedOrder.status === "paid"
-                        ? "bg-green-100 text-green-700 border border-green-300"
-                        : "bg-yellow-100 text-yellow-700 border border-yellow-300"
-                    }`}
+                    className={`text-xs font-semibold px-3 py-1 rounded-full ${selectedOrder.status === "paid"
+                      ? "bg-green-100 text-green-700 border border-green-300"
+                      : "bg-yellow-100 text-yellow-700 border border-yellow-300"
+                      }`}
                   >
                     {selectedOrder.status === "paid" ? "Paid" : "Pending"}
                   </span>
@@ -306,12 +320,14 @@ const AdminDashboard = () => {
               <div className="mt-8 flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 border-t pt-5">
                 {/* Toggle Payment Status Button */}
                 <button
-                  onClick={async () => {
+                  onClick={async () =>
+                  {
                     const newStatus =
                       selectedOrder.status?.toLowerCase() === "paid"
                         ? "pending"
                         : "paid";
-                    try {
+                    try
+                    {
                       const res = await fetch(
                         `https://jhp-backend.onrender.com/api/admin/orders/${selectedOrder._id}/status`,
                         {
@@ -320,43 +336,83 @@ const AdminDashboard = () => {
                           body: JSON.stringify({ status: newStatus }),
                         }
                       );
-                      if (res.ok) {
+                      if (res.ok)
+                      {
                         setSelectedOrder({
                           ...selectedOrder,
                           status: newStatus,
                         });
-                      } else {
+                      } else
+                      {
                         alert("Failed to update payment status.");
                       }
-                    } catch (err) {
+                    } catch (err)
+                    {
                       console.error("Error updating status", err);
                     }
                   }}
-                  className={`flex items-center justify-center gap-2 px-5 py-2 rounded-md border text-sm font-medium transition-all ${
-                    selectedOrder.status?.toLowerCase() === "paid"
-                      ? "text-yellow-700 border-yellow-500 hover:bg-yellow-100"
-                      : "text-green-700 border-green-500 hover:bg-green-100"
-                  }`}
+                  className={`flex items-center justify-center gap-2 px-5 py-2 rounded-md border text-sm font-medium transition-all ${selectedOrder.status?.toLowerCase() === "paid"
+                    ? "text-yellow-700 border-yellow-500 hover:bg-yellow-100"
+                    : "text-green-700 border-green-500 hover:bg-green-100"
+                    }`}
                 >
                   {selectedOrder.status?.toLowerCase() === "paid"
                     ? "Mark as Pending"
                     : "Mark as Paid"}
                 </button>
+                {/* Send Discount Email Button - visible only if email exists */}
+
+                {/* {selectedOrder.email && (
+                  <button
+                    onClick={async () =>
+                    {
+                      try
+                      {
+                        const res = await axios.post(
+                          "https://jhp-backend.onrender.com/api/emails",
+                          { email: selectedOrder.email }
+                        );
+
+                        if (res.status === 200)
+                        {
+                          toast.success(`Discount code sent to ${selectedOrder.email}`);
+                        } else
+                        {
+                          toast.error("Failed to send discount email.");
+                        }
+                      } catch (err)
+                      {
+                        console.error("Error submitting email:", err);
+                        toast.error("Server error: could not send discount email.");
+                      }
+                    }}
+                    className="flex items-center justify-center gap-2 px-5 py-2 rounded-md border border-green-600 text-green-700 hover:bg-green-100 text-sm font-semibold transition-all"
+                  >
+                    Send Discount Coupon
+                  </button>
+                )} */}
+
+                <DiscountEmailButton selectedOrder={selectedOrder} />
+
+
 
                 {/* Delete Order Button */}
                 <button
-                  onClick={async () => {
+                  onClick={async () =>
+                  {
                     const confirmDelete = window.confirm(
                       "Are you sure you want to delete this order?"
                     );
                     if (!confirmDelete) return;
 
-                    try {
+                    try
+                    {
                       const res = await fetch(
                         `https://jhp-backend.onrender.com/api/admin/orders/${selectedOrder._id}`,
                         { method: "DELETE" }
                       );
-                      if (res.ok) {
+                      if (res.ok)
+                      {
                         setShowModal(false);
                         setOrders((prev) =>
                           prev.filter(
@@ -368,10 +424,12 @@ const AdminDashboard = () => {
                         toast.success(
                           `Order for ${selectedOrder.firstName} ${selectedOrder.lastName} deleted successfully`
                         );
-                      } else {
+                      } else
+                      {
                         toast.error("Failed to delete the order.");
                       }
-                    } catch (err) {
+                    } catch (err)
+                    {
                       console.error("Error deleting order", err);
                       toast.error("Error deleting order. Please try again.");
                     }
