@@ -2,6 +2,7 @@ import med from "./med.jpg";
 import med2 from "./med2.JPG";
 import drip2 from "./prodc/drip2.JPG";
 import drip3 from "./prodc/drip3.JPG";
+import dripHover from "./prodc/driphover.jpeg";
 import pack2 from "./prodc/pack2.JPG";
 import pack5 from "./prodc/pack5.JPG";
 
@@ -17,12 +18,12 @@ import blue2 from "./prodc/blue2.JPG";
 export const food_list = [
   {
     _id: 1,
-    name: "Cold Brew Grounds (Washed)",
+    name: "Cold Brew Premium",
     image: red2,
     hoverImage: pack5,
     price: 1200,
     description:
-      "A bold, rich espresso made from carefully selected single-origin beans. Perfectly roasted to unlock deep chocolate notes and a smooth crema finish. Ideal for espresso lovers who savor intensity and precision.",
+      "Smooth, clean, and refreshing — perfect for iced coffee lovers.",
     category: "coffee",
     flavors: ["WASHED"],
     type: "cold brew",
@@ -36,12 +37,11 @@ export const food_list = [
   },
   {
     _id: 2,
-    name: "Cold Brew Grounds (Anerobic)",
+    name: "Cold Brew Premium",
     image: blue2,
     hoverImage: pack5,
     price: 1500,
-    description:
-      "A bold, rich espresso made from carefully selected single-origin beans. Perfectly roasted to unlock deep chocolate notes and a smooth crema finish. Ideal for espresso lovers who savor intensity and precision.",
+    description: "Fruity, bold, and vibrant — a refreshing twist on cold brew.",
     category: "coffee",
     flavors: ["ANEROBIC"],
     type: "cold brew",
@@ -53,15 +53,13 @@ export const food_list = [
     rating: 4.4,
     reviews: 53,
   },
-
   {
     _id: 3,
-    name: "Drip Box (Washed)",
+    name: "Drip Box",
     image: drip2,
-    hoverImage: drip3,
+    hoverImage: dripHover,
     price: 565,
-    description:
-      "Brew café-quality coffee anywhere with our Drip Box set. Each box contains 5 individually packed sachets (14g each), delivering convenience without compromising flavor. Ideal for travelers, campers, or busy mornings.",
+    description: "Convenient 5-pack sachets with clean, bright flavors.",
     category: "coffee",
     flavors: ["WASHED"],
     type: "drip box",
@@ -73,12 +71,11 @@ export const food_list = [
   },
   {
     _id: 4,
-    name: "Drip Box (Anerobic)",
+    name: "Drip Box",
     image: drip2,
-    hoverImage: drip3,
+    hoverImage: dripHover,
     price: 850,
-    description:
-      "Brew café-quality coffee anywhere with our Drip Box set. Each box contains 5 individually packed sachets (14g each), delivering convenience without compromising flavor. Ideal for travelers, campers, or busy mornings.",
+    description: "Easy-brew sachets packed with fruity, bold flavors.",
     category: "coffee",
     flavors: ["ANEROBIC"],
     type: "drip box",
@@ -88,15 +85,13 @@ export const food_list = [
     rating: 4.9,
     reviews: 100,
   },
-
   {
     _id: 5,
-    name: "Filter Roasted Washed Coffee Beans",
+    name: "Filter Roasted Beans",
     image: pack12,
     hoverImage: pack12hover,
     price: 900,
-    description:
-      "Artisanally roasted for filter brewing, this coffee brings out vibrant acidity, floral undertones, and a clean finish. Available in 250g, 500g, and 1kg — choose your size and enjoy the purity of the filter roasted.",
+    description: "Bright, floral, and clean — ideal for filter brews.",
     category: "coffee",
     flavors: ["WASHED"],
     type: "filter roasted",
@@ -110,12 +105,11 @@ export const food_list = [
   },
   {
     _id: 6,
-    name: "Filter Roasted Anerobic Coffee Beans",
+    name: "Filter Roasted Beans",
     image: pack13,
     hoverImage: med,
     price: 1250,
-    description:
-      "Artisanally roasted for filter brewing, this coffee brings out vibrant acidity, floral undertones, and a clean finish. Available in 250g, 500g, and 1kg — choose your size and enjoy the purity of the filter roasted.",
+    description: "Fruity, complex, and smooth — crafted for filter brewing.",
     category: "coffee",
     flavors: ["ANEROBIC"],
     type: "filter roasted",

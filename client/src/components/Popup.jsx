@@ -26,14 +26,14 @@ const Popup = () =>
     navigate("/3");
   };
 
-  useEffect(() =>
-  {
-    const alreadySubmitted = localStorage.getItem("popupSubmitted");
-    if (!alreadySubmitted)
-    {
-      setIsVisible(true);
-    }
-  }, []);
+  // useEffect(() =>
+  // {
+  //   const alreadySubmitted = localStorage.getItem("popupSubmitted");
+  //   if (!alreadySubmitted)
+  //   {
+  //     setIsVisible(true);
+  //   }
+  // }, []);
 
   const handleSubmit = async (e) =>
   {

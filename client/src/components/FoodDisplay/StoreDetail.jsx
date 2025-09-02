@@ -237,7 +237,7 @@ function StoreDetail()
           {/* RIGHT: DESCRIPTION */}
           <div className="flex flex-col justify-start space-y-6">
             <div>
-              <h1 className="text-4xl font-extrabold text-gray-900 hidden md:block mb-2">
+              <h1 className="header text-4xl font-extrabold text-gray-900 hidden md:block mb-2">
                 {productName}
               </h1>
               <span className="inline-block bg-gray-100 text-gray-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide shadow-sm">
@@ -265,17 +265,15 @@ function StoreDetail()
 
             <div className="border-t pt-6 mt-4 text-sm text-gray-600 space-y-2">
               <div className="flex items-center gap-2">
-                <Star size={16} className="text-yellow-500" />
-                <span>Rated 4.8/5 by 120+ specialty coffee lovers</span>
               </div>
               <div>
-                Handpicked beans grown sustainably in the lush hills of Illam
+                - Handpicked beans grown sustainably in the lush hills of Illam
               </div>
               <div>
-                Roasted in small batches for consistent flavor and aroma
+                - Roasted in small batches for consistent flavor and aroma
               </div>
               <div>
-                Crafted with passion by farmers and roasters who care deeply
+                - Crafted with passion by farmers and roasters who care deeply
                 about every step
               </div>
             </div>

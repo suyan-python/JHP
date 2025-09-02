@@ -38,7 +38,7 @@ const HomeHero = () =>
     <>
       <Parent />
 
-      <div className="relative overflow-hidden  shadow-xl">
+      <div className="relative overflow-hidden  shadow-xl rounded-3xl my-20">
         {/* Background Slideshow */}
         <div className="absolute inset-0 h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-[95vh]">
           {images.map((img, index) => (
@@ -59,7 +59,7 @@ const HomeHero = () =>
           className="relative z-10 flex flex-col items-center justify-center text-center px-6 md:px-10 h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-[95vh] text-white"
           id="home"
         >
-          <h1 className=" animate-fade-in-up text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-extrabold mb-4 sm:mb-6 leading-tight drop-shadow-lg">
+          <h1 className="header animate-fade-in-up text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-extrabold mb-4 sm:mb-6 leading-tight drop-shadow-lg">
             Premium Nepali Coffee Beans <br /> Fresh from Illam to Your Cup
           </h1>
           <p className="animate-fade-in-up text-base sm:text-lg md:text-xl mb-8 text-white/90 max-w-2xl drop-shadow-md">
@@ -71,7 +71,7 @@ const HomeHero = () =>
 
           <NavLink
             to="/"
-            className="animate-fade-in-up inline-block border border-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-black px-8 py-3 sm:px-10 sm:py-4 rounded-full text-lg sm:text-xl font-semibold transition-all duration-300"
+            className="header animate-fade-in-up inline-block border border-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-black px-8 py-3 sm:px-10 sm:py-4 rounded-full text-lg sm:text-xl font-semibold transition-all duration-300"
           >
             Order Coffee Beans
           </NavLink>
@@ -82,7 +82,7 @@ const HomeHero = () =>
         <Story />
         <Partners />
         <WhyJHP />
-        <TrustedBy />
+        {/* <TrustedBy /> */}
 
         <style>{`
         @keyframes fadeInUp {

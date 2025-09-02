@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  /* margin: 0 100px; */
+  margin: 0 100px;
   background-color: #f0ebe3;
   /* background: linear-gradient(to bottom right, #f0ebe3, #c7ab8d, #a07e5e); */
   /* background-color: #fff9ec; */
@@ -19,6 +19,10 @@ body {
 
 .header {
   font-family: "Cormorant Garamond", serif;
+}
+
+.hero {
+  font-family: "Rozha One", serif;
 }
 
 /* @media (max-width: 768px) {

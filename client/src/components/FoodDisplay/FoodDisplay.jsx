@@ -28,7 +28,7 @@ const FoodDisplay = () =>
   };
 
   const renderOptimizedImage = (src, alt, hoverSrc) => (
-    <div className="relative w-full h-full overflow-hidden rounded-t-3xl">
+    <div className="relative w-full h-full overflow-hidden ">
       <img
         loading="lazy"
         fetchpriority="high"
@@ -43,7 +43,7 @@ const FoodDisplay = () =>
           loading="lazy"
           src={hoverSrc}
           alt={`${alt} Hover`}
-          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-105 group-hover:scale-110 rounded-t-3xl z-10"
+          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-105 group-hover:scale-110  z-10"
         />
       )}
     </div>
@@ -52,7 +52,7 @@ const FoodDisplay = () =>
   const renderProductSection = (title, products, subtitle) => (
     <div className="fooddisplay mb-20 px-4 sm:px-6 lg:px-16">
       <div className="text-center mb-6 sm:mb-12">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brownn">
+        <h2 className="header text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brownn">
           {title}
         </h2>
         {subtitle && (
@@ -67,16 +67,16 @@ const FoodDisplay = () =>
         {products.map((product) => (
           <div
             key={product._id}
-            className="w-full bg-white border rounded-3xl shadow-lg group hover:shadow-xl hover:scale-[1.015] transition-transform duration-300 flex flex-col overflow-hidden"
+            className="w-full bg-white border rounded-2xl shadow-md group hover:shadow-lg hover:scale-[1.01] transition-transform duration-300 flex flex-col overflow-hidden"
           >
             <Link to={`/${product._id}`}>
-              <div className="relative h-[350px] sm:h-[400px] md:h-[500px] overflow-hidden rounded-t-3xl">
+              <div className="relative aspect-[4/5] w-full bg-gray-50 flex items-center justify-center overflow-hidden rounded-t-2xl">
                 {renderOptimizedImage(
                   itemImages[product._id],
                   itemNames[product._id],
                   product.hoverImage
                 )}
-                <span className="absolute top-3 left-3 bg-yellow-500 text-white text-xs sm:text-sm font-semibold px-3 py-1 rounded-full shadow-md">
+                <span className="absolute top-2 left-2 bg-yellow-500 text-white text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full shadow-md">
                   {product.type === "espresso"
                     ? "Premium"
                     : product.type === "drip box"
@@ -86,53 +86,49 @@ const FoodDisplay = () =>
               </div>
             </Link>
 
-            <div className="p-4 sm:p-5 bg-white group-hover:translate-y-[-10px] translate-y-2 transition duration-300 z-10">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 truncate">
+            <div className="p-3 sm:p-4 flex flex-col flex-1">
+              <h3 className="text-sm sm:text-base font-semibold text-gray-900  truncate">
                 {itemNames[product._id]}
               </h3>
-              <p className="text-xs sm:text-sm text-gray-500 mb-2">
-                {product.type === "drip box" ? "70g Pack" : "250g Pack"}
-              </p>
-
-
-              <div className="flex items-center gap-1 text-yellow-600 text-sm font-medium mb-2">
-                <AiFillStar className="text-base sm:text-lg" />
-                {product.rating} · {product.reviews} Reviews
-              </div>
-
-              <p className="text-white font-semibold text-center bg-brownn rounded-md py-2 text-sm sm:text-base">
-                Starting at Rs. {itemPrices[product._id]}
-              </p>
 
               {product.flavors && (
-                <div className="flex flex-wrap gap-2 mt-3">
+                <div className="flex flex-wrap gap-1 my-2">
                   {product.flavors.map((flavor, index) => (
                     <span
                       key={index}
-                      className="bg-gray-100 text-gray-600 text-xs font-medium px-2 py-1 rounded-full"
+                      className="bg-gray-100 text-green-600 text-[10px] sm:text-xs px-3 py-1 rounded-full"
                     >
-                      {flavor}
+                      Process: {flavor}
                     </span>
                   ))}
                 </div>
               )}
 
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-4">
-                <p className="text-xs sm:text-sm text-gray-500 mb-3">
-                  {product.description
-                    ? product.description
-                    : product.type === "espresso"
-                      ? "Intense, syrupy, and made to cut through milk like a true classic."
-                      : product.type === "drip box"
-                        ? "Convenient brewing meets café-quality flavor – no equipment needed."
-                        : "Clarity and brightness in every cup, crafted with meticulous care."}
-                </p>
-                <Link to={`/${product._id}`}>
-                  <button className="w-full border border-brownn text-brownn font-semibold text-xs sm:text-sm rounded-md py-2 hover:bg-brownn hover:text-white transition duration-300">
-                    Explore Brew Options
-                  </button>
-                </Link>
-              </div>
+              <p className="text-[11px] sm:text-xs text-gray-500 mb-2">
+                {product.type === "drip box"
+                  ? "5 individually packed sachets (14g each)"
+                  : "250g Pack"}
+              </p>
+
+              <p className="font-semibold text-sm sm:text-base mb-2">
+                Starting: Rs. {itemPrices[product._id]}
+              </p>
+
+              <p className="text-[11px] sm:text-xs text-gray-500 mb-3 flex-1">
+                {product.description
+                  ? product.description
+                  : product.type === "espresso"
+                    ? "Intense, syrupy, and made to cut through milk."
+                    : product.type === "drip box"
+                      ? "Convenient brewing meets café-quality flavor."
+                      : "Clarity and brightness in every cup."}
+              </p>
+
+              <Link to={`/${product._id}`}>
+                <button className="w-full border border-brownn text-brownn font-semibold text-xs sm:text-sm rounded-md py-1.5 hover:bg-brownn hover:text-white transition duration-300">
+                  Add to cart
+                </button>
+              </Link>
             </div>
           </div>
         ))}
@@ -162,14 +158,14 @@ const FoodDisplay = () =>
   ];
 
   return (
-    <section className="pt-10 sm:pt-20 lg:pt-20  sm:mt-14" id="products">
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="pt-11" id="products">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         {/* Main Header */}
         <div className="mb-8 sm:mb-12 text-center">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-brownn leading-tight">
+          <h1 className="header text-2xl sm:text-3xl lg:text-5xl font-bold text-brownn leading-tight">
             We provide best Handpicked. Roasted. Loved.
           </h1>
-          <p className="text-gray-700 max-w-2xl mx-auto text-sm sm:text-base mt-2 sm:mt-4">
+          <p className="subheader text-gray-700 max-w-2xl mx-auto text-sm sm:text-base mt-2 sm:mt-4">
             Explore our curated selection of premium coffee.
           </p>
         </div>

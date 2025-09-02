@@ -72,7 +72,7 @@ export function Navbar()
       >
         <div className="relative w-full">
           <div className=" flex whitespace-nowrap gap-16 leading-relaxed justify-center">
-            <span className="text-center">
+            <span className="header text-center">
               OFFER! FREE SHIPPING LIMITED TIME
             </span>
             {
@@ -102,7 +102,7 @@ export function Navbar()
           <img
             src={JHPstore}
             alt="Himalayan Arabica Coffee Beans - JHP Store"
-            className={`${scrolled ? "h-16 p-2" : "h-20 md:h-20 py-4"}`}
+            className={`${scrolled ? "h-20 p-2" : "h-20 md:h-28 py-4"}`}
           />
         </NavLink>
 

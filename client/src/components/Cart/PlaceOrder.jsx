@@ -255,7 +255,7 @@ const PlaceOrder = () =>
 
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl max-w-7xl mx-auto my-28 p-6 sm:p-8 md:p-16 flex flex-col md:flex-row gap-6 md:gap-12 w-full">
+    <div className="bg-white rounded-3xl shadow-xl max-w-7xl mx-auto my-36 p-6 sm:p-8 md:p-16 flex flex-col md:flex-row gap-6 md:gap-12 w-full">
       <ToastContainer />
       {/* LEFT: Form */}
       <div className="flex-1 w-full max-w-lg">

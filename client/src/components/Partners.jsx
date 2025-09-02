@@ -23,7 +23,7 @@ const Partners = () =>
       <section className="relative overflow-hidden py-20 px-4 sm:px-8 bg-gradient-to-br from-brownn/50 via-yellow-900/30 to-brownn/70 rounded-3xl shadow-2xl">
         {/* Main Content */}
         <div className="relative max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-6 drop-shadow-lg">
+          <h2 className="header text-4xl sm:text-5xl font-extrabold text-white mb-6 drop-shadow-lg">
             Trusted by Our Valued Partners
           </h2>
           <p className="text-white/80 mb-12 text-base sm:text-lg max-w-2xl mx-auto">
