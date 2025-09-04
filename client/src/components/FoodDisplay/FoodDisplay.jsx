@@ -159,7 +159,7 @@ const FoodDisplay = () =>
 
   return (
     <section className="pt-11" id="products">
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 lg:pt-16 pt-2">
         {/* Main Header */}
         <div className="mb-8 sm:mb-12 text-center">
           <h1 className="header text-2xl sm:text-3xl lg:text-5xl font-bold text-brownn leading-tight">

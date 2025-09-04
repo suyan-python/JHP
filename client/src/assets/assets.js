@@ -13,14 +13,16 @@ import pack12hover from "./prodc/pack12hover.JPG";
 import pack13 from "./prodc/pack13.JPG";
 
 import red2 from "./prodc/red2.JPG";
+import red22 from "./prodc/red22.JPG";
 import blue2 from "./prodc/blue2.JPG";
+import blue22 from "./prodc/blue22.JPG";
 
 export const food_list = [
   {
     _id: 1,
-    name: "Cold Brew Premium",
-    image: red2,
-    hoverImage: pack5,
+    name: "Mystical Coffee Cold Brew Premium",
+    image: blue2,
+    hoverImage: blue22,
     price: 1200,
     description:
       "Smooth, clean, and refreshing — perfect for iced coffee lovers.",
@@ -37,9 +39,9 @@ export const food_list = [
   },
   {
     _id: 2,
-    name: "Cold Brew Premium",
-    image: blue2,
-    hoverImage: pack5,
+    name: "Mystical Coffee Cold Brew Premium",
+    image: red2,
+    hoverImage: red22,
     price: 1500,
     description: "Fruity, bold, and vibrant — a refreshing twist on cold brew.",
     category: "coffee",
@@ -87,7 +89,7 @@ export const food_list = [
   },
   {
     _id: 5,
-    name: "Filter Roasted Beans",
+    name: "Mystical Filter Roasted Beans",
     image: pack12,
     hoverImage: pack12hover,
     price: 900,
@@ -105,9 +107,45 @@ export const food_list = [
   },
   {
     _id: 6,
-    name: "Filter Roasted Beans",
+    name: "Mystical Filter Roasted Beans",
     image: pack13,
     hoverImage: med,
+    price: 1250,
+    description: "Fruity, complex, and smooth — crafted for filter brewing.",
+    category: "coffee",
+    flavors: ["ANEROBIC"],
+    type: "filter roasted",
+    pricesBySize: {
+      250: 1250,
+      500: 2700,
+      1000: 5000,
+    },
+    rating: 4.6,
+    reviews: 77,
+  },
+  {
+    _id: 7,
+    name: "Mystical Filter Ground",
+    image: blue2,
+    hoverImage: blue22,
+    price: 900,
+    description: "Bright, floral, and clean — ideal for filter brews.",
+    category: "coffee",
+    flavors: ["WASHED"],
+    type: "filter roasted",
+    pricesBySize: {
+      250: 900,
+      500: 1800,
+      1000: 3200,
+    },
+    rating: 4.5,
+    reviews: 70,
+  },
+  {
+    _id: 8,
+    name: "Mystical Filter Ground",
+    image: red2,
+    hoverImage: red22,
     price: 1250,
     description: "Fruity, complex, and smooth — crafted for filter brewing.",
     category: "coffee",

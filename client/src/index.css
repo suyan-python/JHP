@@ -25,11 +25,11 @@ body {
   font-family: "Rozha One", serif;
 }
 
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
   body {
-    margin: 0 30px;
+    margin: 0;
   }
-} */
+}
 
 @keyframes fadeIn {
   from {

@@ -7,7 +7,6 @@ import binayak from "../../assets/people/binayak.jpg";
 import pranit from "../../assets/people/pranit.jpg";
 import moonmoon from "../../assets/people/moonmoon.jpeg";
 
-
 function Parent()
 {
   useEffect(() =>
@@ -17,7 +16,7 @@ function Parent()
 
   return (
     <section
-      className="relative flex flex-col items-center justify-center max-h-screen py-36 sm:py-32 max-w-full w-full text-center overflow-hidden shadow-2xl bg-gradient-to-b from-[#f7f9ff] via-[#fffbee] to-[#f7f9ff] mt-36 rounded-3xl"
+      className="relative flex flex-col items-center justify-center py-24 sm:py-28 md:py-32 px-4 sm:px-6 lg:px-12 w-full text-center overflow-hidden shadow-2xl bg-gradient-to-b from-[#f7f9ff] via-[#fffbee] to-[#f7f9ff] mt-36 sm:mt-36 rounded-3xl"
       style={{
         backgroundImage: `linear-gradient(to bottom right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)), url(${backgroundImage})`,
         backgroundSize: "cover",
@@ -28,14 +27,14 @@ function Parent()
       {/* Content */}
       <div className="relative z-10 max-w-4xl w-full animate-fade-in">
         <div className="w-full max-w-3xl mx-auto">
-          <h1 className="header text-4xl sm:text-5xl md:text-7xl font-serif font-extrabold tracking-tight mb-6 text-white drop-shadow-lg">
-            Discover The Story of{" "} <br />
+          <h1 className="header text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-extrabold tracking-tight mb-6 text-white drop-shadow-lg">
+            Discover The Story of <br />
             <span className="text-[#b3e5ff] font-semibold">
               Jewel Himalayan Products
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-8 sm:mb-10 leading-relaxed drop-shadow animate-fade-in delay-150">
+          <p className="text-sm sm:text-lg md:text-xl text-gray-200 mb-8 sm:mb-10 leading-relaxed drop-shadow animate-fade-in delay-150">
             Journey through the rich heritage and passion behind{" "}
             <span className="text-[#b3e5ff] font-semibold">
               Jewel Himalayan Products
@@ -49,32 +48,31 @@ function Parent()
           href="https://jewelhimalayanproducts.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg animate-fade-in delay-300 text-sm sm:text-base"
+          className="inline-flex items-center gap-2 px-5 sm:px-8 py-2.5 sm:py-3 rounded-full bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg animate-fade-in delay-300 text-xs sm:text-sm md:text-base"
         >
           Read Success Stories
           <ExternalLink className="w-4 h-4" />
         </a>
 
+        {/* Leaders Section */}
         <div
           aria-label="Photos of leaders"
-          className="mt-12 flex flex-wrap md:flex-nowrap justify-center gap-6 max-w-4xl w-full pb-6 px-2 overflow-x-auto md:overflow-visible"
+          className="mt-12 flex flex-wrap justify-center gap-4 sm:gap-6 max-w-5xl mx-auto w-full px-2"
         >
           {[bijaya, shekhar, binayak, pranit, moonmoon].map((src, idx) => (
             <img
               key={idx}
               alt={`JHP Leader ${idx + 1}`}
-              className="w-36 sm:w-36 md:w-44 lg:w-56 h-auto aspect-[3/4] rounded-lg object-cover shadow-lg hover:-translate-y-1 transition duration-300 flex-shrink-0"
+              className="w-28 sm:w-36 md:w-44 lg:w-52 h-auto aspect-[3/4] rounded-lg object-cover shadow-lg hover:-translate-y-1 transition duration-300 flex-shrink-0"
               src={src}
-              width="290"
-              height="270"
             />
           ))}
         </div>
       </div>
 
       {/* Decorative Glow Circles */}
-      <div className="absolute top-[-100px] left-[-100px] w-96 h-96 bg-blue-400 rounded-full blur-[120px] opacity-20 z-0 animate-pulse-slow"></div>
-      <div className="absolute bottom-[-100px] right-[-100px] w-96 h-96 bg-pink-400 rounded-full blur-[120px] opacity-20 z-0 animate-pulse-slow"></div>
+      <div className="absolute top-[-100px] left-[-100px] w-72 sm:w-96 h-72 sm:h-96 bg-blue-400 rounded-full blur-[120px] opacity-20 z-0 animate-pulse-slow"></div>
+      <div className="absolute bottom-[-100px] right-[-100px] w-72 sm:w-96 h-72 sm:h-96 bg-pink-400 rounded-full blur-[120px] opacity-20 z-0 animate-pulse-slow"></div>
     </section>
   );
 }
