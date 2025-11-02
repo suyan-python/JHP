@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useStore } from "../../context/StoreContext";
 import { Star } from "lucide-react";
-import notfound from '../../assets/notfound.svg'
+import notfound from "../../assets/notfound.svg";
+import { AiFillStar } from "react-icons/ai";
 
 function StoreDetail()
 {
@@ -17,6 +18,7 @@ function StoreDetail()
     itemFlavors,
     itemTypes,
     itemPricesBySize,
+    food_list,
   } = useStore();
 
   const productName = itemNames[id];
@@ -38,11 +40,11 @@ function StoreDetail()
 
   const flavorDescriptions = {
     WASHED:
-      "Clean, bright, and vibrant — our washed coffees highlight the pure essence of the bean. Expect crisp acidity, floral aromatics, and a refined, tea-like clarity that showcases origin at its finest.",
+      "Clean, bright, and vibrant — our washed coffees highlight the pure essence of the bean.",
     ANEROBIC:
-      "Sweet, bold, and full-bodied — natural process coffees are sun-dried inside the cherry, giving you a fruit-forward cup with notes of berries, tropical fruit, and a rich, wine-like depth.",
+      "Sweet, bold, and full-bodied — natural process coffees are sun-dried inside the cherry.",
     EXPERIMENTAL:
-      "Innovative and intriguing — our experimental lots explore unique fermentation techniques to unlock complex layers of flavor. Expect adventurous profiles, from jammy sweetness to spicy or boozy undertones.",
+      "Innovative and intriguing — our experimental lots explore unique fermentation techniques.",
   };
 
   const priceBySize =
@@ -81,16 +83,16 @@ function StoreDetail()
   {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] bg-gray-50 px-6 py-16">
-        <img
-          src={notfound}
-          alt="Not Found"
-          className="w-48 mb-6 opacity-80"
-        />
-        <h1 className="text-3xl font-semibold text-gray-800 mb-2">Product Not Found</h1>
+        <img src={notfound} alt="Not Found" className="w-48 mb-6 opacity-80" />
+        <h1 className="text-3xl font-semibold text-gray-800 mb-2">
+          Product Not Found
+        </h1>
         <p className="text-gray-600 text-center max-w-md">
-          We couldn’t find the product you’re looking for. It may have been removed, renamed, or temporarily unavailable.
+          We couldn’t find the product you’re looking for. It may have been
+          removed or renamed.
         </p>
-        <Link to={'/'}
+        <Link
+          to={"/"}
           className="mt-6 px-6 py-3 bg-brownn text-white rounded transition"
         >
           Return to Store
@@ -98,6 +100,20 @@ function StoreDetail()
       </div>
     );
   }
+
+  // 🎯 Generate related products by type or random
+  const relatedProducts = food_list
+    .filter((p) =>
+      p._id !== id &&
+      (
+        (productType === "cold brew" && p.type !== "cold brew") ||
+        (productType === "drip box" && p.type !== "drip box") ||
+        (productType === "filter roasted" && p.type !== "filter roasted")
+      )
+    )
+
+
+    .slice(0, 4);
 
   return (
     <>
@@ -113,6 +129,7 @@ function StoreDetail()
         </div>
       )}
 
+      {/* Main Product Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 mt-36 py-8 bg-white rounded-3xl shadow-xl">
         <div className="text-sm text-gray-400 mb-4">
           JHP Store &gt;{" "}
@@ -120,7 +137,7 @@ function StoreDetail()
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* LEFT: IMAGE + FORM */}
+          {/* LEFT */}
           <div>
             <h1 className="text-3xl font-extrabold text-gray-900 mb-4 md:hidden">
               {productName}
@@ -133,8 +150,8 @@ function StoreDetail()
             />
 
             <div className="space-y-4">
+              {/* SIZE + PROCESS */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                {/* SIZE SELECTOR */}
                 <div>
                   <label
                     htmlFor="size"
@@ -153,19 +170,19 @@ function StoreDetail()
                     ) : (
                       <>
                         <option value={250}>250g</option>
-                        {["filter roasted", "anerobic process", "cold brew"].includes(productType) && (
-                          <>
-                            <option value={500}>500g</option>
-                            <option value={1000}>1kg</option>
-                          </>
-                        )}
+                        {["filter roasted", "anerobic process", "cold brew"].includes(
+                          productType
+                        ) && (
+                            <>
+                              <option value={500}>500g</option>
+                              <option value={1000}>1kg</option>
+                            </>
+                          )}
                       </>
                     )}
                   </select>
-
                 </div>
 
-                {/* PROCESS SELECTOR */}
                 {productFlavors?.length > 0 && (
                   <div>
                     <label
@@ -218,7 +235,6 @@ function StoreDetail()
                 </div>
               </div>
 
-              {/* ADD TO CART */}
               <button
                 className={`w-full sm:w-fit px-6 py-3 font-semibold rounded-lg shadow-md transition ${addedToCart
                   ? "bg-green-600 text-white hover:bg-green-700"
@@ -229,12 +245,13 @@ function StoreDetail()
                 {addedToCart ? "✔ Added to Cart" : "Add to Cart"}
               </button>
             </div>
-            <div className="text-red-500 font-semibold pt-4">
+
+            <div className="text-red-500 font-semibold pt-4 text-sm">
               *Note: EXPERIMENTAL are only available after pre-orders
             </div>
           </div>
 
-          {/* RIGHT: DESCRIPTION */}
+          {/* RIGHT */}
           <div className="flex flex-col justify-start space-y-6">
             <div>
               <h1 className="header text-4xl font-extrabold text-gray-900 hidden md:block mb-2">
@@ -244,13 +261,6 @@ function StoreDetail()
                 {productType || "Coffee"}
               </span>
             </div>
-
-            {productFlavors?.length > 0 && (
-              <div className="text-sm text-gray-600">
-                <strong className="text-gray-800">PROCESS:</strong>{" "}
-                {productFlavors.join(" ")}
-              </div>
-            )}
 
             {productFlavors?.map((flavor) => (
               <div key={flavor}>
@@ -264,22 +274,61 @@ function StoreDetail()
             ))}
 
             <div className="border-t pt-6 mt-4 text-sm text-gray-600 space-y-2">
-              <div className="flex items-center gap-2">
-              </div>
-              <div>
-                - Handpicked beans grown sustainably in the lush hills of Illam
-              </div>
-              <div>
-                - Roasted in small batches for consistent flavor and aroma
-              </div>
-              <div>
-                - Crafted with passion by farmers and roasters who care deeply
-                about every step
-              </div>
+              <div>- Handpicked beans from the lush hills of Illam</div>
+              <div>- Roasted in small batches for consistent flavor</div>
+              <div>- Crafted with passion by local farmers</div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* 🌟 YOU MAY ALSO LIKE */}
+      {relatedProducts.length > 0 && (
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 pb-24">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-brownn mb-2">
+              You may also like
+            </h2>
+            <p className="text-gray-600 text-sm md:text-base max-w-md mx-auto">
+              Discover more from our curated selection — crafted with the same
+              care and passion.
+            </p>
+            <div className="w-16 h-1 bg-brownn mx-auto mt-3 rounded-full"></div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {relatedProducts.map((product) => (
+              <Link
+                to={`/${product._id}`}
+                key={product._id}
+                className="group bg-white border rounded-2xl shadow-md hover:shadow-lg hover:scale-[1.02] transition duration-300 overflow-hidden"
+              >
+                <div className="relative w-full aspect-[4/5] overflow-hidden">
+                  <img
+                    src={itemImages[product._id]}
+                    alt={itemNames[product._id]}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <span className="absolute top-2 left-2 bg-yellow-500 text-white text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full shadow-md">
+                    {product.type || "Coffee"}
+                  </span>
+                </div>
+                <div className="p-4">
+                  <h3 className="text-base font-semibold text-gray-900 truncate mb-1">
+                    {itemNames[product._id]}
+                  </h3>
+                  <p className="text-sm text-gray-500 mb-2">
+                    Starting Rs. {itemPrices[product._id]}
+                  </p>
+                  <button className="w-full border border-brownn text-brownn font-semibold text-sm rounded-md py-2 hover:bg-brownn hover:text-white transition duration-300">
+                    View Details
+                  </button>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 }

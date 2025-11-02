@@ -62,7 +62,6 @@ function AppContent()
             )
           }
         />
-
         <Route path="/" element={<StoreSection />} />
         <Route path="/:id" element={<StoreDetail />} />
         <Route path="/about" element={<Hero />} />
@@ -73,9 +72,11 @@ function AppContent()
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/payment" element={<PlaceOrder />} />
         <Route path="/order-success" element={<OrderSuccess />} />
-        <Route path="/payment-success" element={<Success />} />
-        <Route path="/payment-failure" element={<Failure />} />
-        <Route path="/payment-form" element={<Payment />} />
+
+        {/* <Route path="/payment-success" element={<Success />} /> */}
+        {/* <Route path="/payment-failure" element={<Failure />} /> */}
+        {/* <Route path="/payment-form" element={<Payment />} /> */}
+
       </Routes>
       {!hideNavbarFooter && <Footer />}
     </>

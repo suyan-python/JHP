@@ -60,22 +60,26 @@ const HomeHero = () =>
           id="home"
         >
           <h1 className="header animate-fade-in-up text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-extrabold mb-4 sm:mb-6 leading-tight drop-shadow-lg">
-            Premium Nepali Coffee Beans <br /> Fresh from Illam to Your Cup
+            Buy Premium Nepali Coffee Beans Online <br /> Fresh from Illam, Nepal
           </h1>
+
           <p className="animate-fade-in-up text-base sm:text-lg md:text-xl mb-8 text-white/90 max-w-2xl drop-shadow-md">
-            Jewel Himalayan Products (JHP) offers premium 100% organic Arabica
-            coffee beans grown in the highlands of Illam, Nepal. We support local
-            farmers with expert cultivation and sustainable processing—delivering
-            rich, authentic Himalayan coffee directly to your cup.
+            Experience the rich aroma and taste of <strong>100% organic Arabica coffee</strong>
+            grown sustainably in the highlands of <strong>Illam, Nepal</strong>.
+            At <strong>Jewel Himalayan Products</strong>, we directly connect you with
+            local farmers—bringing <strong>freshly roasted Nepali coffee beans</strong>
+            from the farm to your cup. Ethically sourced, naturally processed, and
+            roasted to perfection for a truly Himalayan flavor.
           </p>
 
           <NavLink
             to="/"
-            className="header animate-fade-in-up inline-block border border-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-black px-8 py-3 sm:px-10 sm:py-4 rounded-full text-lg sm:text-xl font-semibold transition-all duration-300"
+            className="header animate-fade-in-up inline-block border border-white bg-white/10 hover:bg-white hover:text-black px-8 py-3 sm:px-10 sm:py-4 rounded-full text-lg sm:text-xl font-semibold transition-all duration-300"
           >
-            Order Coffee Beans
+            Shop Fresh Coffee Beans
           </NavLink>
         </div>
+
 
         {/* Rest of homepage sections */}
         <SlideCard />
