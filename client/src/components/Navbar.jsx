@@ -158,7 +158,7 @@ export function Navbar()
                     to="/#washed-process"
                     className="block px-4 py-2 hover:bg-[#A66548] hover:text-white rounded"
                   >
-                    filter roasted
+                    Filter roasted
                   </NavLink>
                 </li>
               </ul>

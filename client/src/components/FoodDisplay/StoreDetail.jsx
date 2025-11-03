@@ -111,8 +111,6 @@ function StoreDetail()
         (productType === "filter roasted" && p.type !== "filter roasted")
       )
     )
-
-
     .slice(0, 4);
 
   return (
