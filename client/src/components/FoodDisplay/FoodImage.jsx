@@ -4,29 +4,30 @@ import prod4 from "../../assets/prodc/pack4.JPG";
 import prod2 from "../../assets/prodc/drip2.JPG";
 import prod3 from "../../assets/prodc/pack3.JPG";
 import prod5 from "../../assets/prodc/pack5.JPG";
-import prod6 from "../../assets/prodc/pack6.JPG";
-import prod7 from "../../assets/prodc/pack7.JPG";
-import prod8 from "../../assets/prodc/pack8.JPG";
+
+
+
 import prod9 from "../../assets/prodc/pack9.JPG";
 import prod10 from "../../assets/prodc/pack10.JPG";
 import prod11 from "../../assets/prodc/pack11.avif";
 
-const FoodImage = () => {
+const FoodImage = () =>
+{
   const [stopScroll, setStopScroll] = useState(false);
 
   const cardData = useMemo(
     () => [
-      { title: "Packed With Love and Beans", image: prod6 },
-      { title: "Build with Passion, Ship with Pride", image: prod7 },
+
+
       { title: "Unlock Your Drip Flow-Sip", image: prod2 },
       { title: "Packed with style", image: prod3 },
       { title: "Authentic Beans", image: prod5 },
       { title: "Buy me Open me", image: prod4 },
-      { title: "Packed With Love and Beans", image: prod6 },
+
       { title: "Authentic Beans", image: prod5 },
-      { title: "Build with Passion, Ship with Pride", image: prod7 },
+
       { title: "Packed with style", image: prod3 },
-      { title: "Family Pack, Packed with Love", image: prod8 },
+
       { title: "Buy me Open me", image: prod9 },
       { title: "Mystical at your doorsteps", image: prod10 },
       { title: "Build with Passion, Ship with Pride", image: prod11 },

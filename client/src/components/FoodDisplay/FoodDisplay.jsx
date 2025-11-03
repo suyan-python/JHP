@@ -5,8 +5,7 @@ import { AiFillStar } from "react-icons/ai";
 
 const FoodDisplay = () =>
 {
-  const { food_list, addToCart, itemNames, itemPrices, itemImages } =
-    useStore();
+  const { food_list, addToCart, itemNames, itemPrices, itemImages } = useStore();
 
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOrder, setSortOrder] = useState("default");
@@ -15,23 +14,18 @@ const FoodDisplay = () =>
   {
     if (sortOrder === "asc")
     {
-      return [...products].sort(
-        (a, b) => itemPrices[a._id] - itemPrices[b._id]
-      );
+      return [...products].sort((a, b) => itemPrices[a._id] - itemPrices[b._id]);
     } else if (sortOrder === "desc")
     {
-      return [...products].sort(
-        (a, b) => itemPrices[b._id] - itemPrices[a._id]
-      );
+      return [...products].sort((a, b) => itemPrices[b._id] - itemPrices[a._id]);
     }
     return products;
   };
 
   const renderOptimizedImage = (src, alt, hoverSrc) => (
-    <div className="relative w-full h-full overflow-hidden ">
+    <div className="relative w-full h-full overflow-hidden">
       <img
         loading="lazy"
-        fetchpriority="high"
         src={src}
         alt={alt}
         width="600"
@@ -43,15 +37,15 @@ const FoodDisplay = () =>
           loading="lazy"
           src={hoverSrc}
           alt={`${alt} Hover`}
-          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-105 group-hover:scale-110  z-10"
+          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-105 group-hover:scale-110 z-10"
         />
       )}
     </div>
   );
 
   const renderProductSection = (title, products, subtitle) => (
-    <div className="fooddisplay mb-20 px-4 sm:px-6 lg:px-16">
-      <div className="text-center mb-6 sm:mb-12">
+    <div className="fooddisplay mb-16 px-2 sm:px-6 lg:px-16">
+      <div className="text-center mb-10">
         <h2 className="header text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brownn">
           {title}
         </h2>
@@ -63,20 +57,21 @@ const FoodDisplay = () =>
         <div className="w-20 sm:w-24 h-1 bg-brownn mx-auto mt-4 rounded-full"></div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6">
+      {/* Grid — now 2 cols on mobile for true e-commerce layout */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5 sm:gap-6 md:gap-8">
         {products.map((product) => (
           <div
             key={product._id}
-            className="w-full bg-white border rounded-2xl shadow-md group hover:shadow-lg hover:scale-[1.01] transition-transform duration-300 flex flex-col overflow-hidden"
+            className="bg-white rounded-2xl shadow-md group hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border border-gray-100"
           >
             <Link to={`/${product._id}`}>
-              <div className="relative aspect-[4/5] w-full bg-gray-50 flex items-center justify-center overflow-hidden rounded-t-2xl">
+              <div className="relative aspect-[4/5] w-full bg-gray-50 overflow-hidden">
                 {renderOptimizedImage(
                   itemImages[product._id],
                   itemNames[product._id],
                   product.hoverImage
                 )}
-                <span className="absolute top-2 left-2 bg-yellow-500 text-white text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full shadow-md">
+                <span className="absolute top-2 left-2 bg-gradient-to-r from-green-600 to-green-400 text-white text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full shadow-md">
                   {product.type === "espresso"
                     ? "Premium"
                     : product.type === "drip box"
@@ -86,47 +81,48 @@ const FoodDisplay = () =>
               </div>
             </Link>
 
-            <div className="p-3 sm:p-4 flex flex-col flex-1">
-              <h3 className="text-sm sm:text-base font-semibold text-gray-900  truncate">
+            {/* Info Section */}
+            <div className="p-2.5 sm:p-4 flex flex-col flex-1">
+              <h3 className="text-[12px] sm:text-base font-semibold text-gray-900 truncate">
                 {itemNames[product._id]}
               </h3>
 
               {product.flavors && (
-                <div className="flex flex-wrap gap-1 my-2">
+                <div className="flex flex-wrap gap-1 my-1">
                   {product.flavors.map((flavor, index) => (
                     <span
                       key={index}
-                      className="bg-gray-100 text-green-600 text-[10px] sm:text-xs px-3 py-1 rounded-full"
+                      className="bg-gray-100 text-green-600 text-[9px] sm:text-xs px-2 py-0.5 rounded-full"
                     >
-                      Process: {flavor}
+                      {flavor}
                     </span>
                   ))}
                 </div>
               )}
 
-              <p className="text-[11px] sm:text-xs text-gray-500 mb-2">
+              <p className="text-[10px] sm:text-xs text-gray-500 mb-1">
                 {product.type === "drip box"
-                  ? "5 individually packed sachets (14g each)"
+                  ? "5 sachets (14g each)"
                   : "250g Pack"}
               </p>
 
-              <p className="font-semibold text-sm sm:text-base mb-2">
-                Starting: Rs. {itemPrices[product._id]}
+              <p className="font-semibold text-[12px] sm:text-base mb-1 text-brownn">
+                Rs. {itemPrices[product._id]}
               </p>
 
-              <p className="text-[11px] sm:text-xs text-gray-500 mb-3 flex-1">
+              <p className="text-[10px] sm:text-xs text-gray-500 mb-3 flex-1 line-clamp-2">
                 {product.description
                   ? product.description
                   : product.type === "espresso"
-                    ? "Intense, syrupy, and made to cut through milk."
+                    ? "Intense and syrupy with rich crema."
                     : product.type === "drip box"
-                      ? "Convenient brewing meets café-quality flavor."
-                      : "Clarity and brightness in every cup."}
+                      ? "Instant café-quality brew."
+                      : "Smooth, aromatic, and clean flavor."}
               </p>
 
               <Link to={`/${product._id}`}>
-                <button className="w-full border border-brownn text-brownn font-semibold text-xs sm:text-sm rounded-md py-1.5 hover:bg-brownn hover:text-white transition duration-300">
-                  Add to cart
+                <button className="w-full bg-gradient-to-r from-brownn to-[#6f4e37] text-white font-semibold text-[11px] sm:text-sm rounded-md py-2 hover:opacity-90 transition">
+                  View Details
                 </button>
               </Link>
             </div>
@@ -161,25 +157,25 @@ const FoodDisplay = () =>
     <section className="pt-11" id="products">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 lg:pt-16 pt-2">
         {/* Main Header */}
-        <div className="mb-8 sm:mb-12 text-center">
+        <div className="mb-10 text-center">
           <h1 className="header text-2xl sm:text-3xl lg:text-5xl font-bold text-brownn leading-tight">
-            We provide best Handpicked. Roasted. Loved.
+            Handpicked. Roasted. Loved.
           </h1>
-          <p className="subheader text-gray-700 max-w-2xl mx-auto text-sm sm:text-base mt-2 sm:mt-4">
-            Explore our curated selection of premium coffee.
+          <p className="subheader text-gray-700 max-w-2xl mx-auto text-sm sm:text-base mt-2">
+            Discover our curated collection of Himalayan coffee.
           </p>
         </div>
 
-        {/* Filter Controls */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 mb-8 sm:mb-12">
+        {/* Filters */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
           <div className="flex flex-wrap gap-2 sm:gap-3">
             {categories.map((category) => (
               <button
                 key={category.value}
                 onClick={() => setSelectedCategory(category.value)}
                 className={`px-4 sm:px-6 py-2 rounded-full text-sm font-medium capitalize border transition ${selectedCategory === category.value
-                  ? "bg-brownn text-white border-transparent shadow"
-                  : "text-gray-700 bg-white border-gray-300 hover:bg-brownn hover:text-white"
+                    ? "bg-brownn text-white border-transparent shadow"
+                    : "text-gray-700 bg-white border-gray-300 hover:bg-brownn hover:text-white"
                   }`}
               >
                 {category.label}
@@ -187,9 +183,9 @@ const FoodDisplay = () =>
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
             <label htmlFor="sort" className="text-sm text-gray-700 font-medium">
-              Refine by Price:
+              Sort by Price:
             </label>
             <select
               id="sort"
@@ -197,43 +193,42 @@ const FoodDisplay = () =>
               value={sortOrder}
               className="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brownn transition"
             >
-              <option value="default">Choose...</option>
+              <option value="default">Default</option>
               <option value="asc">Low to High</option>
               <option value="desc">High to Low</option>
             </select>
           </div>
         </div>
 
-        {/* Conditional Rendering */}
+        {/* Product Sections */}
         {selectedCategory === "coffee" ? (
           <>
             {filterRoast.length > 0 &&
               renderProductSection(
                 "The Espresso Edit – Bold, Rich, Timeless",
                 filterRoast,
-                "Experience depth in every sip with our signature roast profiles designed for true espresso lovers."
+                "Depth and character in every sip."
               )}
             {dripBox.length > 0 &&
               renderProductSection(
                 "The Drip Collection – Simple. Elegant. Everyday.",
                 dripBox,
-                "Designed for the modern brew ritual. Easy to pour, hard to forget."
+                "Effortless brewing, full flavor."
               )}
             {washedProcess.length > 0 &&
               renderProductSection(
                 "Roasted Craft – Flavor Unfiltered",
                 washedProcess,
-                "Grown in the highlands of Illam, our washed-process beans offer floral clarity and smooth finishes."
+                "Washed-process beans with floral clarity and smooth finish."
               )}
           </>
         ) : selectedCategory === "tea" ? (
-          <div className="flex flex-col items-center justify-center text-center py-16">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-brownn mb-2">
+          <div className="flex flex-col items-center justify-center text-center py-20">
+            <h2 className="text-2xl font-bold text-brownn mb-2">
               A Steeped Experience is Brewing…
             </h2>
-            <p className="text-gray-600 max-w-md text-sm sm:text-base leading-relaxed">
-              Our Illam tea line is coming soon. Think deep aroma, delicate
-              balance, and mindful sourcing. Stay tuned.
+            <p className="text-gray-600 max-w-md text-sm sm:text-base">
+              Our Illam tea line is coming soon. Deep aroma, mindful sourcing.
             </p>
           </div>
         ) : (

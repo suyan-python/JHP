@@ -130,7 +130,8 @@ function StoreDetail()
       {/* Main Product Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 mt-36 py-8 bg-white rounded-3xl shadow-xl">
         <div className="text-sm text-gray-400 mb-4">
-          JHP Store &gt;{" "}
+          <Link to="/" className="hover:text-amber-800" >  JHP Store &gt;</Link>
+          {" "}
           <span className="text-black font-semibold">{productName}</span>
         </div>
 
@@ -282,43 +283,48 @@ function StoreDetail()
 
       {/* 🌟 YOU MAY ALSO LIKE */}
       {relatedProducts.length > 0 && (
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 pb-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-brownn mb-2">
-              You may also like
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-brownn mb-2">
+              You May Also Like
             </h2>
-            <p className="text-gray-600 text-sm md:text-base max-w-md mx-auto">
-              Discover more from our curated selection — crafted with the same
-              care and passion.
+            <p className="text-gray-600 text-sm sm:text-base max-w-md mx-auto">
+              Discover more from our curated Himalayan coffee range — roasted with precision and passion.
             </p>
             <div className="w-16 h-1 bg-brownn mx-auto mt-3 rounded-full"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {/* 🟤 Responsive Product Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6">
             {relatedProducts.map((product) => (
               <Link
                 to={`/${product._id}`}
                 key={product._id}
-                className="group bg-white border rounded-2xl shadow-md hover:shadow-lg hover:scale-[1.02] transition duration-300 overflow-hidden"
+                className="group bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 overflow-hidden"
               >
-                <div className="relative w-full aspect-[4/5] overflow-hidden">
+                {/* 🖼️ Product Image */}
+                <div className="relative w-full aspect-[4/5] overflow-hidden bg-gray-50">
                   <img
                     src={itemImages[product._id]}
                     alt={itemNames[product._id]}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
-                  <span className="absolute top-2 left-2 bg-yellow-500 text-white text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full shadow-md">
-                    {product.type || "Coffee"}
+                  <span className="absolute top-2 left-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-[9px] sm:text-[10px] md:text-xs font-semibold px-2 py-0.5 rounded-full shadow-md tracking-wide">
+                    {product.type?.toUpperCase() || "COFFEE"}
                   </span>
                 </div>
-                <div className="p-4">
-                  <h3 className="text-base font-semibold text-gray-900 truncate mb-1">
+
+                {/* 🧾 Product Details */}
+                <div className="p-3 sm:p-4 flex flex-col">
+                  <h3 className="text-[12px] sm:text-sm md:text-base font-semibold text-gray-900 truncate mb-1">
                     {itemNames[product._id]}
                   </h3>
-                  <p className="text-sm text-gray-500 mb-2">
+                  <p className="text-[11px] sm:text-sm text-gray-500 mb-2">
                     Starting Rs. {itemPrices[product._id]}
                   </p>
-                  <button className="w-full border border-brownn text-brownn font-semibold text-sm rounded-md py-2 hover:bg-brownn hover:text-white transition duration-300">
+
+                  <button className="w-full mt-auto border border-brownn text-brownn font-medium text-[11px] sm:text-sm rounded-lg py-1.5 sm:py-2 hover:bg-brownn hover:text-white transition duration-300">
                     View Details
                   </button>
                 </div>
@@ -327,6 +333,7 @@ function StoreDetail()
           </div>
         </div>
       )}
+
     </>
   );
 }
